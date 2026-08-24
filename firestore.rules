@@ -1,0 +1,39 @@
+rules_version = '2';
+
+// Single-admin portfolio rules.
+//
+// Write access requires a signed-in account carrying the custom claim
+// `admin == true`. Set it once with:
+//   npm install firebase-admin --no-save
+//   ADMIN_EMAIL=you@example.com node scripts/set-admin-claim.mjs
+// See README.md › "Seed the admin user".
+
+service cloud.firestore {
+  function isSignedIn() {
+    return request.auth != null;
+  }
+
+  function isAdmin() {
+    return isSignedIn() && request.auth.token.admin == true;
+  }
+
+  match /databases/{database}/documents {
+
+    // Public site reads the single profile document.
+    match /profile/{document} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    // Public site reads projects; only the admin mutates them.
+    match /projects/{projectId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    // Everything else is locked down.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

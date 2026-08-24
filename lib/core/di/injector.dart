@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../features/admin/auth/data/firebase_auth_repository.dart';
+import '../../features/admin/auth/presentation/cubit/auth_cubit.dart';
 import '../../features/admin/auth/domain/repositories/auth_repository.dart';
 import '../../features/admin/media/data/firebase_media_storage_repository.dart';
 import '../../features/admin/media/domain/repositories/media_storage_repository.dart';
@@ -49,6 +50,10 @@ void configureDependencies() {
     // Admin
     ..registerLazySingleton<AuthRepository>(
       () => FirebaseAuthRepository(getIt<FirebaseAuth>()),
+    )
+    ..registerLazySingleton<AuthCubit>(
+      () => AuthCubit(getIt<AuthRepository>(), getIt<AuthGate>()),
+      dispose: (cubit) => cubit.close(),
     )
     ..registerLazySingleton<MediaStorageRepository>(
       () => FirebaseMediaStorageRepository(getIt<FirebaseStorage>()),

@@ -16,5 +16,9 @@ abstract final class StoragePaths {
 abstract final class AppRoutes {
   static const String home = '/';
   static const String adminLogin = '/admin/login';
+  static const String adminRoot = '/admin';
   static const String adminDashboard = '/admin';
+  static const String adminProfile = '/admin/profile';
+  static const String adminProjects = '/admin/projects';
+  static const String adminNewProject = '/admin/projects/new';
 }

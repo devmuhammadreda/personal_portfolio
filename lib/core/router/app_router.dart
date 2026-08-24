@@ -4,6 +4,10 @@ import 'package:go_router/go_router.dart';
 import '../constants/app_constants.dart';
 import '../../features/admin/auth/presentation/pages/login_page.dart';
 import '../../features/admin/presentation/pages/dashboard_page.dart';
+import '../../features/admin/presentation/widgets/admin_shell.dart';
+import '../../features/admin/profile_management/presentation/pages/profile_editor_page.dart';
+import '../../features/admin/project_management/presentation/pages/project_form_page.dart';
+import '../../features/admin/project_management/presentation/pages/projects_admin_page.dart';
 import '../../features/portfolio/presentation/pages/portfolio_page.dart';
 import 'auth_gate.dart';
 import 'authentication_status.dart';
@@ -28,25 +32,59 @@ GoRouter createAppRouter(AuthGate authGate) {
     routes: [
       GoRoute(
         path: AppRoutes.home,
-        pageBuilder: (context, state) => _fadePage(state, const PortfolioPage()),
+        pageBuilder: (context, state) =>
+            _fadePage(state, const PortfolioPage()),
       ),
       GoRoute(
         path: AppRoutes.adminLogin,
         pageBuilder: (context, state) => _fadePage(state, const LoginPage()),
       ),
-      GoRoute(
-        path: AppRoutes.adminDashboard,
-        pageBuilder: (context, state) => _fadePage(state, const DashboardPage()),
+      ShellRoute(
+        pageBuilder: (context, state, child) =>
+            _fadePage(state, AdminShell(child: child), keepShellAlive: true),
+        routes: [
+          GoRoute(
+            path: AppRoutes.adminDashboard,
+            pageBuilder: (context, state) =>
+                _noTransition(state, const DashboardPage()),
+          ),
+          GoRoute(
+            path: AppRoutes.adminProfile,
+            pageBuilder: (context, state) =>
+                _noTransition(state, const ProfileEditorPage()),
+          ),
+          GoRoute(
+            path: AppRoutes.adminProjects,
+            pageBuilder: (context, state) =>
+                _noTransition(state, const ProjectsAdminPage()),
+          ),
+          GoRoute(
+            path: AppRoutes.adminNewProject,
+            pageBuilder: (context, state) =>
+                _noTransition(state, const ProjectFormPage()),
+          ),
+          GoRoute(
+            path: '/admin/projects/:id',
+            pageBuilder: (context, state) => _noTransition(
+              state,
+              ProjectFormPage(projectId: state.pathParameters['id']),
+            ),
+          ),
+        ],
       ),
     ],
   );
 }
 
-CustomTransitionPage<void> _fadePage(GoRouterState state, Widget child) {
+CustomTransitionPage<void> _fadePage(
+  GoRouterState state,
+  Widget child, {
+  bool keepShellAlive = false,
+}) {
   return CustomTransitionPage<void>(
     key: state.pageKey,
     child: child,
-    transitionDuration: const Duration(milliseconds: 320),
+    transitionDuration: Duration(milliseconds: keepShellAlive ? 220 : 320),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       final curved = CurvedAnimation(
         parent: animation,
@@ -64,4 +102,8 @@ CustomTransitionPage<void> _fadePage(GoRouterState state, Widget child) {
       );
     },
   );
+}
+
+NoTransitionPage<void> _noTransition(GoRouterState state, Widget child) {
+  return NoTransitionPage<void>(key: state.pageKey, child: child);
 }

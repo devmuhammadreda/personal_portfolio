@@ -8,6 +8,14 @@ class Skill extends Equatable {
   final String name;
   final String? iconUrl;
 
+  Skill copyWithSkill({String? name, int? level, String? iconUrl}) {
+    return Skill(
+      name: name ?? this.name,
+      level: level ?? this.level,
+      iconUrl: iconUrl ?? this.iconUrl,
+    );
+  }
+
   @override
   List<Object?> get props => [name, level, iconUrl];
 }
