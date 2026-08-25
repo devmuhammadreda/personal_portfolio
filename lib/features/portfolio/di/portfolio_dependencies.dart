@@ -12,11 +12,10 @@ import '../data/repositories/project_repository_impl.dart';
 import '../domain/repositories/profile_repository.dart';
 import '../domain/repositories/project_repository.dart';
 
-/// Flavor module for the **portfolio** build: public content data plus
-/// the public-only router.
-void configurePortfolioDependencies() {
+/// Content data registrations needed by **both** flavors: the admin
+/// console edits the same profile/projects the public site displays.
+void initPortfolioDataInjection() {
   getIt
-    // Portfolio data
     ..registerLazySingleton<ProfileRemoteDataSource>(
       () => FirestoreProfileDataSource(getIt<FirebaseFirestore>()),
     )
@@ -28,10 +27,15 @@ void configurePortfolioDependencies() {
     )
     ..registerLazySingleton<ProjectRepository>(
       () => ProjectRepositoryImpl(getIt<ProjectRemoteDataSource>()),
-    )
-    // Routing
-    ..registerLazySingleton<GoRouter>(
-      () => createPortfolioRouter(),
-      dispose: (GoRouter router) => router.dispose(),
     );
+}
+
+/// Flavor module for the **portfolio** build: content data plus the
+/// public-only router.
+void configurePortfolioDependencies() {
+  initPortfolioDataInjection();
+  getIt.registerLazySingleton<GoRouter>(
+    () => createPortfolioRouter(),
+    dispose: (GoRouter router) => router.dispose(),
+  );
 }
