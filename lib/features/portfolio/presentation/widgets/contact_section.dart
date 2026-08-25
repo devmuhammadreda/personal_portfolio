@@ -28,18 +28,25 @@ class _ContactSectionState extends State<ContactSection> {
   final TextEditingController _message = TextEditingController();
   String? _phone;
 
+  /// Owned here (not created inside `build`) so handlers on this State
+  /// can reach it without a context that sits above the BlocProvider.
+  late final ContactFormCubit _formCubit = ContactFormCubit(
+    getIt<ContactMessageRepository>(),
+  );
+
   @override
   void dispose() {
     _name.dispose();
     _email.dispose();
     _message.dispose();
+    _formCubit.close();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<ContactFormCubit>(
-      create: (_) => ContactFormCubit(getIt<ContactMessageRepository>()),
+    return BlocProvider<ContactFormCubit>.value(
+      value: _formCubit,
       child: BlocBuilder<PortfolioCubit, PortfolioState>(
         buildWhen: (previous, current) => previous.profile != current.profile,
         builder: (context, state) => _buildBody(context, state),
@@ -50,7 +57,7 @@ class _ContactSectionState extends State<ContactSection> {
   void _send() {
     final bool valid = _formKey.currentState?.validate() ?? false;
     if (!valid) return;
-    context.read<ContactFormCubit>().submit(
+    _formCubit.submit(
       name: _name.text,
       email: _email.text,
       message: _message.text,

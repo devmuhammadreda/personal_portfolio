@@ -23,8 +23,10 @@ Future<void> main() {
   return app.runPersonalPortfolioApp(
     title: 'Flutter Developer Portfolio — Admin Console',
     extraProviders: [
-      // Bridges Supabase auth state into the router guard.
-      BlocProvider<AuthCubit>.value(value: getIt<AuthCubit>()),
+      // Bridges Supabase auth state into the router guard. Created
+      // lazily — the shared bootstrap configures admin dependencies
+      // after these arguments are built.
+      BlocProvider<AuthCubit>(create: (_) => getIt<AuthCubit>()),
     ],
     configureFlavorDependencies: configureAdminDependencies,
   );

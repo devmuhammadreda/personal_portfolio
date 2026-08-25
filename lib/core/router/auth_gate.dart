@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 
 import 'authentication_status.dart';
@@ -13,6 +15,8 @@ class AuthGate extends ChangeNotifier {
   void update(AuthenticationStatus status) {
     if (_status == status) return;
     _status = status;
-    notifyListeners();
+    // Deferred so a lazily-created AuthCubit (first build) can push the
+    // initial status without forcing GoRouter to rebuild mid-frame.
+    scheduleMicrotask(notifyListeners);
   }
 }
