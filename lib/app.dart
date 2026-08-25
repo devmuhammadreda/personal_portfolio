@@ -8,6 +8,7 @@ import 'package:nested/nested.dart' show SingleChildWidget;
 import 'core/di/injector.dart';
 import 'core/localizations_cubit/locale_cubit.dart';
 import 'core/theme/app_theme.dart';
+import 'core/theme/app_theme_mode.dart';
 import 'core/theme/theme_cubit.dart';
 import 'l10n/app_localizations.dart';
 
@@ -35,17 +36,23 @@ class PersonalPortfolioApp extends StatelessWidget {
         BlocProvider<LocaleCubit>.value(value: getIt<LocaleCubit>()),
         ...extraProviders,
       ],
-      child: BlocBuilder<ThemeCubit, ThemeMode>(
-        builder: (context, themeMode) {
+      child: BlocBuilder<ThemeCubit, AppThemeMode>(
+        builder: (context, mode) {
           return BlocBuilder<LocaleCubit, Locale>(
             builder: (context, locale) {
               return FlavorBanner(
                 child: MaterialApp.router(
                   title: title,
                   debugShowCheckedModeBanner: false,
-                  theme: AppTheme.light,
+                  theme:
+                      mode == AppThemeMode.gold
+                          ? AppTheme.gold
+                          : AppTheme.light,
                   darkTheme: AppTheme.dark,
-                  themeMode: themeMode,
+                  themeMode:
+                      mode == AppThemeMode.dark
+                          ? ThemeMode.dark
+                          : ThemeMode.light,
                   locale: locale,
                   supportedLocales: supportedLocales,
                   localizationsDelegates: const [

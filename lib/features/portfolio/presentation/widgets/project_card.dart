@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/localizations_cubit/category_labels.dart';
 import '../../../../core/localizations_cubit/locale_cubit.dart';
 
-import '../../../../core/theme/app_palette.dart';
+import '../../../../core/theme/app_accents.dart';
 import '../../domain/entities/project.dart';
 
 final class ProjectCard extends StatefulWidget {
@@ -60,7 +60,7 @@ class _ProjectCardState extends State<ProjectCard> {
                                   gradient: LinearGradient(
                                     begin: Alignment.topLeft,
                                     end: Alignment.bottomRight,
-                                    colors: AppPalette.heroGradient
+                                    colors: context.accents.heroGradient
                                         .map(
                                           (color) =>
                                               color.withValues(alpha: 0.25),

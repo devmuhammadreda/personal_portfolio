@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import '../../../../core/localizations_cubit/locale_cubit.dart';
-import '../../../../core/theme/app_palette.dart';
+import '../../../../core/theme/app_accents.dart';
 import '../../../../core/widgets/language_toggle.dart';
 import '../../../../core/widgets/theme_toggle.dart';
 
@@ -81,7 +81,7 @@ final class AnimatedNavbar extends StatelessWidget {
                             height: 9,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              gradient: AppPalette.accentGradient,
+                              gradient: context.accents.accentGradient,
                             ),
                           ),
                           const SizedBox(width: 10),

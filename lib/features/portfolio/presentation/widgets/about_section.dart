@@ -3,7 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/localizations_cubit/locale_cubit.dart';
-import '../../../../core/theme/app_palette.dart';
+import '../../../../core/theme/app_accents.dart';
 import '../../../../core/utils/responsive.dart';
 import '../../domain/entities/skill.dart';
 import '../cubit/portfolio_cubit.dart';
@@ -163,7 +163,7 @@ class _StatTile extends StatelessWidget {
           style: theme.textTheme.displayMedium?.copyWith(
             fontSize: 34,
             foreground: Paint()
-              ..shader = AppPalette.accentGradient.createShader(
+              ..shader = context.accents.accentGradient.createShader(
                 const Rect.fromLTWH(0, 0, 120, 40),
               ),
           ),

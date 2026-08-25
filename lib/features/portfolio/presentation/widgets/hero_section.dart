@@ -3,7 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/localizations_cubit/locale_cubit.dart';
-import '../../../../core/theme/app_palette.dart';
+import '../../../../core/theme/app_accents.dart';
 import '../../../../core/utils/responsive.dart';
 import '../../../../core/utils/url_helper.dart';
 import '../cubit/portfolio_cubit.dart';
@@ -202,7 +202,7 @@ class _GradientText extends StatelessWidget {
   Widget build(BuildContext context) {
     return ShaderMask(
       shaderCallback: (bounds) =>
-          AppPalette.accentGradient.createShader(bounds),
+          context.accents.accentGradient.createShader(bounds),
       blendMode: BlendMode.srcIn,
       child: Text(text, style: style),
     );

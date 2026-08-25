@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/localizations_cubit/locale_cubit.dart';
 
-import '../../../../../core/theme/app_palette.dart';
+import '../../../../../core/theme/app_accents.dart';
 import '../cubit/auth_cubit.dart';
 import '../cubit/auth_state.dart';
 
@@ -92,7 +92,7 @@ class _LoginPageState extends State<LoginPage> {
                                 height: 52,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(16),
-                                  gradient: AppPalette.accentGradient,
+                                  gradient: context.accents.accentGradient,
                                 ),
                                 child: Icon(
                                   Icons.lock_person_rounded,

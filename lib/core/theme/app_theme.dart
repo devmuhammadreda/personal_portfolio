@@ -1,24 +1,32 @@
 import 'package:flutter/material.dart';
 
+import 'app_accents.dart';
 import 'app_palette.dart';
+import 'app_theme_mode.dart';
 import 'app_typography.dart';
 
 abstract final class AppTheme {
-  static ThemeData get light => _build(Brightness.light);
+  static ThemeData get dark => _build(AppThemeMode.dark);
 
-  static ThemeData get dark => _build(Brightness.dark);
+  static ThemeData get light => _build(AppThemeMode.light);
 
-  static ThemeData _build(Brightness brightness) {
-    final ColorScheme scheme = AppPalette.colorScheme(brightness);
+  static ThemeData get gold => _build(AppThemeMode.gold);
+
+  static ThemeData _build(AppThemeMode mode) {
+    final Brightness brightness = mode.brightness;
     final bool isDark = brightness == Brightness.dark;
+    final ColorScheme scheme = AppPalette.colorScheme(mode);
+    final AppAccents accents = switch (mode) {
+      AppThemeMode.gold => AppAccents.gold,
+      _ => AppAccents.violet,
+    };
 
     return ThemeData(
       useMaterial3: true,
       brightness: brightness,
       colorScheme: scheme,
-      scaffoldBackgroundColor: isDark
-          ? AppPalette.darkBackground
-          : AppPalette.lightBackground,
+      extensions: [accents],
+      scaffoldBackgroundColor: AppPalette.background(mode),
       splashFactory: InkSparkle.splashFactory,
       textTheme: AppTypography.textTheme(brightness),
       appBarTheme: AppBarTheme(
@@ -75,9 +83,9 @@ abstract final class AppTheme {
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: isDark
-            ? AppPalette.darkSurfaceVariant.withValues(alpha: 0.55)
-            : AppPalette.lightSurfaceVariant.withValues(alpha: 0.5),
+        fillColor: AppPalette.surfaceVariant(
+          mode,
+        ).withValues(alpha: isDark ? 0.55 : 0.5),
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 16,
           vertical: 14,

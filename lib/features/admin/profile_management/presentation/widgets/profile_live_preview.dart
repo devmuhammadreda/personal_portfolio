@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../../core/localizations_cubit/locale_cubit.dart';
 
-import '../../../../../core/theme/app_palette.dart';
+import '../../../../../core/theme/app_accents.dart';
 import '../../../../portfolio/domain/entities/profile.dart';
 
 /// Right-hand preview card in the profile editor, mirroring the public
@@ -46,7 +46,7 @@ final class ProfileLivePreview extends StatelessWidget {
                 height: 92,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  gradient: AppPalette.accentGradient,
+                  gradient: context.accents.accentGradient,
                   border: Border.all(color: scheme.outline),
                   image: photoUrl != null && photoUrl.isNotEmpty
                       ? DecorationImage(
@@ -92,7 +92,7 @@ final class ProfileLivePreview extends StatelessWidget {
             Center(
               child: ShaderMask(
                 shaderCallback: (bounds) =>
-                    AppPalette.accentGradient.createShader(bounds),
+                    context.accents.accentGradient.createShader(bounds),
                 blendMode: BlendMode.srcIn,
                 child: Text(
                   profile.name.isEmpty

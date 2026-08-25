@@ -5,6 +5,7 @@ import 'package:nested/nested.dart' show SingleChildWidget;
 import 'core/di/injector.dart';
 import 'core/services/bloc_observer.dart';
 import 'core/supabase/supabase_bootstrapper.dart';
+import 'core/theme/theme_cubit.dart';
 import 'app.dart';
 import 'features/portfolio/di/portfolio_dependencies.dart';
 
@@ -31,6 +32,9 @@ Future<void> runPersonalPortfolioApp({
   // Dependency graph: core first, then the flavor's own module.
   configureCoreDependencies();
   configureFlavorDependencies();
+
+  // Restore the persisted theme before the first frame renders.
+  await getIt<ThemeCubit>().load();
 
   // Backend
   await SupabaseBootstrapper.initialise();

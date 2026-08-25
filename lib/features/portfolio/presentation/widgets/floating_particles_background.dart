@@ -1,8 +1,9 @@
 import 'dart:math' as math;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../core/theme/app_palette.dart';
+import '../../../../core/theme/app_accents.dart';
 
 /// Lightweight animated backdrop: drifting translucent orbs on a soft
 /// radial gradient. Runs a single repeating controller; ignores pointers.
@@ -39,11 +40,7 @@ class _FloatingParticlesBackgroundState
         speedX: 0.02 + random.nextDouble() * 0.06,
         speedY: 0.03 + random.nextDouble() * 0.08,
         phase: random.nextDouble() * math.pi * 2,
-        color: switch (index % 3) {
-          0 => AppPalette.brandIndigo,
-          1 => AppPalette.brandViolet,
-          _ => AppPalette.brandCyan,
-        },
+        colorIndex: index % 3,
       );
     });
   }
@@ -57,6 +54,7 @@ class _FloatingParticlesBackgroundState
   @override
   Widget build(BuildContext context) {
     final bool isDark = Theme.of(context).brightness == Brightness.dark;
+    final List<Color> particleColors = context.accents.particleColors;
     return IgnorePointer(
       child: Stack(
         fit: StackFit.expand,
@@ -68,11 +66,11 @@ class _FloatingParticlesBackgroundState
                 radius: 1.4,
                 colors: isDark
                     ? [
-                        AppPalette.brandIndigo.withValues(alpha: 0.16),
+                        particleColors.first.withValues(alpha: 0.16),
                         Colors.transparent,
                       ]
                     : [
-                        AppPalette.brandIndigo.withValues(alpha: 0.08),
+                        particleColors.first.withValues(alpha: 0.08),
                         Colors.transparent,
                       ],
               ),
@@ -85,11 +83,11 @@ class _FloatingParticlesBackgroundState
                 radius: 1.2,
                 colors: isDark
                     ? [
-                        AppPalette.brandCyan.withValues(alpha: 0.10),
+                        particleColors.last.withValues(alpha: 0.10),
                         Colors.transparent,
                       ]
                     : [
-                        AppPalette.brandCyan.withValues(alpha: 0.07),
+                        particleColors.last.withValues(alpha: 0.07),
                         Colors.transparent,
                       ],
               ),
@@ -99,7 +97,11 @@ class _FloatingParticlesBackgroundState
             animation: _controller,
             builder: (context, _) {
               return CustomPaint(
-                painter: _OrbsPainter(_orbs, _controller.value),
+                painter: _OrbsPainter(
+                  _orbs,
+                  _controller.value,
+                  particleColors,
+                ),
               );
             },
           ),
@@ -117,7 +119,7 @@ class _Orb {
     required this.speedX,
     required this.speedY,
     required this.phase,
-    required this.color,
+    required this.colorIndex,
   });
 
   final double baseX;
@@ -126,14 +128,15 @@ class _Orb {
   final double speedX;
   final double speedY;
   final double phase;
-  final Color color;
+  final int colorIndex;
 }
 
 class _OrbsPainter extends CustomPainter {
-  const _OrbsPainter(this.orbs, this.progress);
+  const _OrbsPainter(this.orbs, this.progress, this.particleColors);
 
   final List<_Orb> orbs;
   final double progress;
+  final List<Color> particleColors;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -148,7 +151,7 @@ class _OrbsPainter extends CustomPainter {
           0.04 * math.cos(progress * 2 * math.pi + orb.phase);
       final Offset center = Offset(dx * size.width, dy * size.height);
       final Paint paint = Paint()
-        ..color = orb.color.withValues(alpha: 0.28)
+        ..color = particleColors[orb.colorIndex].withValues(alpha: 0.28)
         ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 6);
       canvas.drawCircle(center, orb.radius, paint);
     }
@@ -156,5 +159,6 @@ class _OrbsPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _OrbsPainter oldDelegate) =>
-      oldDelegate.progress != progress;
+      oldDelegate.progress != progress ||
+      !listEquals(oldDelegate.particleColors, particleColors);
 }

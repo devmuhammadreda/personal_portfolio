@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/localizations_cubit/locale_cubit.dart';
 
 import '../../../../../core/di/injector.dart';
-import '../../../../../core/theme/app_palette.dart';
+import '../../../../../core/theme/app_accents.dart';
 import '../../../../../core/utils/url_helper.dart';
 import '../../../media/domain/repositories/media_storage_repository.dart';
 import '../../../../portfolio/domain/repositories/profile_repository.dart';
@@ -365,7 +365,7 @@ class _MediaCard extends StatelessWidget {
                   height: 84,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    gradient: AppPalette.accentGradient,
+                    gradient: context.accents.accentGradient,
                     image: photoUrl != null && photoUrl.isNotEmpty
                         ? DecorationImage(
                             image: NetworkImage(photoUrl),
