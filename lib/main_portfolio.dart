@@ -8,6 +8,9 @@ import 'main.dart' as app;
 /// Config only — the shared bootstrap in `main.dart` owns every init
 /// step. Ships zero admin surface: no auth, no admin routes, no admin
 /// dependency graph. The banner label is shown in debug mode only.
+///
+/// Web deploys copy `index.html` to `404.html` (see the GitHub Actions
+/// workflow) so path-style deep links survive refreshes on static hosts.
 Future<void> main() {
   FlavorConfig(
     name: kDebugMode ? 'PORTFOLIO' : '',
