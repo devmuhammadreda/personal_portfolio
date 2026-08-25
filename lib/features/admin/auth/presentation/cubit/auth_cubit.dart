@@ -10,7 +10,7 @@ import '../../domain/entities/admin_user.dart';
 import '../../domain/repositories/auth_repository.dart';
 import 'auth_state.dart';
 
-/// Bridges [FirebaseAuth]-backed auth status into the app: emits UI state
+/// Bridges Supabase auth status into the app: emits UI state
 /// here and pushes every change into the [AuthGate] that drives the
 /// router guard — including automatic logout on session expiry.
 final class AuthCubit extends Cubit<AuthState>

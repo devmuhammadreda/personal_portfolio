@@ -11,33 +11,43 @@ sealed class AppFailure {
 final class AuthFailure extends AppFailure {
   const AuthFailure(super.message);
 
-  factory AuthFailure.fromCode(String code) {
-    final String message = switch (code) {
-      'invalid-email' => 'That email address looks malformed.',
-      'user-disabled' => 'This account has been disabled.',
-      'user-not-found' ||
-      'wrong-password' ||
-      'invalid-credential' => 'Invalid email or password.',
-      'too-many-requests' =>
+  /// Maps Supabase GoTrue error messages to friendly copy.
+  factory AuthFailure.fromMessage(String message) {
+    final String friendly = switch (message.toLowerCase()) {
+      final m when m.contains('invalid login credentials') =>
+        'Invalid email or password.',
+      final m when m.contains('email not confirmed') =>
+        'Please confirm your email address first.',
+      final m when m.contains('disabled') => 'This account has been disabled.',
+      final m when m.contains('rate limit') || m.contains('too many') =>
         'Too many attempts. Please wait and try again later.',
-      'network-request-failed' => 'Network error. Check your connection.',
+      final m when m.contains('network') =>
+        'Network error. Check your connection.',
       _ => 'Sign-in failed. Please try again.',
     };
-    return AuthFailure(message);
+    return AuthFailure(friendly);
   }
 }
 
 final class FirestoreFailure extends AppFailure {
   const FirestoreFailure(super.message);
 
-  factory FirestoreFailure.fromCode(String code) {
-    final String message = switch (code) {
-      'permission-denied' =>
+  /// Maps Supabase PostgREST error messages/codes to friendly copy.
+  factory FirestoreFailure.fromCode(String codeOrMessage) {
+    final String lowered = codeOrMessage.toLowerCase();
+    final String message = switch (lowered) {
+      final m
+          when m.contains('42501') ||
+              m.contains('permission') ||
+              m.contains('row-level security') =>
         'You do not have permission to perform this action.',
-      'not-found' => 'The requested document was not found.',
-      'unavailable' =>
-        'Service is currently unavailable. Please try again shortly.',
-      'unauthenticated' => 'Your session has expired. Please sign in again.',
+      final m when m.contains('jwt') || m.contains('session') =>
+        'Your session has expired. Please sign in again.',
+      final m
+          when m.contains('fetch') ||
+              m.contains('socket') ||
+              m.contains('network') =>
+        'Network error. Check your connection.',
       _ => 'Something went wrong while syncing data.',
     };
     return FirestoreFailure(message);
@@ -47,15 +57,21 @@ final class FirestoreFailure extends AppFailure {
 final class StorageFailure extends AppFailure {
   const StorageFailure(super.message);
 
-  factory StorageFailure.fromCode(String code) {
-    final String message = switch (code) {
-      'object-not-found' => 'The file no longer exists on the server.',
-      'unauthorized' => 'You are not allowed to upload this file.',
-      'canceled' => 'Upload cancelled.',
-      'retry-limit-exceeded' =>
-        'Upload took too long. Please check your connection and retry.',
+  /// Maps Supabase Storage error messages to friendly copy.
+  factory StorageFailure.fromMessage(String message) {
+    final String lowered = message.toLowerCase();
+    final String friendly = switch (lowered) {
+      final m when m.contains('not found') =>
+        'The file no longer exists on the server.',
+      final m
+          when m.contains('unauthorized') ||
+              m.contains('row-level security') ||
+              m.contains('permission') =>
+        'You are not allowed to upload this file.',
+      final m when m.contains('payload too large') || m.contains('exceeds') =>
+        'That file is too large to upload.',
       _ => 'File upload failed. Please try again.',
     };
-    return StorageFailure(message);
+    return StorageFailure(friendly);
   }
 }

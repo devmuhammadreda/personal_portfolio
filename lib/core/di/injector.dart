@@ -1,5 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get_it/get_it.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../localizations_cubit/locale_cubit.dart';
 import '../theme/theme_cubit.dart';
@@ -10,16 +10,12 @@ import '../theme/theme_cubit.dart';
 final GetIt getIt = GetIt.instance;
 
 /// Platform-level registrations shared by every flavor: theme, locale
-/// and the Firestore SDK instance. Feature-owned data sources,
-/// repositories, auth and routers live in each feature's own registrar
-/// (`di/*_injection.dart` / `di/*_dependencies.dart`).
+/// and the Supabase client instance.
 void configureCoreDependencies() {
   getIt
     // Core presentation
     ..registerLazySingleton<ThemeCubit>(ThemeCubit.new)
     ..registerLazySingleton<LocaleCubit>(LocaleCubit.new)
-    // Firebase SDK (lazy — only resolved once configured)
-    ..registerLazySingleton<FirebaseFirestore>(
-      () => FirebaseFirestore.instance,
-    );
+    // Supabase SDK (lazy — only resolved once configured)
+    ..registerLazySingleton<SupabaseClient>(() => Supabase.instance.client);
 }

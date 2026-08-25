@@ -9,6 +9,6 @@ abstract interface class MediaStorageRepository {
     required String contentType,
   });
 
-  /// Deletes the object behind a Firebase Storage download [url].
+  /// Deletes the object behind a storage download [url].
   Future<void> deleteByUrl(String url);
 }

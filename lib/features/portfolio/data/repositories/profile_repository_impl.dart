@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../../core/errors/app_failure.dart';
 import '../datasources/profile_remote_data_source.dart';
@@ -17,8 +17,8 @@ class ProfileRepositoryImpl implements ProfileRepository {
       final map = await _dataSource.fetchProfileMap();
       if (map == null) return Profile.empty;
       return ProfileModel.fromMap(map);
-    } on FirebaseException catch (error) {
-      throw FirestoreFailure.fromCode(error.code);
+    } on PostgrestException catch (error) {
+      throw FirestoreFailure.fromCode(error.message);
     }
   }
 
@@ -34,8 +34,8 @@ class ProfileRepositoryImpl implements ProfileRepository {
     try {
       final map = ProfileModel.fromEntity(profile).toMap();
       await _dataSource.upsertProfileMap(map);
-    } on FirebaseException catch (error) {
-      throw FirestoreFailure.fromCode(error.code);
+    } on PostgrestException catch (error) {
+      throw FirestoreFailure.fromCode(error.message);
     }
   }
 }

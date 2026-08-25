@@ -5,8 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 /// Lifecycle utilities for Cubits, ported from the tamweely_voting
 /// codebase and adapted: the dio [CancelToken] helpers were dropped
-/// because this project talks to Firestore/Firebase Storage, which offer
-/// no cancellation tokens.
+/// because this project's backends (Supabase) offer no cancellation
+/// tokens.
 ///
 /// Mix it into every cubit that performs async work:
 ///

@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../../core/errors/app_failure.dart';
 import '../datasources/project_remote_data_source.dart';
@@ -16,8 +16,8 @@ class ProjectRepositoryImpl implements ProjectRepository {
     try {
       final docs = await _dataSource.fetchProjectMaps();
       return docs.map(_toEntity).toList();
-    } on FirebaseException catch (error) {
-      throw FirestoreFailure.fromCode(error.code);
+    } on PostgrestException catch (error) {
+      throw FirestoreFailure.fromCode(error.message);
     }
   }
 
@@ -26,8 +26,8 @@ class ProjectRepositoryImpl implements ProjectRepository {
     try {
       final map = ProjectModel.fromEntity(project).toMap();
       return await _dataSource.saveProjectMap(map);
-    } on FirebaseException catch (error) {
-      throw FirestoreFailure.fromCode(error.code);
+    } on PostgrestException catch (error) {
+      throw FirestoreFailure.fromCode(error.message);
     }
   }
 
@@ -36,8 +36,8 @@ class ProjectRepositoryImpl implements ProjectRepository {
     try {
       final map = ProjectModel.fromEntity(project).toMap();
       await _dataSource.saveProjectMap(map, id: project.id);
-    } on FirebaseException catch (error) {
-      throw FirestoreFailure.fromCode(error.code);
+    } on PostgrestException catch (error) {
+      throw FirestoreFailure.fromCode(error.message);
     }
   }
 
@@ -45,8 +45,8 @@ class ProjectRepositoryImpl implements ProjectRepository {
   Future<void> deleteProject(String projectId) async {
     try {
       await _dataSource.deleteProject(projectId);
-    } on FirebaseException catch (error) {
-      throw FirestoreFailure.fromCode(error.code);
+    } on PostgrestException catch (error) {
+      throw FirestoreFailure.fromCode(error.message);
     }
   }
 
@@ -54,8 +54,8 @@ class ProjectRepositoryImpl implements ProjectRepository {
   Future<void> reorderProjects(List<String> projectIdsInOrder) async {
     try {
       await _dataSource.applyOrder(projectIdsInOrder);
-    } on FirebaseException catch (error) {
-      throw FirestoreFailure.fromCode(error.code);
+    } on PostgrestException catch (error) {
+      throw FirestoreFailure.fromCode(error.message);
     }
   }
 

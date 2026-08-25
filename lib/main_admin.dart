@@ -5,7 +5,7 @@ import 'package:flutter_flavor/flutter_flavor.dart';
 
 import 'app.dart';
 import 'core/di/injector.dart';
-import 'core/firebase/firebase_bootstrapper.dart';
+import 'core/supabase/supabase_bootstrapper.dart';
 import 'core/services/bloc_observer.dart';
 import 'features/admin/auth/presentation/cubit/auth_cubit.dart';
 import 'features/admin/di/admin_dependencies.dart';
@@ -26,12 +26,12 @@ Future<void> main() async {
   );
   configureCoreDependencies();
   configureAdminDependencies();
-  await FirebaseBootstrapper.initialise();
+  await SupabaseBootstrapper.initialise();
   runApp(
     PersonalPortfolioApp(
       title: 'Flutter Developer Portfolio — Admin Console',
       extraProviders: [
-        // Bridges Firebase Auth state into the router guard.
+        // Bridges Supabase auth state into the router guard.
         BlocProvider<AuthCubit>.value(value: getIt<AuthCubit>()),
       ],
     ),

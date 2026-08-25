@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 import '../../domain/entities/project.dart';
 import '../../domain/entities/project_category.dart';
 
@@ -76,14 +74,16 @@ final class ProjectModel extends Project {
       'category': category.value,
       'featured': featured,
       'order': order,
-      'createdAt': Timestamp.fromDate(createdAt),
-      'updatedAt': Timestamp.fromDate(updatedAt),
+      'createdAt': createdAt.toIso8601String(),
+      'updatedAt': updatedAt.toIso8601String(),
     };
   }
 
   static DateTime _toDateTime(dynamic value) => switch (value) {
-    final Timestamp timestamp => timestamp.toDate(),
+    final String iso when iso.isNotEmpty => DateTime.tryParse(iso) ?? _epoch,
     final DateTime dateTime => dateTime,
-    _ => DateTime.fromMillisecondsSinceEpoch(0),
+    _ => _epoch,
   };
+
+  static final DateTime _epoch = DateTime.fromMillisecondsSinceEpoch(0);
 }

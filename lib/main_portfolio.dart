@@ -5,7 +5,7 @@ import 'package:flutter_flavor/flutter_flavor.dart';
 
 import 'app.dart';
 import 'core/di/injector.dart';
-import 'core/firebase/firebase_bootstrapper.dart';
+import 'core/supabase/supabase_bootstrapper.dart';
 import 'core/services/bloc_observer.dart';
 import 'features/portfolio/di/portfolio_dependencies.dart';
 
@@ -23,6 +23,6 @@ Future<void> main() async {
   );
   configureCoreDependencies();
   configurePortfolioDependencies();
-  await FirebaseBootstrapper.initialise();
+  await SupabaseBootstrapper.initialise();
   runApp(const PersonalPortfolioApp());
 }

@@ -1,12 +1,12 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:go_router/go_router.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/di/injector.dart';
 import '../../../core/router/portfolio_router.dart';
-import '../data/datasources/firestore_profile_data_source.dart';
-import '../data/datasources/firestore_project_data_source.dart';
 import '../data/datasources/profile_remote_data_source.dart';
 import '../data/datasources/project_remote_data_source.dart';
+import '../data/datasources/supabase_profile_data_source.dart';
+import '../data/datasources/supabase_project_data_source.dart';
 import '../data/repositories/profile_repository_impl.dart';
 import '../data/repositories/project_repository_impl.dart';
 import '../domain/repositories/profile_repository.dart';
@@ -17,10 +17,10 @@ import '../domain/repositories/project_repository.dart';
 void initPortfolioDataInjection() {
   getIt
     ..registerLazySingleton<ProfileRemoteDataSource>(
-      () => FirestoreProfileDataSource(getIt<FirebaseFirestore>()),
+      () => SupabaseProfileDataSource(getIt<SupabaseClient>()),
     )
     ..registerLazySingleton<ProjectRemoteDataSource>(
-      () => FirestoreProjectDataSource(getIt<FirebaseFirestore>()),
+      () => SupabaseProjectDataSource(getIt<SupabaseClient>()),
     )
     ..registerLazySingleton<ProfileRepository>(
       () => ProfileRepositoryImpl(getIt<ProfileRemoteDataSource>()),
