@@ -1,6 +1,8 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../core/mixin/cubit_lifecycle_mixin.dart';
+
 import '../../../../../../core/constants/app_constants.dart';
 import '../../../../../../core/errors/app_failure.dart';
 import '../../../media/domain/repositories/media_storage_repository.dart';
@@ -9,7 +11,8 @@ import '../../../../portfolio/domain/entities/project_category.dart';
 import '../../../../portfolio/domain/repositories/project_repository.dart';
 import 'project_form_state.dart';
 
-final class ProjectFormCubit extends Cubit<ProjectFormState> {
+final class ProjectFormCubit extends Cubit<ProjectFormState>
+    with CubitLifecycleMixin<ProjectFormState> {
   ProjectFormCubit(this._projectRepository, this._mediaStorage)
     : super(const ProjectFormState());
 
@@ -22,7 +25,7 @@ final class ProjectFormCubit extends Cubit<ProjectFormState> {
     try {
       if (projectId == null || projectId.isEmpty) {
         final int nextOrder = await _nextOrder();
-        emit(
+        safeEmit(
           ProjectFormState(
             status: ProjectFormStatus.ready,
             project: _emptyDraft(order: nextOrder),
@@ -33,7 +36,7 @@ final class ProjectFormCubit extends Cubit<ProjectFormState> {
       final projects = await _projectRepository.getProjects();
       final existing = projects.where((p) => p.id == projectId).firstOrNull;
       if (existing == null) {
-        emit(
+        safeEmit(
           const ProjectFormState(
             status: ProjectFormStatus.failure,
             errorMessage: 'Project not found. It may have been deleted.',
@@ -41,14 +44,11 @@ final class ProjectFormCubit extends Cubit<ProjectFormState> {
         );
         return;
       }
-      emit(
-        ProjectFormState(
-          status: ProjectFormStatus.ready,
-          project: existing,
-        ),
+      safeEmit(
+        ProjectFormState(status: ProjectFormStatus.ready, project: existing),
       );
     } on AppFailure catch (failure) {
-      emit(
+      safeEmit(
         ProjectFormState(
           status: ProjectFormStatus.failure,
           errorMessage: failure.message,
@@ -73,11 +73,13 @@ final class ProjectFormCubit extends Cubit<ProjectFormState> {
   void setLongDescription(String value) =>
       _update((d) => d.copyWith(longDescription: value));
 
-  void setLiveUrl(String value) =>
-      _update((d) => d.copyWith(liveUrl: value.trim().isEmpty ? null : value.trim()));
+  void setLiveUrl(String value) => _update(
+    (d) => d.copyWith(liveUrl: value.trim().isEmpty ? null : value.trim()),
+  );
 
-  void setGithubUrl(String value) =>
-      _update((d) => d.copyWith(githubUrl: value.trim().isEmpty ? null : value.trim()));
+  void setGithubUrl(String value) => _update(
+    (d) => d.copyWith(githubUrl: value.trim().isEmpty ? null : value.trim()),
+  );
 
   void setCategory(ProjectCategory category) =>
       _update((d) => d.copyWith(category: category));
@@ -104,16 +106,15 @@ final class ProjectFormCubit extends Cubit<ProjectFormState> {
     final files = await FilePicker.pickFiles(type: FileType.image);
     if (files.isEmpty) return;
 
-    emit(state.copyWith(isUploadingImages: true, clearError: true));
+    safeEmit(state.copyWith(isUploadingImages: true, clearError: true));
     try {
       final List<String> uploadedUrls = [];
       for (final (index, file) in files.indexed) {
         final bytes = await file.readAsBytes();
         if (bytes.isEmpty) continue;
-        final String extension =
-            file.name.contains('.')
-                ? file.name.split('.').last.toLowerCase()
-                : 'png';
+        final String extension = file.name.contains('.')
+            ? file.name.split('.').last.toLowerCase()
+            : 'png';
         final url = await _mediaStorage.uploadBytes(
           storagePath:
               '${StoragePaths.projectImages}/${DateTime.now().millisecondsSinceEpoch}-$index.$extension',
@@ -126,9 +127,9 @@ final class ProjectFormCubit extends Cubit<ProjectFormState> {
       }
       _update((d) => d.copyWith(imageUrls: [...d.imageUrls, ...uploadedUrls]));
     } on AppFailure catch (failure) {
-      emit(state.copyWith(errorMessage: failure.message));
+      safeEmit(state.copyWith(errorMessage: failure.message));
     } finally {
-      emit(state.copyWith(isUploadingImages: false));
+      safeEmit(state.copyWith(isUploadingImages: false));
     }
   }
 
@@ -158,10 +159,10 @@ final class ProjectFormCubit extends Cubit<ProjectFormState> {
       } else {
         await _projectRepository.updateProject(stamped);
       }
-      emit(state.copyWith(status: ProjectFormStatus.saved));
+      safeEmit(state.copyWith(status: ProjectFormStatus.saved));
       return true;
     } on AppFailure catch (failure) {
-      emit(
+      safeEmit(
         state.copyWith(
           status: ProjectFormStatus.ready,
           errorMessage: failure.message,

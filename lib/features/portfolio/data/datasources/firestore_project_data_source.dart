@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../../../../core/constants/app_constants.dart';
+import '../../../../core/flavor/flavor_settings.dart';
 import 'project_remote_data_source.dart';
 
 class FirestoreProjectDataSource implements ProjectRemoteDataSource {
@@ -9,7 +9,7 @@ class FirestoreProjectDataSource implements ProjectRemoteDataSource {
   final FirebaseFirestore _firestore;
 
   CollectionReference<Map<String, dynamic>> get _collection =>
-      _firestore.collection(FirestoreCollections.projects);
+      _firestore.collection(FlavorSettings.projectsCollection);
 
   Query<Map<String, dynamic>> get _orderedQuery =>
       _collection.orderBy('order', descending: false);
@@ -17,17 +17,14 @@ class FirestoreProjectDataSource implements ProjectRemoteDataSource {
   @override
   Future<List<ProjectDoc>> fetchProjectMaps() async {
     final snapshot = await _orderedQuery.get();
-    return snapshot.docs
-        .map((doc) => (id: doc.id, map: doc.data()))
-        .toList();
+    return snapshot.docs.map((doc) => (id: doc.id, map: doc.data())).toList();
   }
 
   @override
   Stream<List<ProjectDoc>> watchProjectMaps() {
     return _orderedQuery.snapshots().map(
-      (snapshot) => snapshot.docs
-          .map((doc) => (id: doc.id, map: doc.data()))
-          .toList(),
+      (snapshot) =>
+          snapshot.docs.map((doc) => (id: doc.id, map: doc.data())).toList(),
     );
   }
 

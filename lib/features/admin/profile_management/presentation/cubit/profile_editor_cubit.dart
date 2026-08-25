@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/constants/app_constants.dart';
 import '../../../../../core/errors/app_failure.dart';
+import '../../../../../core/mixin/cubit_lifecycle_mixin.dart';
 import '../../../media/domain/repositories/media_storage_repository.dart';
 import '../../../../portfolio/domain/entities/profile.dart';
 import '../../../../portfolio/domain/entities/skill.dart';
@@ -14,7 +15,8 @@ import 'profile_editor_state.dart';
 
 enum SocialField { github, linkedin, twitter, email, whatsapp }
 
-final class ProfileEditorCubit extends Cubit<ProfileEditorState> {
+final class ProfileEditorCubit extends Cubit<ProfileEditorState>
+    with CubitLifecycleMixin<ProfileEditorState> {
   ProfileEditorCubit(this._profileRepository, this._mediaStorageRepository)
     : super(const ProfileEditorState());
 
@@ -24,11 +26,11 @@ final class ProfileEditorCubit extends Cubit<ProfileEditorState> {
   Profile? _savedSnapshot;
 
   Future<void> load() async {
-    emit(state.copyWith(status: ProfileEditorStatus.loading));
+    safeEmit(state.copyWith(status: ProfileEditorStatus.loading));
     try {
       final profile = await _profileRepository.getProfile();
       _savedSnapshot = profile;
-      emit(
+      safeEmit(
         state.copyWith(
           status: ProfileEditorStatus.ready,
           profile: profile,
@@ -36,7 +38,7 @@ final class ProfileEditorCubit extends Cubit<ProfileEditorState> {
         ),
       );
     } on AppFailure catch (failure) {
-      emit(
+      safeEmit(
         state.copyWith(
           status: ProfileEditorStatus.failure,
           errorMessage: failure.message,
@@ -63,9 +65,7 @@ final class ProfileEditorCubit extends Cubit<ProfileEditorState> {
 
   void setYearsOfExperience(String value) {
     final int years = int.tryParse(value) ?? state.profile.yearsOfExperience;
-    _emitProfile(
-      state.profile.copyWith(yearsOfExperience: years.clamp(0, 80)),
-    );
+    _emitProfile(state.profile.copyWith(yearsOfExperience: years.clamp(0, 80)));
   }
 
   void setAvailableForWork({required bool available}) =>
@@ -86,7 +86,9 @@ final class ProfileEditorCubit extends Cubit<ProfileEditorState> {
   void setSkillLevel(int index, double level) {
     final skills = [...state.profile.skills];
     if (index < 0 || index >= skills.length) return;
-    skills[index] = skills[index].copyWithSkill(level: level.round().clamp(0, 100));
+    skills[index] = skills[index].copyWithSkill(
+      level: level.round().clamp(0, 100),
+    );
     _emitProfile(state.profile.copyWith(skills: skills));
   }
 
@@ -130,7 +132,7 @@ final class ProfileEditorCubit extends Cubit<ProfileEditorState> {
   Future<void> pickAndUploadPhoto() async {
     final Uint8List? bytes = await _pickBytes(FileType.image);
     if (bytes == null || bytes.isEmpty) return;
-    emit(state.copyWith(isUploadingImage: true));
+    safeEmit(state.copyWith(isUploadingImage: true));
     try {
       final url = await _mediaStorageRepository.uploadBytes(
         storagePath:
@@ -140,9 +142,9 @@ final class ProfileEditorCubit extends Cubit<ProfileEditorState> {
       );
       _emitProfile(state.profile.copyWith(profileImageUrl: url));
     } on AppFailure catch (failure) {
-      emit(state.copyWith(errorMessage: failure.message));
+      safeEmit(state.copyWith(errorMessage: failure.message));
     } finally {
-      emit(state.copyWith(isUploadingImage: false));
+      safeEmit(state.copyWith(isUploadingImage: false));
     }
   }
 
@@ -157,7 +159,7 @@ final class ProfileEditorCubit extends Cubit<ProfileEditorState> {
     if (file == null) return;
     final Uint8List bytes = await file.readAsBytes();
     if (bytes.isEmpty) return;
-    emit(state.copyWith(isUploadingResume: true));
+    safeEmit(state.copyWith(isUploadingResume: true));
     try {
       final url = await _mediaStorageRepository.uploadBytes(
         storagePath:
@@ -167,21 +169,21 @@ final class ProfileEditorCubit extends Cubit<ProfileEditorState> {
       );
       _emitProfile(state.profile.copyWith(resumeUrl: url));
     } on AppFailure catch (failure) {
-      emit(state.copyWith(errorMessage: failure.message));
+      safeEmit(state.copyWith(errorMessage: failure.message));
     } finally {
-      emit(state.copyWith(isUploadingResume: false));
+      safeEmit(state.copyWith(isUploadingResume: false));
     }
   }
 
   Future<void> save() async {
     if (!state.isDirty || state.isBusy) return;
-    emit(state.copyWith(isSaving: true, clearError: true));
+    safeEmit(state.copyWith(isSaving: true, clearError: true));
     try {
       await _profileRepository.saveProfile(state.profile);
       _savedSnapshot = state.profile;
-      emit(state.copyWith(isSaving: false, isDirty: false));
+      safeEmit(state.copyWith(isSaving: false, isDirty: false));
     } on AppFailure catch (failure) {
-      emit(state.copyWith(isSaving: false, errorMessage: failure.message));
+      safeEmit(state.copyWith(isSaving: false, errorMessage: failure.message));
     }
   }
 

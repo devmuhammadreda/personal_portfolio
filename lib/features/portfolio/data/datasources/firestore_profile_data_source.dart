@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../../../core/constants/app_constants.dart';
+import '../../../../core/flavor/flavor_settings.dart';
 import 'profile_remote_data_source.dart';
 
 class FirestoreProfileDataSource implements ProfileRemoteDataSource {
@@ -9,7 +10,7 @@ class FirestoreProfileDataSource implements ProfileRemoteDataSource {
   final FirebaseFirestore _firestore;
 
   DocumentReference<Map<String, dynamic>> get _doc => _firestore
-      .collection(FirestoreCollections.profile)
+      .collection(FlavorSettings.profileCollection)
       .doc(FirestoreDocs.mainProfile);
 
   @override

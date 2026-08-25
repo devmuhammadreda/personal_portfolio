@@ -1,11 +1,14 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../core/mixin/cubit_lifecycle_mixin.dart';
+
 import '../../../../../core/errors/app_failure.dart';
 import '../../../../portfolio/domain/entities/project.dart';
 import '../../../../portfolio/domain/repositories/project_repository.dart';
 import 'projects_admin_state.dart';
 
-final class ProjectsAdminCubit extends Cubit<ProjectsAdminState> {
+final class ProjectsAdminCubit extends Cubit<ProjectsAdminState>
+    with CubitLifecycleMixin<ProjectsAdminState> {
   ProjectsAdminCubit(this._projectRepository)
     : super(const ProjectsAdminState());
 
@@ -15,11 +18,11 @@ final class ProjectsAdminCubit extends Cubit<ProjectsAdminState> {
     emit(state.copyWith(status: ProjectsAdminStatus.loading, clearError: true));
     try {
       final projects = await _projectRepository.getProjects();
-      emit(
+      safeEmit(
         state.copyWith(status: ProjectsAdminStatus.ready, projects: projects),
       );
     } on AppFailure catch (failure) {
-      emit(
+      safeEmit(
         state.copyWith(
           status: ProjectsAdminStatus.failure,
           errorMessage: failure.message,
@@ -34,17 +37,14 @@ final class ProjectsAdminCubit extends Cubit<ProjectsAdminState> {
       await _projectRepository.updateProject(
         project.copyWith(featured: !project.featured),
       );
-      final projects =
-          state.projects
-              .map(
-                (p) => p.id == project.id
-                    ? p.copyWith(featured: !p.featured)
-                    : p,
-              )
-              .toList();
-      emit(state.copyWith(projects: projects, clearInfo: true));
+      final projects = state.projects
+          .map(
+            (p) => p.id == project.id ? p.copyWith(featured: !p.featured) : p,
+          )
+          .toList();
+      safeEmit(state.copyWith(projects: projects, clearInfo: true));
     } on AppFailure catch (failure) {
-      emit(state.copyWith(errorMessage: failure.message));
+      safeEmit(state.copyWith(errorMessage: failure.message));
     } finally {
       _markBusy(project.id, false);
     }
@@ -54,13 +54,13 @@ final class ProjectsAdminCubit extends Cubit<ProjectsAdminState> {
     _markBusy(projectId, true);
     try {
       await _projectRepository.deleteProject(projectId);
-      emit(
+      safeEmit(
         state.copyWith(
           projects: state.projects.where((p) => p.id != projectId).toList(),
         ),
       );
     } on AppFailure catch (failure) {
-      emit(state.copyWith(errorMessage: failure.message));
+      safeEmit(state.copyWith(errorMessage: failure.message));
     } finally {
       _markBusy(projectId, false);
     }
@@ -75,15 +75,16 @@ final class ProjectsAdminCubit extends Cubit<ProjectsAdminState> {
     projects.insert(newIndex, moved);
 
     final reordered = [
-      for (var i = 0; i < projects.length; i++)
-        projects[i].copyWith(order: i),
+      for (var i = 0; i < projects.length; i++) projects[i].copyWith(order: i),
     ];
-    emit(state.copyWith(projects: reordered));
+    safeEmit(state.copyWith(projects: reordered));
 
     try {
-      await _projectRepository.reorderProjects(reordered.map((p) => p.id).toList());
+      await _projectRepository.reorderProjects(
+        reordered.map((p) => p.id).toList(),
+      );
     } on AppFailure catch (failure) {
-      emit(state.copyWith(errorMessage: failure.message));
+      safeEmit(state.copyWith(errorMessage: failure.message));
       await load();
     }
   }
