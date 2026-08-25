@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../portfolio/presentation/pages/portfolio_page.dart';
 import '../auth/presentation/pages/login_page.dart';
+import '../message_inbox/presentation/pages/messages_admin_page.dart';
 import '../presentation/pages/dashboard_page.dart';
 import '../presentation/widgets/admin_footer_badge.dart';
 import '../presentation/widgets/admin_shell.dart';
@@ -64,6 +65,11 @@ GoRouter createAdminRouter(AuthGate authGate) {
             path: AppRoutes.adminProjects,
             pageBuilder: (context, state) =>
                 _noTransition(state, const ProjectsAdminPage()),
+          ),
+          GoRoute(
+            path: AppRoutes.adminMessages,
+            pageBuilder: (context, state) =>
+                _noTransition(state, const MessagesAdminPage()),
           ),
           GoRoute(
             path: AppRoutes.adminNewProject,

@@ -21,15 +21,18 @@ final class AdminShell extends StatelessWidget {
     (0, Icons.dashboard_outlined, AppRoutes.adminDashboard),
     (1, Icons.person_outline_rounded, AppRoutes.adminProfile),
     (2, Icons.folder_open_outlined, AppRoutes.adminProjects),
+    (3, Icons.mail_outline_rounded, AppRoutes.adminMessages),
   ];
 
   static String _label(AppLocalizations loc, int index) => switch (index) {
     0 => loc.shellDashboard,
     1 => loc.shellProfile,
-    _ => loc.shellProjects,
+    2 => loc.shellProjects,
+    _ => loc.shellMessages,
   };
 
   int _selectedIndexFor(String location) {
+    if (location.startsWith(AppRoutes.adminMessages)) return 3;
     if (location.startsWith(AppRoutes.adminProjects)) return 2;
     if (location.startsWith(AppRoutes.adminProfile)) return 1;
     return 0;

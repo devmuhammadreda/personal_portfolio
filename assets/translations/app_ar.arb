@@ -42,13 +42,15 @@
   "contactSubtitle": "لديك مشروع في ذهنك أو تريد فقط إلقاء التحية؟ بريدي مفتوح دائمًا.",
   "contactFormName": "اسمك",
   "contactFormEmail": "بريدك الإلكتروني",
+  "contactFormPhone": "رقم الهاتف (اختياري)",
+  "contactFormPhoneInvalid": "أدخل رقم هاتف صحيحًا.",
   "contactFormMessage": "الرسالة",
   "contactFormNameRequired": "من فضلك أدخل اسمك.",
   "contactFormEmailInvalid": "من فضلك أدخل بريدًا إلكترونيًا صحيحًا.",
   "contactFormMessageShort": "أخبرني المزيد (١٠ أحرف على الأقل).",
   "contactSendMessage": "أرسل الرسالة",
-  "contactSending": "جارٍ الفتح…",
-  "contactMailSnackbar": "جارٍ فتح تطبيق البريد…",
+  "contactSending": "جارٍ الإرسال…",
+  "contactSentSnackbar": "تم إرسال رسالتك — سأرد عليك قريبًا!",
   "adminSignInTitle": "تسجيل دخول المشرف",
   "adminSignInSubtitle": "منطقة مقيّدة — للمالك فقط.",
   "fieldEmail": "البريد الإلكتروني",
@@ -59,6 +61,7 @@
   "shellDashboard": "لوحة التحكم",
   "shellProfile": "الملف الشخصي",
   "shellProjects": "المشاريع",
+  "shellMessages": "الرسائل",
   "shellConsoleTitle": "لوحة المشرف",
   "shellSignOut": "تسجيل الخروج",
   "dashboardOverview": "نظرة عامة",
@@ -145,5 +148,25 @@
   },
   "formTitleField": "العنوان *",
   "formTitleRequired": "العنوان مطلوب.",
-  "formCategoryField": "التصنيف"
+  "formCategoryField": "التصنيف",
+  "messagesAdminCount": "الرسائل ({count})",
+  "@messagesAdminCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "messagesAdminUnreadCount": "{count} غير مقروءة",
+  "@messagesAdminUnreadCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "messagesAdminMarkAllRead": "تعليم الكل كمقروء",
+  "messagesAdminEmpty": "لا توجد رسائل بعد — ستظهر هنا رسائل نموذج التواصل.",
+  "messagesAdminFailedToLoad": "فشل تحميل الرسائل.",
+  "messagesAdminReply": "رد"
 }

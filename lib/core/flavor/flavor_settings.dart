@@ -30,4 +30,6 @@ abstract final class FlavorSettings {
   static String get profileTable => '${tablePrefix}profile';
 
   static String get projectsTable => '${tablePrefix}projects';
+
+  static String get contactMessagesTable => '${tablePrefix}contact_messages';
 }

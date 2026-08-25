@@ -12,4 +12,5 @@ abstract final class AppRoutes {
   static const String adminProfile = '/admin/profile';
   static const String adminProjects = '/admin/projects';
   static const String adminNewProject = '/admin/projects/new';
+  static const String adminMessages = '/admin/messages';
 }

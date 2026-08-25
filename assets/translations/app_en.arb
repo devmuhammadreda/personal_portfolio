@@ -59,13 +59,15 @@
   "contactSubtitle": "Have a project in mind or just want to say hi? My inbox is always open.",
   "contactFormName": "Your name",
   "contactFormEmail": "Your email",
+  "contactFormPhone": "Phone number (optional)",
+  "contactFormPhoneInvalid": "Enter a valid phone number.",
   "contactFormMessage": "Message",
   "contactFormNameRequired": "Please enter your name.",
   "contactFormEmailInvalid": "Please enter a valid email.",
   "contactFormMessageShort": "Tell me a bit more (min. 10 characters).",
   "contactSendMessage": "Send message",
-  "contactSending": "Opening…",
-  "contactMailSnackbar": "Opening your mail app…",
+  "contactSending": "Sending…",
+  "contactSentSnackbar": "Message sent — I'll get back to you soon!",
   "adminSignInTitle": "Admin sign-in",
   "adminSignInSubtitle": "Restricted area — owner access only.",
   "fieldEmail": "Email",
@@ -76,6 +78,7 @@
   "shellDashboard": "Dashboard",
   "shellProfile": "Profile",
   "shellProjects": "Projects",
+  "shellMessages": "Messages",
   "shellConsoleTitle": "Admin console",
   "shellSignOut": "Sign out",
   "dashboardOverview": "Overview",
@@ -190,5 +193,25 @@
   },
   "formTitleField": "Title *",
   "formTitleRequired": "Title is required.",
-  "formCategoryField": "Category"
+  "formCategoryField": "Category",
+  "messagesAdminCount": "Messages ({count})",
+  "@messagesAdminCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "messagesAdminUnreadCount": "{count} unread",
+  "@messagesAdminUnreadCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "messagesAdminMarkAllRead": "Mark all as read",
+  "messagesAdminEmpty": "No messages yet — new contact form submissions land here.",
+  "messagesAdminFailedToLoad": "Failed to load messages.",
+  "messagesAdminReply": "Reply"
 }
