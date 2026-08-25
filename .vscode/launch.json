@@ -2,13 +2,13 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "portfolio (dev)",
+      "name": "Portfolio",
       "program": "lib/main_portfolio.dart",
       "request": "launch",
       "type": "dart"
     },
     {
-      "name": "admin (dev)",
+      "name": "Admin",
       "program": "lib/main_admin.dart",
       "request": "launch",
       "type": "dart"
