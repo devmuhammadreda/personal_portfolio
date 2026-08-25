@@ -14,7 +14,10 @@ import '../widgets/site_footer.dart';
 import '../widgets/scroll_reveal.dart';
 
 final class PortfolioPage extends StatefulWidget {
-  const PortfolioPage({super.key});
+  const PortfolioPage({super.key, this.footerTrailing});
+
+  /// Optional extra footer item (e.g. the admin-flavor shortcut chip).
+  final Widget? footerTrailing;
 
   @override
   State<PortfolioPage> createState() => _PortfolioPageState();
@@ -104,7 +107,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                           ),
                           child: const ContactSection(),
                         ),
-                        const SiteFooter(),
+                        SiteFooter(trailing: widget.footerTrailing),
                       ],
                     ),
                   ),

@@ -1,24 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../constants/app_constants.dart';
-import '../../features/admin/auth/presentation/pages/login_page.dart';
-import '../../features/admin/presentation/pages/dashboard_page.dart';
-import '../../features/admin/presentation/widgets/admin_shell.dart';
-import '../../features/admin/profile_management/presentation/pages/profile_editor_page.dart';
-import '../../features/admin/project_management/presentation/pages/project_form_page.dart';
-import '../../features/admin/project_management/presentation/pages/projects_admin_page.dart';
-import '../../features/portfolio/presentation/pages/portfolio_page.dart';
-import 'auth_gate.dart';
-import 'authentication_status.dart';
+import '../../../core/constants/app_constants.dart';
+import '../../portfolio/presentation/pages/portfolio_page.dart';
+import '../auth/presentation/pages/login_page.dart';
+import '../presentation/pages/dashboard_page.dart';
+import '../presentation/widgets/admin_footer_badge.dart';
+import '../presentation/widgets/admin_shell.dart';
+import '../profile_management/presentation/pages/profile_editor_page.dart';
+import '../project_management/presentation/pages/project_form_page.dart';
+import '../project_management/presentation/pages/projects_admin_page.dart';
+import '../../../core/router/auth_gate.dart';
+import '../../../core/router/authentication_status.dart';
 
-GoRouter createAppRouter(AuthGate authGate) {
+/// Router for the **admin** flavor.
+///
+/// Boots into the dashboard (redirecting to login while unauthenticated)
+/// and keeps the public site reachable for live-content preview.
+GoRouter createAdminRouter(AuthGate authGate) {
   return GoRouter(
-    initialLocation: AppRoutes.home,
+    initialLocation: AppRoutes.adminDashboard,
     refreshListenable: authGate,
     redirect: (BuildContext context, GoRouterState state) {
       final String location = state.matchedLocation;
-      final bool isAdminRoute = location.startsWith('/admin');
+      final bool isAdminRoute = location.startsWith(AppRoutes.adminRoot);
       final bool isLoginRoute = location == AppRoutes.adminLogin;
       final bool authenticated =
           authGate.status == AuthenticationStatus.authenticated;
@@ -32,8 +37,10 @@ GoRouter createAppRouter(AuthGate authGate) {
     routes: [
       GoRoute(
         path: AppRoutes.home,
-        pageBuilder: (context, state) =>
-            _fadePage(state, const PortfolioPage()),
+        pageBuilder: (context, state) => _fadePage(
+          state,
+          const PortfolioPage(footerTrailing: AdminFooterBadge()),
+        ),
       ),
       GoRoute(
         path: AppRoutes.adminLogin,
@@ -64,7 +71,7 @@ GoRouter createAppRouter(AuthGate authGate) {
                 _noTransition(state, const ProjectFormPage()),
           ),
           GoRoute(
-            path: '/admin/projects/:id',
+            path: '${AppRoutes.adminProjects}/:id',
             pageBuilder: (context, state) => _noTransition(
               state,
               ProjectFormPage(projectId: state.pathParameters['id']),
@@ -86,7 +93,7 @@ CustomTransitionPage<void> _fadePage(
     child: child,
     transitionDuration: Duration(milliseconds: keepShellAlive ? 220 : 320),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      final curved = CurvedAnimation(
+      final CurvedAnimation curved = CurvedAnimation(
         parent: animation,
         curve: Curves.easeOutCubic,
       );

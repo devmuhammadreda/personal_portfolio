@@ -100,21 +100,20 @@ final class AdminShell extends StatelessWidget {
           Expanded(child: child),
         ],
       ),
-      bottomNavigationBar:
-          isCompact
-              ? NavigationBar(
-                  selectedIndex: selectedIndex,
-                  onDestinationSelected: (index) => _go(context, index),
-                  destinations: [
-                    for (final (label, icon, _) in _destinations)
-                      NavigationDestination(
-                        icon: Icon(icon),
-                        selectedIcon: Icon(icon),
-                        label: label,
-                      ),
-                  ],
-                )
-              : null,
+      bottomNavigationBar: isCompact
+          ? NavigationBar(
+              selectedIndex: selectedIndex,
+              onDestinationSelected: (index) => _go(context, index),
+              destinations: [
+                for (final (label, icon, _) in _destinations)
+                  NavigationDestination(
+                    icon: Icon(icon),
+                    selectedIcon: Icon(icon),
+                    label: label,
+                  ),
+              ],
+            )
+          : null,
     );
   }
 }

@@ -38,8 +38,8 @@ final class AboutSection extends StatelessWidget {
                   child: ScrollReveal.child(
                     child: SelectableText(
                       profile.aboutMe.isEmpty
-                          ? 'Add your story in the admin panel — this bio lives '
-                              'in Firestore and updates without redeploying.'
+                          ? 'This bio lives in Firestore and updates without '
+                                'redeploying — add your story to see it here.'
                           : profile.aboutMe,
                       style: theme.textTheme.bodyLarge,
                     ),
@@ -61,10 +61,7 @@ final class AboutSection extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 44),
-            Text(
-              'Tech I work with',
-              style: theme.textTheme.titleLarge,
-            ),
+            Text('Tech I work with', style: theme.textTheme.titleLarge),
             const SizedBox(height: 18),
             _SkillsGrid(skills: profile.skills),
           ],
@@ -155,20 +152,17 @@ class _StatTile extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Flexible(
-          child: Text(label, style: theme.textTheme.bodyLarge),
-        ),
+        Flexible(child: Text(label, style: theme.textTheme.bodyLarge)),
         const SizedBox(width: 12),
         CountUpText(
           value: value,
           revealed: revealed,
           style: theme.textTheme.displayMedium?.copyWith(
             fontSize: 34,
-            foreground:
-                Paint()
-                  ..shader = AppPalette.accentGradient.createShader(
-                    const Rect.fromLTWH(0, 0, 120, 40),
-                  ),
+            foreground: Paint()
+              ..shader = AppPalette.accentGradient.createShader(
+                const Rect.fromLTWH(0, 0, 120, 40),
+              ),
           ),
         ).animate(delay: delayMs.ms).fadeIn(duration: 400.ms),
         if (suffix.isNotEmpty)
@@ -254,7 +248,10 @@ class _SkillsGrid extends StatelessWidget {
                       duration: const Duration(milliseconds: 900),
                       curve: Curves.easeOutCubic,
                       builder: (context, value, _) {
-                        return LinearProgressIndicator(value: value, minHeight: 6);
+                        return LinearProgressIndicator(
+                          value: value,
+                          minHeight: 6,
+                        );
                       },
                     ),
                   ),

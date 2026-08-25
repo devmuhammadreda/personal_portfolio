@@ -16,8 +16,9 @@ abstract final class AppTheme {
       useMaterial3: true,
       brightness: brightness,
       colorScheme: scheme,
-      scaffoldBackgroundColor:
-          isDark ? AppPalette.darkBackground : AppPalette.lightBackground,
+      scaffoldBackgroundColor: isDark
+          ? AppPalette.darkBackground
+          : AppPalette.lightBackground,
       splashFactory: InkSparkle.splashFactory,
       textTheme: AppTypography.textTheme(brightness),
       appBarTheme: AppBarTheme(
@@ -26,9 +27,8 @@ abstract final class AppTheme {
         elevation: 0,
         scrolledUnderElevation: 0,
         centerTitle: false,
-        titleTextStyle: AppTypography.textTheme(
-          brightness,
-        ).titleLarge!.copyWith(fontWeight: FontWeight.w700),
+        titleTextStyle: AppTypography.textTheme(brightness).titleLarge!
+            .copyWith(fontWeight: FontWeight.w700),
       ),
       cardTheme: CardThemeData(
         color: scheme.surface,
@@ -116,9 +116,13 @@ abstract final class AppTheme {
       ),
       snackBarTheme: SnackBarThemeData(
         behavior: SnackBarBehavior.floating,
-        backgroundColor: isDark ? AppPalette.darkSurface : AppPalette.darkTextPrimary,
+        backgroundColor: isDark
+            ? AppPalette.darkSurface
+            : AppPalette.darkTextPrimary,
         contentTextStyle: TextStyle(
-          color: isDark ? AppPalette.darkTextPrimary : AppPalette.darkBackground,
+          color: isDark
+              ? AppPalette.darkTextPrimary
+              : AppPalette.darkBackground,
         ),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),

@@ -1,12 +1,6 @@
-import 'package:flutter/material.dart';
+import 'main_portfolio.dart' as portfolio;
 
-import 'app.dart';
-import 'core/di/injector.dart';
-import 'core/firebase/firebase_bootstrapper.dart';
-
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  configureDependencies();
-  await FirebaseBootstrapper.initialise();
-  runApp(const PersonalPortfolioApp());
-}
+/// Default entry point — runs the **portfolio** flavor.
+///
+/// The admin console lives in its own flavor: `lib/main_admin.dart`.
+Future<void> main() => portfolio.main();

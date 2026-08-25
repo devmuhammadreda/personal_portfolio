@@ -41,12 +41,18 @@ final class ProfileLivePreview extends StatelessWidget {
                   gradient: AppPalette.accentGradient,
                   border: Border.all(color: scheme.outline),
                   image: photoUrl != null && photoUrl.isNotEmpty
-                      ? DecorationImage(image: NetworkImage(photoUrl), fit: BoxFit.cover)
+                      ? DecorationImage(
+                          image: NetworkImage(photoUrl),
+                          fit: BoxFit.cover,
+                        )
                       : null,
                 ),
                 child: photoUrl == null || photoUrl.isEmpty
-                    ? Icon(Icons.person_outline_rounded,
-                        size: 40, color: Colors.white.withValues(alpha: 0.9))
+                    ? Icon(
+                        Icons.person_outline_rounded,
+                        size: 40,
+                        color: Colors.white.withValues(alpha: 0.9),
+                      )
                     : null,
               ),
             ),
@@ -54,15 +60,22 @@ final class ProfileLivePreview extends StatelessWidget {
               const SizedBox(height: 16),
               Center(
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 6,
+                  ),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(999),
                     color: Colors.green.withValues(alpha: 0.12),
-                    border: Border.all(color: Colors.green.withValues(alpha: 0.45)),
+                    border: Border.all(
+                      color: Colors.green.withValues(alpha: 0.45),
+                    ),
                   ),
                   child: Text(
                     'Available for work',
-                    style: theme.textTheme.labelMedium?.copyWith(color: Colors.green.shade300),
+                    style: theme.textTheme.labelMedium?.copyWith(
+                      color: Colors.green.shade300,
+                    ),
                   ),
                 ),
               ),
@@ -70,7 +83,8 @@ final class ProfileLivePreview extends StatelessWidget {
             const SizedBox(height: 16),
             Center(
               child: ShaderMask(
-                shaderCallback: (bounds) => AppPalette.accentGradient.createShader(bounds),
+                shaderCallback: (bounds) =>
+                    AppPalette.accentGradient.createShader(bounds),
                 blendMode: BlendMode.srcIn,
                 child: Text(
                   profile.name.isEmpty ? 'Your name' : profile.name,
@@ -83,7 +97,9 @@ final class ProfileLivePreview extends StatelessWidget {
             Center(
               child: Text(
                 profile.title.isEmpty ? 'Your title' : profile.title,
-                style: theme.textTheme.bodyLarge?.copyWith(color: scheme.secondary),
+                style: theme.textTheme.bodyLarge?.copyWith(
+                  color: scheme.secondary,
+                ),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -101,10 +117,15 @@ final class ProfileLivePreview extends StatelessWidget {
               runSpacing: 8,
               children: [
                 for (final skill in profile.skills.take(6))
-                  Chip(label: Text(skill.name), visualDensity: VisualDensity.compact),
+                  Chip(
+                    label: Text(skill.name),
+                    visualDensity: VisualDensity.compact,
+                  ),
                 if (profile.skills.isEmpty)
-                  Text('No skills yet — add some below.',
-                      style: theme.textTheme.bodyMedium),
+                  Text(
+                    'No skills yet — add some below.',
+                    style: theme.textTheme.bodyMedium,
+                  ),
               ],
             ),
             if (profile.skills.isNotEmpty)

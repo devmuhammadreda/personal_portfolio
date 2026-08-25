@@ -33,7 +33,11 @@ final class Unauthenticated extends AuthState {
   @override
   List<Object?> get props => [submitting, errorMessage];
 
-  Unauthenticated copyWith({bool? submitting, String? errorMessage, bool clearError = false}) {
+  Unauthenticated copyWith({
+    bool? submitting,
+    String? errorMessage,
+    bool clearError = false,
+  }) {
     return Unauthenticated(
       submitting: submitting ?? this.submitting,
       errorMessage: clearError ? null : (errorMessage ?? this.errorMessage),

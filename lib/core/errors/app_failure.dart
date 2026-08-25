@@ -15,8 +15,9 @@ final class AuthFailure extends AppFailure {
     final String message = switch (code) {
       'invalid-email' => 'That email address looks malformed.',
       'user-disabled' => 'This account has been disabled.',
-      'user-not-found' || 'wrong-password' || 'invalid-credential' =>
-        'Invalid email or password.',
+      'user-not-found' ||
+      'wrong-password' ||
+      'invalid-credential' => 'Invalid email or password.',
       'too-many-requests' =>
         'Too many attempts. Please wait and try again later.',
       'network-request-failed' => 'Network error. Check your connection.',

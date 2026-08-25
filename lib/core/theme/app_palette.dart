@@ -33,14 +33,12 @@ abstract final class AppPalette {
     return ColorScheme(
       brightness: brightness,
       primary: isDark ? const Color(0xFF818CF8) : brandIndigo,
-      onPrimary:
-          isDark ? const Color(0xFF0A0E1A) : Colors.white,
+      onPrimary: isDark ? const Color(0xFF0A0E1A) : Colors.white,
       primaryContainer: isDark ? darkSurfaceVariant : const Color(0xFFE0E7FF),
       onPrimaryContainer: isDark ? darkTextPrimary : const Color(0xFF1E1B4B),
       secondary: brandCyan,
       onSecondary: const Color(0xFF04252B),
-      secondaryContainer:
-          isDark ? darkSurfaceVariant : const Color(0xFFCFFAFE),
+      secondaryContainer: isDark ? darkSurfaceVariant : const Color(0xFFCFFAFE),
       onSecondaryContainer: isDark ? darkTextPrimary : const Color(0xFF083344),
       error: const Color(0xFFF87171),
       onError: const Color(0xFF450A0A),
@@ -48,8 +46,9 @@ abstract final class AppPalette {
       onErrorContainer: const Color(0xFFFEE2E2),
       surface: isDark ? darkSurface : lightSurface,
       onSurface: isDark ? darkTextPrimary : lightTextPrimary,
-      surfaceContainerHighest:
-          isDark ? darkSurfaceVariant : lightSurfaceVariant,
+      surfaceContainerHighest: isDark
+          ? darkSurfaceVariant
+          : lightSurfaceVariant,
       onSurfaceVariant: isDark ? darkTextSecondary : lightTextSecondary,
       outline: isDark ? darkBorder : lightBorder,
       outlineVariant: isDark ? darkBorder : lightBorder,

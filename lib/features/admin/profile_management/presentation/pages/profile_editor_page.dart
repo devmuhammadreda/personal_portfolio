@@ -37,7 +37,10 @@ class _ProfileEditorView extends StatelessWidget {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
-              SnackBar(content: Text(error), backgroundColor: Theme.of(context).colorScheme.errorContainer),
+              SnackBar(
+                content: Text(error),
+                backgroundColor: Theme.of(context).colorScheme.errorContainer,
+              ),
             );
           context.read<ProfileEditorCubit>().dismissError();
         }
@@ -53,7 +56,10 @@ class _ProfileEditorView extends StatelessWidget {
                 children: [
                   Text(state.errorMessage ?? 'Failed to load profile.'),
                   const SizedBox(height: 12),
-                  FilledButton.tonal(onPressed: () => context.read<ProfileEditorCubit>().load(), child: const Text('Retry')),
+                  FilledButton.tonal(
+                    onPressed: () => context.read<ProfileEditorCubit>().load(),
+                    child: const Text('Retry'),
+                  ),
                 ],
               ),
             );
@@ -81,12 +87,23 @@ class _EditorScaffold extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(24, 18, 24, 0),
           child: Row(
             children: [
-              Expanded(child: Text('Edit profile', style: theme.textTheme.headlineMedium)),
+              Expanded(
+                child: Text(
+                  'Edit profile',
+                  style: theme.textTheme.headlineMedium,
+                ),
+              ),
               if (state.isDirty)
                 FilledButton.icon(
-                  onPressed: state.isBusy ? null : () => context.read<ProfileEditorCubit>().save(),
+                  onPressed: state.isBusy
+                      ? null
+                      : () => context.read<ProfileEditorCubit>().save(),
                   icon: state.isSaving
-                      ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2))
+                      ? const SizedBox(
+                          width: 16,
+                          height: 16,
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        )
                       : const Icon(Icons.save_rounded, size: 18),
                   label: Text(state.isSaving ? 'Saving…' : 'Save changes'),
                 ),
@@ -104,10 +121,7 @@ class _EditorScaffold extends StatelessWidget {
                   direction: isCompact ? Axis.vertical : Axis.horizontal,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(
-                      flex: 3,
-                      child: _FormColumn(state: state),
-                    ),
+                    Expanded(flex: 3, child: _FormColumn(state: state)),
                     if (!isCompact) const SizedBox(width: 28),
                     Expanded(
                       flex: 2,
@@ -167,7 +181,9 @@ class _SkillsCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                Expanded(child: Text('Skills', style: theme.textTheme.titleLarge)),
+                Expanded(
+                  child: Text('Skills', style: theme.textTheme.titleLarge),
+                ),
                 OutlinedButton.icon(
                   onPressed: cubit.addSkill,
                   icon: const Icon(Icons.add_rounded, size: 18),
@@ -192,7 +208,9 @@ class _SkillsCard extends StatelessWidget {
                     Expanded(
                       flex: 3,
                       child: TextFormField(
-                        initialValue: skills[i].name.isEmpty ? null : skills[i].name,
+                        initialValue: skills[i].name.isEmpty
+                            ? null
+                            : skills[i].name,
                         onChanged: (value) => cubit.renameSkill(i, value),
                         decoration: InputDecoration(
                           labelText: 'Skill ${i + 1}',
@@ -211,7 +229,10 @@ class _SkillsCard extends StatelessWidget {
                         onChanged: (value) => cubit.setSkillLevel(i, value),
                       ),
                     ),
-                    Text('${skills[i].level}%', style: theme.textTheme.labelMedium),
+                    Text(
+                      '${skills[i].level}%',
+                      style: theme.textTheme.labelMedium,
+                    ),
                     IconButton(
                       tooltip: 'Remove',
                       onPressed: () => cubit.removeSkill(i),
@@ -273,15 +294,16 @@ class _BasicsCard extends StatelessWidget {
               initialValue: '${state.profile.yearsOfExperience}',
               onChanged: cubit.setYearsOfExperience,
               keyboardType: TextInputType.number,
-              decoration: const InputDecoration(labelText: 'Years of experience'),
+              decoration: const InputDecoration(
+                labelText: 'Years of experience',
+              ),
             ),
             SwitchListTile(
               contentPadding: EdgeInsets.zero,
               title: const Text('Available for work'),
               subtitle: const Text('Shows the green badge in the hero section'),
               value: state.profile.availableForWork,
-              onChanged: (value) =>
-                  cubit.setAvailableForWork(available: value),
+              onChanged: (value) => cubit.setAvailableForWork(available: value),
             ),
             const SizedBox(height: 6),
             TextFormField(
@@ -331,14 +353,23 @@ class _MediaCard extends StatelessWidget {
                     shape: BoxShape.circle,
                     gradient: AppPalette.accentGradient,
                     image: photoUrl != null && photoUrl.isNotEmpty
-                        ? DecorationImage(image: NetworkImage(photoUrl), fit: BoxFit.cover)
+                        ? DecorationImage(
+                            image: NetworkImage(photoUrl),
+                            fit: BoxFit.cover,
+                          )
                         : null,
                   ),
                   child: state.isUploadingImage
-                      ? const Center(child: CircularProgressIndicator(strokeWidth: 2))
+                      ? const Center(
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        )
                       : (photoUrl == null || photoUrl.isEmpty)
-                          ? Icon(Icons.person_rounded, color: Colors.white.withValues(alpha: 0.9), size: 34)
-                          : null,
+                      ? Icon(
+                          Icons.person_rounded,
+                          color: Colors.white.withValues(alpha: 0.9),
+                          size: 34,
+                        )
+                      : null,
                 ),
                 const SizedBox(width: 18),
                 Expanded(
@@ -347,14 +378,19 @@ class _MediaCard extends StatelessWidget {
                     runSpacing: 8,
                     children: [
                       OutlinedButton.icon(
-                        onPressed: state.isBusy ? null : cubit.pickAndUploadPhoto,
+                        onPressed: state.isBusy
+                            ? null
+                            : cubit.pickAndUploadPhoto,
                         icon: const Icon(Icons.upload_rounded, size: 18),
                         label: const Text('Upload photo'),
                       ),
                       if (photoUrl != null && photoUrl.isNotEmpty)
                         TextButton.icon(
                           onPressed: state.isBusy ? null : cubit.clearPhoto,
-                          icon: const Icon(Icons.delete_outline_rounded, size: 18),
+                          icon: const Icon(
+                            Icons.delete_outline_rounded,
+                            size: 18,
+                          ),
                           label: const Text('Remove'),
                         ),
                     ],
@@ -378,9 +414,17 @@ class _MediaCard extends StatelessWidget {
                 OutlinedButton.icon(
                   onPressed: state.isBusy ? null : cubit.pickAndUploadResume,
                   icon: state.isUploadingResume
-                      ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2))
+                      ? const SizedBox(
+                          width: 16,
+                          height: 16,
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        )
                       : const Icon(Icons.picture_as_pdf_outlined, size: 18),
-                  label: Text(resumeUrl == null || resumeUrl.isEmpty ? 'Upload PDF' : 'Replace PDF'),
+                  label: Text(
+                    resumeUrl == null || resumeUrl.isEmpty
+                        ? 'Upload PDF'
+                        : 'Replace PDF',
+                  ),
                 ),
                 if (resumeUrl != null && resumeUrl.isNotEmpty) ...[
                   const SizedBox(width: 8),
@@ -420,28 +464,32 @@ class _SocialLinksCard extends StatelessWidget {
             TextFormField(
               key: const ValueKey('github'),
               initialValue: links.github,
-              onChanged: (value) => cubit.setSocialLink(SocialField.github, value),
+              onChanged: (value) =>
+                  cubit.setSocialLink(SocialField.github, value),
               decoration: const InputDecoration(labelText: 'GitHub URL'),
             ),
             const SizedBox(height: 14),
             TextFormField(
               key: const ValueKey('linkedin'),
               initialValue: links.linkedin,
-              onChanged: (value) => cubit.setSocialLink(SocialField.linkedin, value),
+              onChanged: (value) =>
+                  cubit.setSocialLink(SocialField.linkedin, value),
               decoration: const InputDecoration(labelText: 'LinkedIn URL'),
             ),
             const SizedBox(height: 14),
             TextFormField(
               key: const ValueKey('twitter'),
               initialValue: links.twitter,
-              onChanged: (value) => cubit.setSocialLink(SocialField.twitter, value),
+              onChanged: (value) =>
+                  cubit.setSocialLink(SocialField.twitter, value),
               decoration: const InputDecoration(labelText: 'Twitter / X URL'),
             ),
             const SizedBox(height: 14),
             TextFormField(
               key: const ValueKey('email'),
               initialValue: links.email,
-              onChanged: (value) => cubit.setSocialLink(SocialField.email, value),
+              onChanged: (value) =>
+                  cubit.setSocialLink(SocialField.email, value),
               keyboardType: TextInputType.emailAddress,
               decoration: const InputDecoration(
                 labelText: 'Contact email',
@@ -452,7 +500,8 @@ class _SocialLinksCard extends StatelessWidget {
             TextFormField(
               key: const ValueKey('whatsapp'),
               initialValue: links.whatsapp,
-              onChanged: (value) => cubit.setSocialLink(SocialField.whatsapp, value),
+              onChanged: (value) =>
+                  cubit.setSocialLink(SocialField.whatsapp, value),
               decoration: const InputDecoration(
                 labelText: 'WhatsApp link',
                 helperText: 'e.g. https://wa.me/1234567890',

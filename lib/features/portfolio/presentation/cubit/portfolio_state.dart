@@ -44,8 +44,9 @@ final class PortfolioState extends Equatable {
       status: status ?? this.status,
       profile: profile ?? this.profile,
       projects: projects ?? this.projects,
-      selectedCategory:
-          clearSelectedCategory ? null : (selectedCategory ?? this.selectedCategory),
+      selectedCategory: clearSelectedCategory
+          ? null
+          : (selectedCategory ?? this.selectedCategory),
       errorMessage: clearError ? null : (errorMessage ?? this.errorMessage),
     );
   }

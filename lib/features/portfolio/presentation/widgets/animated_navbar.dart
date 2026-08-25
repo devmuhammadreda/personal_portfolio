@@ -36,8 +36,9 @@ final class AnimatedNavbar extends StatelessWidget {
     return AnimatedBuilder(
       animation: scrollController,
       builder: (context, _) {
-        final double offset =
-            scrollController.hasClients ? scrollController.offset : 0;
+        final double offset = scrollController.hasClients
+            ? scrollController.offset
+            : 0;
         final double t = (offset / _blurStartOffset).clamp(0.0, 1.0);
         final double height =
             _expandedHeight - (_expandedHeight - _collapsedHeight) * t;
@@ -100,7 +101,10 @@ final class AnimatedNavbar extends StatelessWidget {
                         for (var i = 0; i < sections.length; i++)
                           Padding(
                             padding: const EdgeInsets.only(right: 6),
-                            child: _NavButton(label: sections[i].$1, onTap: sections[i].$2),
+                            child: _NavButton(
+                              label: sections[i].$1,
+                              onTap: sections[i].$2,
+                            ),
                           ),
                       ],
                     )
@@ -133,7 +137,10 @@ final class AnimatedNavbar extends StatelessWidget {
               for (final (label, onTap) in sections)
                 ListTile(
                   title: Text(label),
-                  trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 14),
+                  trailing: const Icon(
+                    Icons.arrow_forward_ios_rounded,
+                    size: 14,
+                  ),
                   onTap: () {
                     Navigator.of(sheetContext).pop();
                     onTap();
@@ -179,7 +186,10 @@ class _NavButtonState extends State<_NavButton> {
                 ? scheme.primary.withValues(alpha: 0.1)
                 : Colors.transparent,
           ),
-          child: Text(widget.label, style: Theme.of(context).textTheme.labelLarge),
+          child: Text(
+            widget.label,
+            style: Theme.of(context).textTheme.labelLarge,
+          ),
         ),
       ),
     );

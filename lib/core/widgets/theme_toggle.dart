@@ -31,7 +31,9 @@ final class ThemeToggle extends StatelessWidget {
                 AnimatedAlign(
                   duration: const Duration(milliseconds: 300),
                   curve: Curves.easeOutCubic,
-                  alignment: isDark ? Alignment.centerRight : Alignment.centerLeft,
+                  alignment: isDark
+                      ? Alignment.centerRight
+                      : Alignment.centerLeft,
                   child: Container(
                     width: 26,
                     height: 26,
@@ -49,13 +51,14 @@ final class ThemeToggle extends StatelessWidget {
                     ),
                     child: AnimatedSwitcher(
                       duration: const Duration(milliseconds: 250),
-                      transitionBuilder:
-                          (child, animation) => FadeTransition(
-                            opacity: animation,
-                            child: ScaleTransition(scale: animation, child: child),
-                          ),
+                      transitionBuilder: (child, animation) => FadeTransition(
+                        opacity: animation,
+                        child: ScaleTransition(scale: animation, child: child),
+                      ),
                       child: Icon(
-                        isDark ? Icons.dark_mode_rounded : Icons.light_mode_rounded,
+                        isDark
+                            ? Icons.dark_mode_rounded
+                            : Icons.light_mode_rounded,
                         key: ValueKey<bool>(isDark),
                         size: 15,
                         color: scheme.onPrimary,

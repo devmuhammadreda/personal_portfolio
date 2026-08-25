@@ -72,8 +72,7 @@ class _LoginPageState extends State<LoginPage> {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text(state.errorMessage!),
-                                backgroundColor:
-                                    scheme.errorContainer,
+                                backgroundColor: scheme.errorContainer,
                               ),
                             );
                           }
@@ -117,7 +116,9 @@ class _LoginPageState extends State<LoginPage> {
                                 enabled: !submitting,
                                 decoration: const InputDecoration(
                                   labelText: 'Email',
-                                  prefixIcon: Icon(Icons.alternate_email_rounded),
+                                  prefixIcon: Icon(
+                                    Icons.alternate_email_rounded,
+                                  ),
                                 ),
                                 validator: (value) =>
                                     value == null ||
@@ -134,13 +135,11 @@ class _LoginPageState extends State<LoginPage> {
                                 onFieldSubmitted: (_) => _submit(),
                                 decoration: InputDecoration(
                                   labelText: 'Password',
-                                  prefixIcon: const Icon(
-                                    Icons.key_rounded,
-                                  ),
+                                  prefixIcon: const Icon(Icons.key_rounded),
                                   suffixIcon: IconButton(
                                     onPressed: () => setState(
-                                      () => _obscurePassword =
-                                          !_obscurePassword,
+                                      () =>
+                                          _obscurePassword = !_obscurePassword,
                                     ),
                                     icon: Icon(
                                       _obscurePassword

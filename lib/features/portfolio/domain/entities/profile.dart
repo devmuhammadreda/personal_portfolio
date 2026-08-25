@@ -63,8 +63,9 @@ class Profile extends Equatable {
       skills: skills ?? this.skills,
       socialLinks: socialLinks ?? this.socialLinks,
       resumeUrl: clearResumeUrl ? null : (resumeUrl ?? this.resumeUrl),
-      profileImageUrl:
-          clearProfileImageUrl ? null : (profileImageUrl ?? this.profileImageUrl),
+      profileImageUrl: clearProfileImageUrl
+          ? null
+          : (profileImageUrl ?? this.profileImageUrl),
       yearsOfExperience: yearsOfExperience ?? this.yearsOfExperience,
       availableForWork: availableForWork ?? this.availableForWork,
     );

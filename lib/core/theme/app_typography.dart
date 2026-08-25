@@ -5,10 +5,12 @@ import 'app_palette.dart';
 abstract final class AppTypography {
   static TextTheme textTheme(Brightness brightness) {
     final bool isDark = brightness == Brightness.dark;
-    final Color primary =
-        isDark ? AppPalette.darkTextPrimary : AppPalette.lightTextPrimary;
-    final Color secondary =
-        isDark ? AppPalette.darkTextSecondary : AppPalette.lightTextSecondary;
+    final Color primary = isDark
+        ? AppPalette.darkTextPrimary
+        : AppPalette.lightTextPrimary;
+    final Color secondary = isDark
+        ? AppPalette.darkTextSecondary
+        : AppPalette.lightTextSecondary;
 
     return TextTheme(
       displayLarge: TextStyle(

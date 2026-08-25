@@ -69,7 +69,9 @@ class _ProjectCardState extends State<ProjectCard> {
                                   child: Icon(
                                     Icons.image_outlined,
                                     size: 42,
-                                    color: scheme.primary.withValues(alpha: 0.6),
+                                    color: scheme.primary.withValues(
+                                      alpha: 0.6,
+                                    ),
                                   ),
                                 ),
                               );

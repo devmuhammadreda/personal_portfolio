@@ -16,7 +16,8 @@ Future<void> composeEmail({
   final Uri uri = Uri(
     scheme: 'mailto',
     path: to,
-    query: 'subject=${Uri.encodeComponent(subject)}'
+    query:
+        'subject=${Uri.encodeComponent(subject)}'
         '&body=${Uri.encodeComponent(body)}',
   );
   await launchUrl(uri, mode: LaunchMode.externalApplication);

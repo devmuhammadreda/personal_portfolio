@@ -98,7 +98,9 @@ class _FloatingParticlesBackgroundState
           AnimatedBuilder(
             animation: _controller,
             builder: (context, _) {
-              return CustomPaint(painter: _OrbsPainter(_orbs, _controller.value));
+              return CustomPaint(
+                painter: _OrbsPainter(_orbs, _controller.value),
+              );
             },
           ),
         ],
@@ -137,10 +139,12 @@ class _OrbsPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     for (final orb in orbs) {
       final double dx =
-          (orb.baseX + progress * orb.speedX) % 1.1 - 0.05 +
+          (orb.baseX + progress * orb.speedX) % 1.1 -
+          0.05 +
           0.04 * math.sin(progress * 2 * math.pi + orb.phase);
       final double dy =
-          (orb.baseY - progress * orb.speedY) % 1.1 - 0.05 +
+          (orb.baseY - progress * orb.speedY) % 1.1 -
+          0.05 +
           0.04 * math.cos(progress * 2 * math.pi + orb.phase);
       final Offset center = Offset(dx * size.width, dy * size.height);
       final Paint paint = Paint()

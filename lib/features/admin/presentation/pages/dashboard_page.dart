@@ -16,8 +16,7 @@ final class DashboardPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<DashboardCubit>(
-      create: (_) =>
-          DashboardCubit(getIt<ProjectRepository>())..load(),
+      create: (_) => DashboardCubit(getIt<ProjectRepository>())..load(),
       child: BlocBuilder<DashboardCubit, DashboardState>(
         builder: (context, state) {
           switch (state.status) {
@@ -91,7 +90,10 @@ class _DashboardBody extends StatelessWidget {
               Row(
                 children: [
                   Expanded(
-                    child: Text('Recently updated', style: theme.textTheme.titleLarge),
+                    child: Text(
+                      'Recently updated',
+                      style: theme.textTheme.titleLarge,
+                    ),
                   ),
                   FilledButton.tonalIcon(
                     onPressed: () => context.go(AppRoutes.adminNewProject),
@@ -107,9 +109,16 @@ class _DashboardBody extends StatelessWidget {
                     padding: const EdgeInsets.all(28),
                     child: Column(
                       children: [
-                        Icon(Icons.rocket_launch_outlined, size: 38, color: theme.colorScheme.onSurfaceVariant),
+                        Icon(
+                          Icons.rocket_launch_outlined,
+                          size: 38,
+                          color: theme.colorScheme.onSurfaceVariant,
+                        ),
                         const SizedBox(height: 12),
-                        Text('No projects yet. Add your first one!', style: theme.textTheme.bodyLarge),
+                        Text(
+                          'No projects yet. Add your first one!',
+                          style: theme.textTheme.bodyLarge,
+                        ),
                       ],
                     ),
                   ),
@@ -207,7 +216,9 @@ class _RecentTile extends StatelessWidget {
             )
           : const Icon(Icons.image_outlined),
       title: Text(project.title, maxLines: 1, overflow: TextOverflow.ellipsis),
-      subtitle: Text('${project.category.label} · updated ${_dateText(project.updatedAt)}'),
+      subtitle: Text(
+        '${project.category.label} · updated ${_dateText(project.updatedAt)}',
+      ),
       trailing: project.featured
           ? Icon(Icons.star_rounded, color: Colors.amber.shade600)
           : null,
