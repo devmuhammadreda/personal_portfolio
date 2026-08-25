@@ -74,9 +74,9 @@ lib/
       presentation/         dashboard, AdminShell, footer shortcut chip
   core/config/              SupabaseConfig (URL + anon key)
   core/supabase/            bootstrapper
-  main.dart                 default → portfolio flavor
-  main_portfolio.dart       portfolio flavor bootstrap
-  main_admin.dart           admin flavor bootstrap
+  main.dart                 shared bootstrap: all init + app config
+  main_portfolio.dart       portfolio flavor — FlavorConfig only
+  main_admin.dart           admin flavor — FlavorConfig only
 ```
 
 All Supabase access goes through the repository layer — the UI never
