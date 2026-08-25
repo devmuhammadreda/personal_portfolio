@@ -46,3 +46,7 @@ app.*.map.json
 
 # Widget Preview related
 .widget_preview/
+
+# npm (was only needed for the removed Firebase claim script)
+node_modules/
+package-lock.json
