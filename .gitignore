@@ -50,3 +50,6 @@ app.*.map.json
 # npm (was only needed for the removed Firebase claim script)
 node_modules/
 package-lock.json
+
+# Secrets (envied)
+.env

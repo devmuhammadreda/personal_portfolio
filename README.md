@@ -101,9 +101,19 @@ flutter pub get
 ### 3. Connect a Supabase project
 
 1. Create a project at <https://supabase.com/dashboard> (any region close to you).
-2. Open **Project Settings › API** and copy the **Project URL** and **anon /
-   publishable key**, then paste both into
-   `lib/core/config/supabase_config.dart`.
+2. Open **Project Settings › API**, copy the **Project URL** and **anon /
+   publishable key**, then create a `.env` file at the repo root (copy
+   `.env.example`) with:
+
+   ```dotenv
+   SUPABASE_URL=https://your-project.supabase.co
+   SUPABASE_ANON_KEY=your-anon-key
+   ```
+
+   Secrets are compiled in via [`envied`](https://pub.dev/packages/envied)
+   (obfuscated, git-ignored). After editing `.env`, regenerate:
+   `dart run build_runner build --delete-conflicting-outputs`. Never put the
+   database password or service-role key in `.env`.
 3. Open **SQL Editor › New query**, paste the contents of
    [`supabase_setup.sql`](supabase_setup.sql) and run it. This creates:
    - `profile` + `projects` tables (camelCase columns mirroring the Dart models)
