@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../../../core/localizations_cubit/category_labels.dart';
+import '../../../../../../core/localizations_cubit/locale_cubit.dart';
+
 import '../../../../../core/constants/app_constants.dart';
 import '../../../../../core/di/injector.dart';
 import '../../../../portfolio/domain/entities/project_category.dart';
@@ -163,6 +166,7 @@ class _BasicsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
+    final loc = context.loc;
     final cubit = context.read<ProjectFormCubit>();
     final project = state.project!;
 
@@ -172,7 +176,7 @@ class _BasicsSection extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Basics', style: theme.textTheme.titleLarge),
+            Text(loc.profileBasicsHeading, style: theme.textTheme.titleLarge),
             const SizedBox(height: 16),
             TextFormField(
               key: ValueKey('title-${project.id}'),
@@ -194,12 +198,14 @@ class _BasicsSection extends StatelessWidget {
                       'category-${project.id}-${project.category.name}',
                     ),
                     initialValue: project.category,
-                    decoration: const InputDecoration(labelText: 'Category'),
+                    decoration: InputDecoration(
+                      labelText: loc.formCategoryField,
+                    ),
                     items: [
                       for (final category in ProjectCategory.values)
                         DropdownMenuItem(
                           value: category,
-                          child: Text(category.label),
+                          child: Text(loc.categoryLabel(category)),
                         ),
                     ],
                     onChanged: (value) {
@@ -214,7 +220,7 @@ class _BasicsSection extends StatelessWidget {
                     key: ValueKey('role-${project.id}'),
                     initialValue: project.role.isEmpty ? null : project.role,
                     onChanged: cubit.setRole,
-                    decoration: const InputDecoration(labelText: 'Your role'),
+                    decoration: InputDecoration(labelText: loc.formRoleField),
                   ),
                 ),
               ],
@@ -229,11 +235,11 @@ class _BasicsSection extends StatelessWidget {
               maxLines: 2,
               autovalidateMode: AutovalidateMode.onUserInteraction,
               validator: (value) => value == null || value.trim().isEmpty
-                  ? 'Short description is required.'
+                  ? loc.formShortDescriptionRequired
                   : null,
-              decoration: const InputDecoration(
-                labelText: 'Short description *',
-                helperText: 'Shown on the project card',
+              decoration: InputDecoration(
+                labelText: loc.formShortDescription,
+                helperText: loc.formShortDescriptionHelper,
                 alignLabelWithHint: true,
               ),
             ),
@@ -246,16 +252,16 @@ class _BasicsSection extends StatelessWidget {
               onChanged: cubit.setLongDescription,
               minLines: 4,
               maxLines: 8,
-              decoration: const InputDecoration(
-                labelText: 'Full description',
+              decoration: InputDecoration(
+                labelText: loc.formFullDescription,
                 alignLabelWithHint: true,
               ),
             ),
             const SizedBox(height: 16),
             SwitchListTile(
               contentPadding: EdgeInsets.zero,
-              title: const Text('Featured project'),
-              subtitle: const Text('Highlights it on cards and the dashboard'),
+              title: Text(loc.formFeaturedSwitchTitle),
+              subtitle: Text(loc.formFeaturedSwitchSubtitle),
               value: project.featured,
               onChanged: (value) => cubit.setFeatured(featured: value),
             ),
@@ -295,6 +301,7 @@ class _TechStackFieldState extends State<_TechStackField> {
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
+    final loc = context.loc;
     final techStack = widget.state.project!.techStack;
 
     return Column(
@@ -303,10 +310,10 @@ class _TechStackFieldState extends State<_TechStackField> {
         TextField(
           controller: _controller,
           decoration: InputDecoration(
-            labelText: 'Tech stack',
-            helperText: 'Type a technology and press Add',
+            labelText: loc.formTechStack,
+            helperText: loc.formTechStackHelper,
             suffixIcon: IconButton(
-              tooltip: 'Add',
+              tooltip: loc.commonAdd,
               onPressed: _add,
               icon: const Icon(Icons.add_rounded),
             ),
@@ -325,10 +332,7 @@ class _TechStackFieldState extends State<_TechStackField> {
                     context.read<ProjectFormCubit>().removeTechAt(i),
               ),
             if (techStack.isEmpty)
-              Text(
-                'No technologies added yet.',
-                style: theme.textTheme.bodyMedium,
-              ),
+              Text(loc.formTechStackEmpty, style: theme.textTheme.bodyMedium),
           ],
         ),
       ],
@@ -357,7 +361,7 @@ class _ImagesSection extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    'Screenshots (${images.length})',
+                    context.loc.formScreenshotsCount(images.length),
                     style: theme.textTheme.titleLarge,
                   ),
                 ),
@@ -371,19 +375,21 @@ class _ImagesSection extends StatelessWidget {
                         )
                       : const Icon(Icons.upload_rounded, size: 18),
                   label: Text(
-                    state.isUploadingImages ? 'Uploading…' : 'Add images',
+                    state.isUploadingImages
+                        ? context.loc.formUploadingImages
+                        : context.loc.formAddImages,
                   ),
                 ),
               ],
             ),
             const SizedBox(height: 6),
-            Text(
-              'The first image is used as the card cover.',
-              style: theme.textTheme.bodyMedium,
-            ),
+            Text(context.loc.formCoverHint, style: theme.textTheme.bodyMedium),
             const SizedBox(height: 14),
             if (images.isEmpty && !state.isUploadingImages)
-              Text('No screenshots yet.', style: theme.textTheme.bodyMedium)
+              Text(
+                context.loc.formNoScreenshots,
+                style: theme.textTheme.bodyMedium,
+              )
             else
               Wrap(
                 spacing: 12,
@@ -407,9 +413,9 @@ class _ImagesSection extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Positioned(
+                        PositionedDirectional(
                           top: 4,
-                          right: 4,
+                          end: 4,
                           child: InkWell(
                             onTap: () => cubit.removeImageAt(i),
                             customBorder: const CircleBorder(),
@@ -428,9 +434,9 @@ class _ImagesSection extends StatelessWidget {
                           ),
                         ),
                         if (i == 0)
-                          Positioned(
+                          PositionedDirectional(
                             bottom: 4,
-                            left: 4,
+                            start: 4,
                             child: Container(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 8,
@@ -443,7 +449,7 @@ class _ImagesSection extends StatelessWidget {
                                 ),
                               ),
                               child: Text(
-                                'Cover',
+                                context.loc.formCoverBadge,
                                 style: TextStyle(
                                   fontSize: 10.5,
                                   fontWeight: FontWeight.w600,
@@ -470,6 +476,7 @@ class _LinksSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = context.loc;
     final cubit = context.read<ProjectFormCubit>();
     final project = state.project!;
 
@@ -479,14 +486,17 @@ class _LinksSection extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Links', style: Theme.of(context).textTheme.titleLarge),
+            Text(
+              context.loc.formLinksHeading,
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
             const SizedBox(height: 16),
             TextFormField(
               key: ValueKey('live-${project.id}'),
               initialValue: project.liveUrl,
               onChanged: cubit.setLiveUrl,
               keyboardType: TextInputType.url,
-              decoration: const InputDecoration(labelText: 'Live demo URL'),
+              decoration: InputDecoration(labelText: loc.formLiveUrlField),
             ),
             const SizedBox(height: 14),
             TextFormField(
@@ -494,9 +504,7 @@ class _LinksSection extends StatelessWidget {
               initialValue: project.githubUrl,
               onChanged: cubit.setGithubUrl,
               keyboardType: TextInputType.url,
-              decoration: const InputDecoration(
-                labelText: 'GitHub repository URL',
-              ),
+              decoration: InputDecoration(labelText: loc.formGithubUrlField),
             ),
           ],
         ),

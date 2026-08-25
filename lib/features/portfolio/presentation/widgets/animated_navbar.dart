@@ -2,7 +2,9 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
+import '../../../../core/localizations_cubit/locale_cubit.dart';
 import '../../../../core/theme/app_palette.dart';
+import '../../../../core/widgets/language_toggle.dart';
 import '../../../../core/widgets/theme_toggle.dart';
 
 typedef NavTap = void Function();
@@ -100,7 +102,7 @@ final class AnimatedNavbar extends StatelessWidget {
                       children: [
                         for (var i = 0; i < sections.length; i++)
                           Padding(
-                            padding: const EdgeInsets.only(right: 6),
+                            padding: const EdgeInsetsDirectional.only(end: 6),
                             child: _NavButton(
                               label: sections[i].$1,
                               onTap: sections[i].$2,
@@ -110,11 +112,13 @@ final class AnimatedNavbar extends StatelessWidget {
                     )
                   else
                     IconButton(
-                      tooltip: 'Menu',
+                      tooltip: context.loc.navMenuTooltip,
                       onPressed: () => _showMobileMenu(context),
                       icon: const Icon(Icons.menu_rounded),
                     ),
                   const SizedBox(width: 12),
+                  const LanguageToggle(),
+                  const SizedBox(width: 10),
                   const ThemeToggle(),
                 ],
               ),

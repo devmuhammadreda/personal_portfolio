@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../core/localizations_cubit/locale_cubit.dart';
+
 import '../../../../../core/di/injector.dart';
 import '../../../../../core/theme/app_palette.dart';
 import '../../../../../core/utils/url_helper.dart';
@@ -54,11 +56,11 @@ class _ProfileEditorView extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(state.errorMessage ?? 'Failed to load profile.'),
+                  Text(state.errorMessage ?? context.loc.profileFailedToLoad),
                   const SizedBox(height: 12),
                   FilledButton.tonal(
                     onPressed: () => context.read<ProfileEditorCubit>().load(),
-                    child: const Text('Retry'),
+                    child: Text(context.loc.commonRetry),
                   ),
                 ],
               ),
@@ -89,7 +91,7 @@ class _EditorScaffold extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  'Edit profile',
+                  context.loc.profileEditorTitle,
                   style: theme.textTheme.headlineMedium,
                 ),
               ),
@@ -105,7 +107,11 @@ class _EditorScaffold extends StatelessWidget {
                           child: CircularProgressIndicator(strokeWidth: 2),
                         )
                       : const Icon(Icons.save_rounded, size: 18),
-                  label: Text(state.isSaving ? 'Saving…' : 'Save changes'),
+                  label: Text(
+                    state.isSaving
+                        ? context.loc.profileSaving
+                        : context.loc.profileSaveChanges,
+                  ),
                 ),
             ],
           ),
@@ -169,6 +175,7 @@ class _SkillsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = context.loc;
     final ThemeData theme = Theme.of(context);
     final cubit = context.read<ProfileEditorCubit>();
     final skills = state.profile.skills;
@@ -182,12 +189,15 @@ class _SkillsCard extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: Text('Skills', style: theme.textTheme.titleLarge),
+                  child: Text(
+                    context.loc.skillsHeading,
+                    style: theme.textTheme.titleLarge,
+                  ),
                 ),
                 OutlinedButton.icon(
                   onPressed: cubit.addSkill,
                   icon: const Icon(Icons.add_rounded, size: 18),
-                  label: const Text('Add skill'),
+                  label: Text(context.loc.skillsAdd),
                 ),
               ],
             ),
@@ -196,7 +206,7 @@ class _SkillsCard extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 12),
                 child: Text(
-                  'No skills yet — add the technologies you work with.',
+                  context.loc.skillsEmpty,
                   style: theme.textTheme.bodyMedium,
                 ),
               )
@@ -213,7 +223,7 @@ class _SkillsCard extends StatelessWidget {
                             : skills[i].name,
                         onChanged: (value) => cubit.renameSkill(i, value),
                         decoration: InputDecoration(
-                          labelText: 'Skill ${i + 1}',
+                          labelText: loc.skillLabel(i + 1),
                           isDense: true,
                         ),
                       ),
@@ -234,7 +244,7 @@ class _SkillsCard extends StatelessWidget {
                       style: theme.textTheme.labelMedium,
                     ),
                     IconButton(
-                      tooltip: 'Remove',
+                      tooltip: context.loc.commonRemove,
                       onPressed: () => cubit.removeSkill(i),
                       icon: Icon(
                         Icons.close_rounded,
@@ -258,6 +268,7 @@ class _BasicsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = context.loc;
     final cubit = context.read<ProfileEditorCubit>();
     return Card(
       child: Padding(
@@ -265,26 +276,29 @@ class _BasicsCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Basics', style: Theme.of(context).textTheme.titleLarge),
+            Text(
+              context.loc.profileBasicsHeading,
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
             const SizedBox(height: 16),
             TextFormField(
               initialValue: state.profile.name,
               onChanged: cubit.setName,
-              decoration: const InputDecoration(labelText: 'Name'),
+              decoration: InputDecoration(labelText: loc.fieldName),
             ),
             const SizedBox(height: 14),
             TextFormField(
               initialValue: state.profile.title,
               onChanged: cubit.setTitle,
-              decoration: const InputDecoration(labelText: 'Title'),
+              decoration: InputDecoration(labelText: loc.fieldTitle),
             ),
             const SizedBox(height: 14),
             TextFormField(
               initialValue: state.profile.tagline,
               onChanged: cubit.setTagline,
               maxLines: 2,
-              decoration: const InputDecoration(
-                labelText: 'Tagline',
+              decoration: InputDecoration(
+                labelText: loc.fieldTagline,
                 alignLabelWithHint: true,
               ),
             ),
@@ -294,14 +308,14 @@ class _BasicsCard extends StatelessWidget {
               initialValue: '${state.profile.yearsOfExperience}',
               onChanged: cubit.setYearsOfExperience,
               keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                labelText: 'Years of experience',
+              decoration: InputDecoration(
+                labelText: loc.fieldYearsOfExperience,
               ),
             ),
             SwitchListTile(
               contentPadding: EdgeInsets.zero,
-              title: const Text('Available for work'),
-              subtitle: const Text('Shows the green badge in the hero section'),
+              title: Text(loc.availableSwitchTitle),
+              subtitle: Text(loc.availableSwitchSubtitle),
               value: state.profile.availableForWork,
               onChanged: (value) => cubit.setAvailableForWork(available: value),
             ),
@@ -311,8 +325,8 @@ class _BasicsCard extends StatelessWidget {
               onChanged: cubit.setAboutMe,
               minLines: 5,
               maxLines: 10,
-              decoration: const InputDecoration(
-                labelText: 'About me',
+              decoration: InputDecoration(
+                labelText: loc.fieldAboutMe,
                 alignLabelWithHint: true,
               ),
             ),

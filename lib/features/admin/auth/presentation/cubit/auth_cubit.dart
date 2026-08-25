@@ -53,11 +53,9 @@ final class AuthCubit extends Cubit<AuthState>
     } on AppFailure catch (failure) {
       safeEmit(Unauthenticated.fromFailure(failure));
     } catch (_) {
-      safeEmit(
-        const Unauthenticated(
-          errorMessage: 'Sign-in failed. Please try again.',
-        ),
-      );
+      // Unknown failures stay unlabelled; the login page shows a
+      // localized generic message.
+      safeEmit(const Unauthenticated());
     }
   }
 

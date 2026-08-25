@@ -45,12 +45,9 @@ final class PortfolioCubit extends Cubit<PortfolioState>
         ),
       );
     } catch (_) {
-      safeEmit(
-        state.copyWith(
-          status: PortfolioStatus.failure,
-          errorMessage: 'Something went wrong while loading the portfolio.',
-        ),
-      );
+      // Unknown failures stay unlabelled; the UI shows a localized
+      // generic message.
+      safeEmit(state.copyWith(status: PortfolioStatus.failure));
     }
   }
 

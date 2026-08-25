@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/localizations_cubit/category_labels.dart';
+import '../../../../core/localizations_cubit/locale_cubit.dart';
+
 import '../../../../core/constants/app_constants.dart';
 import '../../../../core/di/injector.dart';
 import '../../../../core/utils/responsive.dart';
@@ -55,7 +58,10 @@ class _DashboardBody extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Overview', style: theme.textTheme.headlineMedium),
+              Text(
+                context.loc.dashboardOverview,
+                style: theme.textTheme.headlineMedium,
+              ),
               const SizedBox(height: 20),
               Wrap(
                 spacing: 16,
@@ -63,13 +69,13 @@ class _DashboardBody extends StatelessWidget {
                 children: [
                   _StatCard(
                     icon: Icons.folder_open_rounded,
-                    label: 'Total projects',
+                    label: context.loc.dashboardTotalProjects,
                     value: '${state.totalProjects}',
                     color: theme.colorScheme.primary,
                   ),
                   _StatCard(
                     icon: Icons.star_rounded,
-                    label: 'Featured',
+                    label: context.loc.dashboardFeaturedCount,
                     value: '${state.featuredCount}',
                     color: Colors.amber.shade700,
                   ),
@@ -80,7 +86,7 @@ class _DashboardBody extends StatelessWidget {
                         ProjectCategory.web => Icons.web_rounded,
                         ProjectCategory.fullstack => Icons.dns_rounded,
                       },
-                      label: entry.key.label,
+                      label: context.loc.categoryLabel(entry.key),
                       value: '${entry.value}',
                       color: theme.colorScheme.secondary,
                     ),
@@ -91,14 +97,14 @@ class _DashboardBody extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      'Recently updated',
+                      context.loc.dashboardRecentlyUpdated,
                       style: theme.textTheme.titleLarge,
                     ),
                   ),
                   FilledButton.tonalIcon(
                     onPressed: () => context.go(AppRoutes.adminNewProject),
                     icon: const Icon(Icons.add_rounded, size: 19),
-                    label: const Text('New project'),
+                    label: Text(context.loc.dashboardNewProject),
                   ),
                 ],
               ),
@@ -116,7 +122,7 @@ class _DashboardBody extends StatelessWidget {
                         ),
                         const SizedBox(height: 12),
                         Text(
-                          'No projects yet. Add your first one!',
+                          context.loc.dashboardEmptyProjects,
                           style: theme.textTheme.bodyLarge,
                         ),
                       ],
@@ -217,7 +223,10 @@ class _RecentTile extends StatelessWidget {
           : const Icon(Icons.image_outlined),
       title: Text(project.title, maxLines: 1, overflow: TextOverflow.ellipsis),
       subtitle: Text(
-        '${project.category.label} · updated ${_dateText(project.updatedAt)}',
+        context.loc.projectUpdatedLine(
+          context.loc.categoryLabel(project.category),
+          _dateText(context, project.updatedAt),
+        ),
       ),
       trailing: project.featured
           ? Icon(Icons.star_rounded, color: Colors.amber.shade600)
@@ -226,12 +235,13 @@ class _RecentTile extends StatelessWidget {
     );
   }
 
-  String _dateText(DateTime date) {
+  String _dateText(BuildContext context, DateTime date) {
+    final loc = context.loc;
     final now = DateTime.now();
     final diff = now.difference(date);
-    if (diff.inDays == 0) return 'today';
-    if (diff.inDays == 1) return 'yesterday';
-    if (diff.inDays < 30) return '${diff.inDays}d ago';
+    if (diff.inDays == 0) return loc.updatedToday;
+    if (diff.inDays == 1) return loc.updatedYesterday;
+    if (diff.inDays < 30) return loc.updatedDaysAgo(diff.inDays);
     return '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
   }
 }
@@ -250,9 +260,15 @@ class _ErrorPane extends StatelessWidget {
         children: [
           const Icon(Icons.error_outline_rounded, size: 42),
           const SizedBox(height: 12),
-          Text(message ?? 'Failed to load.', textAlign: TextAlign.center),
+          Text(
+            message ?? context.loc.dashboardFailedToLoad,
+            textAlign: TextAlign.center,
+          ),
           const SizedBox(height: 14),
-          FilledButton.tonal(onPressed: onRetry, child: const Text('Retry')),
+          FilledButton.tonal(
+            onPressed: onRetry,
+            child: Text(context.loc.commonRetry),
+          ),
         ],
       ),
     );

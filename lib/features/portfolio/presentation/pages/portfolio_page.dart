@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/di/injector.dart';
+import '../../../../core/localizations_cubit/locale_cubit.dart';
 import '../../../../core/utils/responsive.dart';
 import '../cubit/portfolio_cubit.dart';
 import '../cubit/portfolio_state.dart';
@@ -125,9 +126,12 @@ class _PortfolioPageState extends State<PortfolioPage> {
                           : state.profile.name.split(' ').first.toLowerCase(),
                       onTitleTap: () => _scrollTo(_heroKey),
                       sections: [
-                        ('About', () => _scrollTo(_aboutKey)),
-                        ('Projects', () => _scrollTo(_projectsKey)),
-                        ('Contact', () => _scrollTo(_contactKey)),
+                        (context.loc.navAbout, () => _scrollTo(_aboutKey)),
+                        (
+                          context.loc.navProjects,
+                          () => _scrollTo(_projectsKey),
+                        ),
+                        (context.loc.navContact, () => _scrollTo(_contactKey)),
                       ],
                     ),
                   ),
@@ -156,7 +160,7 @@ class _LoadingView extends StatelessWidget {
             ),
             const SizedBox(height: 18),
             Text(
-              'Loading portfolio…',
+              context.loc.loadingPortfolio,
               style: Theme.of(context).textTheme.bodyLarge,
             ),
           ],
@@ -191,7 +195,7 @@ class _ErrorView extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 Text(
-                  message ?? 'Something went wrong.',
+                  message ?? context.loc.errorLoadingPortfolio,
                   textAlign: TextAlign.center,
                   style: theme.textTheme.bodyLarge,
                 ),
@@ -199,7 +203,7 @@ class _ErrorView extends StatelessWidget {
                 FilledButton.icon(
                   onPressed: onRetry,
                   icon: const Icon(Icons.refresh_rounded, size: 19),
-                  label: const Text('Try again'),
+                  label: Text(context.loc.commonRetry),
                 ),
               ],
             ),

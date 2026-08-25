@@ -3,7 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/constants/app_constants.dart';
+import '../../../../core/localizations_cubit/locale_cubit.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../../../core/utils/responsive.dart';
+import '../../../../core/widgets/language_toggle.dart';
 import '../../../../core/widgets/theme_toggle.dart';
 import '../../auth/presentation/cubit/auth_cubit.dart';
 
@@ -14,11 +17,17 @@ final class AdminShell extends StatelessWidget {
 
   final Widget child;
 
-  static const List<(String, IconData, String)> _destinations = [
-    ('Dashboard', Icons.dashboard_outlined, AppRoutes.adminDashboard),
-    ('Profile', Icons.person_outline_rounded, AppRoutes.adminProfile),
-    ('Projects', Icons.folder_open_outlined, AppRoutes.adminProjects),
+  static const List<(int, IconData, String)> _destinations = [
+    (0, Icons.dashboard_outlined, AppRoutes.adminDashboard),
+    (1, Icons.person_outline_rounded, AppRoutes.adminProfile),
+    (2, Icons.folder_open_outlined, AppRoutes.adminProjects),
   ];
+
+  static String _label(AppLocalizations loc, int index) => switch (index) {
+    0 => loc.shellDashboard,
+    1 => loc.shellProfile,
+    _ => loc.shellProjects,
+  };
 
   int _selectedIndexFor(String location) {
     if (location.startsWith(AppRoutes.adminProjects)) return 2;
@@ -58,16 +67,23 @@ final class AdminShell extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 10),
-            Text('Admin console', style: theme.textTheme.titleMedium),
+            Text(
+              context.loc.shellConsoleTitle,
+              style: theme.textTheme.titleMedium,
+            ),
           ],
         ),
         actions: [
           const Padding(
-            padding: EdgeInsets.only(right: 6),
+            padding: EdgeInsetsDirectional.only(end: 6),
+            child: Center(child: LanguageToggle()),
+          ),
+          const Padding(
+            padding: EdgeInsetsDirectional.only(end: 6),
             child: Center(child: ThemeToggle()),
           ),
           IconButton(
-            tooltip: 'Sign out',
+            tooltip: context.loc.shellSignOut,
             onPressed: () => context.read<AuthCubit>().signOut(),
             icon: const Icon(Icons.logout_rounded),
           ),
@@ -87,11 +103,11 @@ final class AdminShell extends StatelessWidget {
                   onDestinationSelected: (index) => _go(context, index),
                   leading: const SizedBox(height: 4),
                   destinations: [
-                    for (final (label, icon, _) in _destinations)
+                    for (final (index, icon, _) in _destinations)
                       NavigationRailDestination(
                         icon: Icon(icon),
                         selectedIcon: Icon(icon),
-                        label: Text(label),
+                        label: Text(_label(context.loc, index)),
                       ),
                   ],
                 ),
@@ -105,11 +121,11 @@ final class AdminShell extends StatelessWidget {
               selectedIndex: selectedIndex,
               onDestinationSelected: (index) => _go(context, index),
               destinations: [
-                for (final (label, icon, _) in _destinations)
+                for (final (index, icon, _) in _destinations)
                   NavigationDestination(
                     icon: Icon(icon),
                     selectedIcon: Icon(icon),
-                    label: label,
+                    label: _label(context.loc, index),
                   ),
               ],
             )

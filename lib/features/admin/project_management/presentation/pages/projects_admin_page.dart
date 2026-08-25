@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../../core/localizations_cubit/category_labels.dart';
+import '../../../../../core/localizations_cubit/locale_cubit.dart';
+
 import '../../../../../core/constants/app_constants.dart';
 import '../../../../../core/di/injector.dart';
 import '../../../../portfolio/domain/entities/project.dart';
@@ -35,12 +38,15 @@ final class ProjectsAdminPage extends StatelessWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(state.errorMessage ?? 'Failed to load projects.'),
+                    Text(
+                      state.errorMessage ??
+                          context.loc.projectsAdminFailedToLoad,
+                    ),
                     const SizedBox(height: 12),
                     FilledButton.tonal(
                       onPressed: () =>
                           context.read<ProjectsAdminCubit>().load(),
-                      child: const Text('Retry'),
+                      child: Text(context.loc.commonRetry),
                     ),
                   ],
                 ),
@@ -75,7 +81,7 @@ class _ProjectsList extends StatelessWidget {
                   Expanded(
                     child: BlocBuilder<ProjectsAdminCubit, ProjectsAdminState>(
                       builder: (context, state) => Text(
-                        'Projects (${state.projects.length})',
+                        context.loc.projectsAdminCount(state.projects.length),
                         style: theme.textTheme.headlineMedium,
                       ),
                     ),
@@ -83,13 +89,13 @@ class _ProjectsList extends StatelessWidget {
                   FilledButton.icon(
                     onPressed: () => context.push(AppRoutes.adminNewProject),
                     icon: const Icon(Icons.add_rounded, size: 19),
-                    label: const Text('New project'),
+                    label: Text(context.loc.projectsAdminNew),
                   ),
                 ],
               ),
               const SizedBox(height: 6),
               Text(
-                'Drag rows to reorder — applies to the public site instantly.',
+                context.loc.projectsAdminReorderHint,
                 style: theme.textTheme.bodyMedium,
               ),
               const SizedBox(height: 18),
@@ -101,7 +107,7 @@ class _ProjectsList extends StatelessWidget {
                       if (state.projects.isEmpty) {
                         return Center(
                           child: Text(
-                            'No projects yet. Create your first one!',
+                            context.loc.projectsAdminEmpty,
                             style: theme.textTheme.bodyLarge,
                           ),
                         );
@@ -176,7 +182,8 @@ class _ProjectRow extends StatelessWidget {
         style: theme.textTheme.titleMedium,
       ),
       subtitle: Text(
-        '${project.category.label} · ${project.techStack.take(3).join(', ')}',
+        '${context.loc.categoryLabel(project.category)} · '
+        '${project.techStack.take(3).join(', ')}',
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
       ),
@@ -185,7 +192,9 @@ class _ProjectRow extends StatelessWidget {
         crossAxisAlignment: WrapCrossAlignment.center,
         children: [
           IconButton(
-            tooltip: project.featured ? 'Unfeature' : 'Feature',
+            tooltip: project.featured
+                ? context.loc.tooltipUnfeature
+                : context.loc.tooltipFeature,
             onPressed: busy ? null : () => cubit.toggleFeatured(project),
             icon: Icon(
               project.featured
@@ -197,12 +206,12 @@ class _ProjectRow extends StatelessWidget {
             ),
           ),
           IconButton(
-            tooltip: 'Edit',
+            tooltip: context.loc.commonEdit,
             onPressed: () => context.go('/admin/projects/${project.id}'),
             icon: const Icon(Icons.edit_outlined),
           ),
           IconButton(
-            tooltip: 'Delete',
+            tooltip: context.loc.commonDelete,
             onPressed: busy ? null : () => _confirmDelete(context, cubit),
             icon: Icon(
               Icons.delete_outline_rounded,
@@ -219,15 +228,12 @@ class _ProjectRow extends StatelessWidget {
       context: context,
       builder: (dialogContext) {
         return AlertDialog(
-          title: Text('Delete "${project.title}"?'),
-          content: const Text(
-            'This permanently removes the project from the public site. '
-            'This action cannot be undone.',
-          ),
+          title: Text(context.loc.deleteProjectTitle(project.title)),
+          content: Text(context.loc.deleteProjectBody),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(dialogContext).pop(),
-              child: const Text('Cancel'),
+              child: Text(context.loc.commonCancel),
             ),
             FilledButton(
               style: FilledButton.styleFrom(
@@ -237,7 +243,7 @@ class _ProjectRow extends StatelessWidget {
                 Navigator.of(dialogContext).pop();
                 cubit.deleteProject(project.id);
               },
-              child: const Text('Delete'),
+              child: Text(context.loc.commonDelete),
             ),
           ],
         );

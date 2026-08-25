@@ -32,8 +32,8 @@ final class ThemeToggle extends StatelessWidget {
                   duration: const Duration(milliseconds: 300),
                   curve: Curves.easeOutCubic,
                   alignment: isDark
-                      ? Alignment.centerRight
-                      : Alignment.centerLeft,
+                      ? AlignmentDirectional.centerEnd
+                      : AlignmentDirectional.centerStart,
                   child: Container(
                     width: 26,
                     height: 26,

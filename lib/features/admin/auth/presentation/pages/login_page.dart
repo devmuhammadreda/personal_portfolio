@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../core/localizations_cubit/locale_cubit.dart';
+
 import '../../../../../core/theme/app_palette.dart';
 import '../cubit/auth_cubit.dart';
 import '../cubit/auth_state.dart';
@@ -78,6 +80,7 @@ class _LoginPageState extends State<LoginPage> {
                           }
                         },
                         builder: (context, state) {
+                          final loc = context.loc;
                           final bool submitting =
                               state is Unauthenticated && state.submitting;
                           return Column(
@@ -98,13 +101,13 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                               const SizedBox(height: 18),
                               Text(
-                                'Admin sign-in',
+                                context.loc.adminSignInTitle,
                                 style: theme.textTheme.headlineMedium,
                                 textAlign: TextAlign.center,
                               ),
                               const SizedBox(height: 6),
                               Text(
-                                'Restricted area — owner access only.',
+                                context.loc.adminSignInSubtitle,
                                 style: theme.textTheme.bodyMedium,
                                 textAlign: TextAlign.center,
                               ),
@@ -114,9 +117,9 @@ class _LoginPageState extends State<LoginPage> {
                                 keyboardType: TextInputType.emailAddress,
                                 autofillHints: const [AutofillHints.email],
                                 enabled: !submitting,
-                                decoration: const InputDecoration(
-                                  labelText: 'Email',
-                                  prefixIcon: Icon(
+                                decoration: InputDecoration(
+                                  labelText: loc.fieldEmail,
+                                  prefixIcon: const Icon(
                                     Icons.alternate_email_rounded,
                                   ),
                                 ),
@@ -124,7 +127,7 @@ class _LoginPageState extends State<LoginPage> {
                                     value == null ||
                                         !value.contains('@') ||
                                         !value.contains('.')
-                                    ? 'Enter a valid email.'
+                                    ? loc.emailInvalid
                                     : null,
                               ),
                               const SizedBox(height: 16),
@@ -134,7 +137,7 @@ class _LoginPageState extends State<LoginPage> {
                                 enabled: !submitting,
                                 onFieldSubmitted: (_) => _submit(),
                                 decoration: InputDecoration(
-                                  labelText: 'Password',
+                                  labelText: loc.fieldPassword,
                                   prefixIcon: const Icon(Icons.key_rounded),
                                   suffixIcon: IconButton(
                                     onPressed: () => setState(
@@ -150,7 +153,7 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                                 validator: (value) =>
                                     value == null || value.length < 6
-                                    ? 'At least 6 characters.'
+                                    ? loc.passwordTooShort
                                     : null,
                               ),
                               const SizedBox(height: 24),
@@ -166,7 +169,7 @@ class _LoginPageState extends State<LoginPage> {
                                       )
                                     : const Icon(Icons.login_rounded, size: 19),
                                 label: Text(
-                                  submitting ? 'Signing in…' : 'Sign in',
+                                  submitting ? loc.signingIn : loc.signInButton,
                                 ),
                               ),
                             ],

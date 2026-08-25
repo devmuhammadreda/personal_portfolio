@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+
+import '../../../../core/localizations_cubit/locale_cubit.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../cubit/portfolio_cubit.dart';
@@ -32,8 +35,10 @@ final class SiteFooter extends StatelessWidget {
                 crossAxisAlignment: WrapCrossAlignment.center,
                 children: [
                   Text(
-                    '© $year ${name.isEmpty ? 'Portfolio' : name}. '
-                    'Built with Flutter.',
+                    context.loc.footerCopyright(
+                      year,
+                      name.isEmpty ? 'Portfolio' : name,
+                    ),
                     style: theme.textTheme.labelMedium,
                   ),
                   ?trailing,

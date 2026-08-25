@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/localizations_cubit/locale_cubit.dart';
 import '../../../../core/theme/app_palette.dart';
 import '../../../../core/utils/responsive.dart';
 import '../../domain/entities/skill.dart';
@@ -25,7 +26,7 @@ final class AboutSection extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SectionHeader(index: '01', title: 'About Me'),
+            SectionHeader(index: '01', title: context.loc.aboutSectionTitle),
             const SizedBox(height: 28),
             Flex(
               direction: isCompact ? Axis.vertical : Axis.horizontal,
@@ -38,8 +39,7 @@ final class AboutSection extends StatelessWidget {
                   child: ScrollReveal.child(
                     child: SelectableText(
                       profile.aboutMe.isEmpty
-                          ? 'This bio lives in Firestore and updates without '
-                                'redeploying — add your story to see it here.'
+                          ? context.loc.aboutBioFallback
                           : profile.aboutMe,
                       style: theme.textTheme.bodyLarge,
                     ),
@@ -61,7 +61,10 @@ final class AboutSection extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 44),
-            Text('Tech I work with', style: theme.textTheme.titleLarge),
+            Text(
+              context.loc.aboutTechHeading,
+              style: theme.textTheme.titleLarge,
+            ),
             const SizedBox(height: 18),
             _SkillsGrid(skills: profile.skills),
           ],
@@ -107,21 +110,21 @@ class _StatsPanel extends StatelessWidget {
         children: [
           _StatTile(
             value: yearsOfExperience,
-            label: 'Years of experience',
+            label: context.loc.statYearsLabel,
             suffix: '+',
             revealed: revealed,
           ),
           const SizedBox(height: 18),
           _StatTile(
             value: projectCount,
-            label: 'Shipped projects',
+            label: context.loc.statProjectsLabel,
             revealed: revealed,
             delayMs: 120,
           ),
           const SizedBox(height: 18),
           _StatTile(
             value: techCount,
-            label: 'Technologies',
+            label: context.loc.statTechnologiesLabel,
             revealed: revealed,
             delayMs: 240,
           ),
@@ -167,7 +170,7 @@ class _StatTile extends StatelessWidget {
         ).animate(delay: delayMs.ms).fadeIn(duration: 400.ms),
         if (suffix.isNotEmpty)
           Padding(
-            padding: const EdgeInsets.only(left: 2),
+            padding: const EdgeInsetsDirectional.only(start: 2),
             child: Text(
               suffix,
               style: theme.textTheme.headlineMedium?.copyWith(

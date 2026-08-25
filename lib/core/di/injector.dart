@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get_it/get_it.dart';
 
+import '../localizations_cubit/locale_cubit.dart';
 import '../theme/theme_cubit.dart';
 
 /// Shared service locator. Flavor modules
@@ -8,14 +9,15 @@ import '../theme/theme_cubit.dart';
 /// per-feature registrars extend it with their own registrations.
 final GetIt getIt = GetIt.instance;
 
-/// Platform-level registrations shared by every flavor: theme + the
-/// Firestore SDK instance. Feature-owned data sources, repositories,
-/// auth and routers live in each feature's own registrar
+/// Platform-level registrations shared by every flavor: theme, locale
+/// and the Firestore SDK instance. Feature-owned data sources,
+/// repositories, auth and routers live in each feature's own registrar
 /// (`di/*_injection.dart` / `di/*_dependencies.dart`).
 void configureCoreDependencies() {
   getIt
     // Core presentation
     ..registerLazySingleton<ThemeCubit>(ThemeCubit.new)
+    ..registerLazySingleton<LocaleCubit>(LocaleCubit.new)
     // Firebase SDK (lazy — only resolved once configured)
     ..registerLazySingleton<FirebaseFirestore>(
       () => FirebaseFirestore.instance,

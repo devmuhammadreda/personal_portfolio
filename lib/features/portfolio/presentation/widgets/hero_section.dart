@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/localizations_cubit/locale_cubit.dart';
 import '../../../../core/theme/app_palette.dart';
 import '../../../../core/utils/responsive.dart';
 import '../../../../core/utils/url_helper.dart';
@@ -55,7 +56,7 @@ final class HeroSection extends StatelessWidget {
                             ),
                       const SizedBox(height: 22),
                       Text(
-                            'Hi there, I\u2019m',
+                            context.loc.heroGreeting,
                             style: textTheme.titleLarge?.copyWith(
                               color: theme.colorScheme.secondary,
                               fontWeight: FontWeight.w600,
@@ -71,7 +72,7 @@ final class HeroSection extends StatelessWidget {
                       const SizedBox(height: 10),
                       _GradientText(
                             text: profile.name.isEmpty
-                                ? 'Flutter Developer'
+                                ? context.loc.heroNameFallback
                                 : profile.name,
                             style: isCompact
                                 ? textTheme.displayMedium
@@ -87,7 +88,7 @@ final class HeroSection extends StatelessWidget {
                       const SizedBox(height: 12),
                       Text(
                         profile.title.isEmpty
-                            ? 'Building beautiful apps, one widget at a time'
+                            ? context.loc.heroTitleFallback
                             : profile.title,
                         style: isCompact
                             ? textTheme.headlineSmall
@@ -123,7 +124,7 @@ final class HeroSection extends StatelessWidget {
                                   Icons.work_outline_rounded,
                                   size: 19,
                                 ),
-                                label: const Text('View My Work'),
+                                label: Text(context.loc.heroViewWork),
                               ),
                               OutlinedButton.icon(
                                 onPressed:
@@ -135,7 +136,7 @@ final class HeroSection extends StatelessWidget {
                                   Icons.download_rounded,
                                   size: 19,
                                 ),
-                                label: const Text('Download CV'),
+                                label: Text(context.loc.heroDownloadCv),
                               ),
                               TextButton.icon(
                                 onPressed: onContact,
@@ -143,7 +144,7 @@ final class HeroSection extends StatelessWidget {
                                   Icons.mail_outline_rounded,
                                   size: 19,
                                 ),
-                                label: const Text('Contact Me'),
+                                label: Text(context.loc.heroContactMe),
                               ),
                             ],
                           )
@@ -233,7 +234,7 @@ class _AvailabilityBadge extends StatelessWidget {
               .fadeOut(duration: 900.ms, curve: Curves.easeInOut),
           const SizedBox(width: 8),
           Text(
-            'Available for work',
+            context.loc.heroAvailableForWork,
             style: Theme.of(context).textTheme.labelLarge
                 ?.copyWith(color: Colors.green.shade300),
           ),

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/localizations_cubit/category_labels.dart';
+import '../../../../core/localizations_cubit/locale_cubit.dart';
+
 import '../../../../core/theme/app_palette.dart';
 import '../../domain/entities/project.dart';
 
@@ -105,7 +108,7 @@ class _ProjectCardState extends State<ProjectCard> {
                                     ),
                                     const SizedBox(width: 7),
                                     Text(
-                                      'View details',
+                                      context.loc.projectCardViewDetails,
                                       style: TextStyle(
                                         color: scheme.onPrimary,
                                         fontWeight: FontWeight.w600,
@@ -127,7 +130,7 @@ class _ProjectCardState extends State<ProjectCard> {
                                 size: 15,
                                 color: Colors.amber.shade600,
                               ),
-                              label: const Text('Featured'),
+                              label: Text(context.loc.projectCardFeaturedBadge),
                               labelStyle: const TextStyle(fontSize: 11.5),
                               visualDensity: VisualDensity.compact,
                             ),
@@ -142,7 +145,9 @@ class _ProjectCardState extends State<ProjectCard> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        project.category.label.toUpperCase(),
+                        context.loc
+                            .categoryLabel(project.category)
+                            .toUpperCase(),
                         style: theme.textTheme.labelMedium?.copyWith(
                           color: scheme.secondary,
                           letterSpacing: 1.2,

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/localizations_cubit/locale_cubit.dart';
+
 import '../../../../core/utils/responsive.dart';
 import '../../../../core/utils/url_helper.dart';
 import '../../domain/entities/project.dart';
@@ -9,7 +11,7 @@ Future<void> showProjectDetail(BuildContext context, Project project) {
   return showGeneralDialog(
     context: context,
     barrierDismissible: true,
-    barrierLabel: 'Project details',
+    barrierLabel: context.loc.projectDetailsBarrierLabel,
     barrierColor: Colors.black87,
     transitionDuration: const Duration(milliseconds: 280),
     pageBuilder: (dialogContext, animation, secondaryAnimation) {
@@ -93,7 +95,7 @@ class _ProjectDetailDialogState extends State<_ProjectDetailDialog> {
                             color: Colors.amber.shade600,
                           ),
                         IconButton(
-                          tooltip: 'Close',
+                          tooltip: context.loc.commonClose,
                           onPressed: () => Navigator.of(context).pop(),
                           icon: const Icon(Icons.close_rounded),
                         ),
@@ -101,7 +103,7 @@ class _ProjectDetailDialogState extends State<_ProjectDetailDialog> {
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      'My role — ${project.role}',
+                      context.loc.projectDetailsRole(project.role),
                       style: theme.textTheme.labelLarge,
                     ),
                     const SizedBox(height: 14),
@@ -140,14 +142,14 @@ class _ProjectDetailDialogState extends State<_ProjectDetailDialog> {
                               Icons.open_in_new_rounded,
                               size: 17,
                             ),
-                            label: const Text('Live demo'),
+                            label: Text(context.loc.projectDetailsLiveDemo),
                           ),
                         if (project.githubUrl?.isNotEmpty ?? false)
                           OutlinedButton.icon(
                             onPressed: () =>
                                 openExternalUrl(project.githubUrl!),
                             icon: const Icon(Icons.code_rounded, size: 17),
-                            label: const Text('Source code'),
+                            label: Text(context.loc.projectDetailsSourceCode),
                           ),
                       ],
                     ),

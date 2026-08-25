@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../core/localizations_cubit/locale_cubit.dart';
+
 import '../../../../../core/theme/app_palette.dart';
 import '../../../../portfolio/domain/entities/profile.dart';
 
@@ -26,9 +28,15 @@ final class ProfileLivePreview extends StatelessWidget {
               children: [
                 Icon(Icons.preview_rounded, size: 18, color: scheme.secondary),
                 const SizedBox(width: 8),
-                Text('Live preview', style: theme.textTheme.labelLarge),
+                Text(
+                  context.loc.livePreviewTitle,
+                  style: theme.textTheme.labelLarge,
+                ),
                 const Spacer(),
-                Text('updates as you type', style: theme.textTheme.labelMedium),
+                Text(
+                  context.loc.livePreviewHint,
+                  style: theme.textTheme.labelMedium,
+                ),
               ],
             ),
             const Divider(height: 30),
@@ -72,7 +80,7 @@ final class ProfileLivePreview extends StatelessWidget {
                     ),
                   ),
                   child: Text(
-                    'Available for work',
+                    context.loc.heroAvailableForWork,
                     style: theme.textTheme.labelMedium?.copyWith(
                       color: Colors.green.shade300,
                     ),
@@ -87,7 +95,9 @@ final class ProfileLivePreview extends StatelessWidget {
                     AppPalette.accentGradient.createShader(bounds),
                 blendMode: BlendMode.srcIn,
                 child: Text(
-                  profile.name.isEmpty ? 'Your name' : profile.name,
+                  profile.name.isEmpty
+                      ? context.loc.livePreviewNameFallback
+                      : profile.name,
                   textAlign: TextAlign.center,
                   style: theme.textTheme.headlineMedium,
                 ),
@@ -96,7 +106,9 @@ final class ProfileLivePreview extends StatelessWidget {
             const SizedBox(height: 6),
             Center(
               child: Text(
-                profile.title.isEmpty ? 'Your title' : profile.title,
+                profile.title.isEmpty
+                    ? context.loc.livePreviewTitleFallback
+                    : profile.title,
                 style: theme.textTheme.bodyLarge?.copyWith(
                   color: scheme.secondary,
                 ),
@@ -123,7 +135,7 @@ final class ProfileLivePreview extends StatelessWidget {
                   ),
                 if (profile.skills.isEmpty)
                   Text(
-                    'No skills yet — add some below.',
+                    context.loc.livePreviewEmptySkills,
                     style: theme.textTheme.bodyMedium,
                   ),
               ],

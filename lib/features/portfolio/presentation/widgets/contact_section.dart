@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/localizations_cubit/locale_cubit.dart';
+
 import '../../../../core/utils/responsive.dart';
 import '../../../../core/utils/url_helper.dart';
 import '../cubit/portfolio_cubit.dart';
@@ -46,14 +48,14 @@ class _ContactSectionState extends State<ContactSection> {
     try {
       await composeEmail(
         to: email,
-        subject: 'Portfolio contact from ${_name.text.trim()}',
+        subject: '${context.loc.contactSectionTitle}: ${_name.text.trim()}',
         body:
             '${_message.text.trim()}\n\n— ${_name.text.trim()} (${_email.text.trim()})',
       );
       if (!mounted) return;
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(const SnackBar(content: Text('Opening your mail app…')));
+      ).showSnackBar(SnackBar(content: Text(context.loc.contactMailSnackbar)));
       _formKey.currentState?.reset();
       _name.clear();
       _email.clear();
@@ -72,10 +74,11 @@ class _ContactSectionState extends State<ContactSection> {
       buildWhen: (previous, current) => previous.profile != current.profile,
       builder: (context, state) {
         final socialLinks = state.profile.socialLinks;
+        final loc = context.loc;
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SectionHeader(index: '03', title: 'Contact'),
+            SectionHeader(index: '03', title: context.loc.contactSectionTitle),
             const SizedBox(height: 28),
             Flex(
               direction: isCompact ? Axis.vertical : Axis.horizontal,
@@ -89,7 +92,7 @@ class _ContactSectionState extends State<ContactSection> {
                         : CrossAxisAlignment.start,
                     children: [
                       Text(
-                            'Let\u2019s build something together.',
+                            context.loc.contactHeading,
                             style: theme.textTheme.headlineSmall,
                             textAlign: isCompact
                                 ? TextAlign.center
@@ -104,8 +107,7 @@ class _ContactSectionState extends State<ContactSection> {
                           ),
                       const SizedBox(height: 14),
                       Text(
-                        'Have a project in mind or just want to say hi? '
-                        'My inbox is always open.',
+                        context.loc.contactSubtitle,
                         style: theme.textTheme.bodyLarge,
                         textAlign: isCompact
                             ? TextAlign.center
@@ -139,13 +141,15 @@ class _ContactSectionState extends State<ContactSection> {
                           children: [
                             TextFormField(
                               controller: _name,
-                              decoration: const InputDecoration(
-                                labelText: 'Your name',
-                                prefixIcon: Icon(Icons.person_outline_rounded),
+                              decoration: InputDecoration(
+                                labelText: loc.contactFormName,
+                                prefixIcon: const Icon(
+                                  Icons.person_outline_rounded,
+                                ),
                               ),
                               validator: (value) =>
                                   value == null || value.trim().isEmpty
-                                  ? 'Please enter your name.'
+                                  ? loc.contactFormNameRequired
                                   : null,
                             ),
                             const SizedBox(height: 16),
@@ -153,15 +157,17 @@ class _ContactSectionState extends State<ContactSection> {
                               controller: _email,
                               keyboardType: TextInputType.emailAddress,
                               autofillHints: const [AutofillHints.email],
-                              decoration: const InputDecoration(
-                                labelText: 'Your email',
-                                prefixIcon: Icon(Icons.alternate_email_rounded),
+                              decoration: InputDecoration(
+                                labelText: loc.contactFormEmail,
+                                prefixIcon: const Icon(
+                                  Icons.alternate_email_rounded,
+                                ),
                               ),
                               validator: (value) =>
                                   value == null ||
                                       !RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$')
                                           .hasMatch(value)
-                                  ? 'Please enter a valid email.'
+                                  ? loc.contactFormEmailInvalid
                                   : null,
                             ),
                             const SizedBox(height: 16),
@@ -169,13 +175,13 @@ class _ContactSectionState extends State<ContactSection> {
                               controller: _message,
                               maxLines: 5,
                               minLines: 4,
-                              decoration: const InputDecoration(
-                                labelText: 'Message',
+                              decoration: InputDecoration(
+                                labelText: loc.contactFormMessage,
                                 alignLabelWithHint: true,
                               ),
                               validator: (value) =>
                                   value == null || value.trim().length < 10
-                                  ? 'Tell me a bit more (min. 10 characters).'
+                                  ? loc.contactFormMessageShort
                                   : null,
                             ),
                             const SizedBox(height: 20),
@@ -191,7 +197,9 @@ class _ContactSectionState extends State<ContactSection> {
                                     )
                                   : const Icon(Icons.send_rounded, size: 18),
                               label: Text(
-                                _sending ? 'Opening…' : 'Send message',
+                                _sending
+                                    ? loc.contactSending
+                                    : loc.contactSendMessage,
                               ),
                             ),
                           ],

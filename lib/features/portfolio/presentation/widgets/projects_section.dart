@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/localizations_cubit/locale_cubit.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../domain/entities/project_category.dart';
 import '../cubit/portfolio_cubit.dart';
 import '../cubit/portfolio_state.dart';
@@ -25,7 +27,7 @@ final class ProjectsSection extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SectionHeader(index: '02', title: 'Projects'),
+            SectionHeader(index: '02', title: context.loc.projectsSectionTitle),
             const SizedBox(height: 22),
             Wrap(
               spacing: 10,
@@ -42,7 +44,7 @@ final class ProjectsSection extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 48),
                 child: Center(
                   child: Text(
-                    'No projects here yet — check back soon!',
+                    context.loc.projectsEmptyPublic,
                     style: theme.textTheme.bodyLarge,
                   ),
                 ),
@@ -108,28 +110,31 @@ final class ProjectsSection extends StatelessWidget {
 }
 
 final class _CategoryChip extends StatelessWidget {
-  _CategoryChip.category({
-    required ProjectCategory this.category,
-    required this.state,
-  }) : label = category.label,
-       isSelected = state.selectedCategory == category;
+  _CategoryChip.category({required this.category, required this.state})
+    : isSelected = state.selectedCategory == category;
 
   _CategoryChip.all({required this.state})
-    : label = 'All',
-      category = null,
+    : category = null,
       isSelected = state.selectedCategory == null;
 
-  final String label;
   final ProjectCategory? category;
   final bool isSelected;
   final PortfolioState state;
 
+  String _label(AppLocalizations loc) => switch (category) {
+    null => loc.projectsFilterAll,
+    ProjectCategory.mobile => loc.categoryMobile,
+    ProjectCategory.web => loc.categoryWeb,
+    ProjectCategory.fullstack => loc.categoryFullstack,
+  };
+
   @override
   Widget build(BuildContext context) {
     final ColorScheme scheme = Theme.of(context).colorScheme;
+    final AppLocalizations loc = context.loc;
     return FilterChip(
       selected: isSelected,
-      label: Text(label),
+      label: Text(_label(loc)),
       labelPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 2),
       onSelected: (_) {
         final cubit = context.read<PortfolioCubit>();

@@ -38,6 +38,14 @@ FlavorConfig(
 );
 ```
 
+## Localization (EN / AR)
+
+- **Sources:** `assets/translations/app_en.arb` + `app_ar.arb` (bundled as assets)
+- **Generated code:** `lib/l10n/` via `l10n.yaml` → run `flutter gen-l10n` after editing
+- **Locale state:** `LocaleCubit` (`core/localizations_cubit/`) — starts from the system locale, toggled by the `ع`/`EN` pill in the navbar / admin shell; Arabic flips the whole app to RTL automatically
+- Access strings anywhere below MaterialApp with `context.loc.someKey`
+- After editing ARBs: `flutter gen-l10n`, then restart the app
+
 ## Project structure
 
 ```

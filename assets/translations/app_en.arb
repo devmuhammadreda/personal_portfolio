@@ -1,0 +1,194 @@
+{
+  "@@locale": "en",
+  "commonRetry": "Try again",
+  "commonCancel": "Cancel",
+  "commonDelete": "Delete",
+  "commonEdit": "Edit",
+  "commonClose": "Close",
+  "commonRemove": "Remove",
+  "commonAdd": "Add",
+  "commonErrorGeneric": "Something went wrong.",
+  "loadingPortfolio": "Loading portfolio…",
+  "errorLoadingPortfolio": "Something went wrong while loading the portfolio.",
+  "navAbout": "About",
+  "navProjects": "Projects",
+  "navContact": "Contact",
+  "navMenuTooltip": "Menu",
+  "heroGreeting": "Hi there, I’m",
+  "heroNameFallback": "Flutter Developer",
+  "heroTitleFallback": "Building beautiful apps, one widget at a time",
+  "heroViewWork": "View My Work",
+  "heroDownloadCv": "Download CV",
+  "heroContactMe": "Contact Me",
+  "heroAvailableForWork": "Available for work",
+  "aboutSectionTitle": "About Me",
+  "aboutBioFallback": "This bio lives in Firestore and updates without redeploying — add your story to see it here.",
+  "aboutTechHeading": "Tech I work with",
+  "statYearsLabel": "Years of experience",
+  "statProjectsLabel": "Shipped projects",
+  "statTechnologiesLabel": "Technologies",
+  "projectsSectionTitle": "Projects",
+  "projectsEmptyPublic": "No projects here yet — check back soon!",
+  "projectsFilterAll": "All",
+  "projectCardViewDetails": "View details",
+  "projectCardFeaturedBadge": "Featured",
+  "projectDetailsBarrierLabel": "Project details",
+  "projectDetailsRole": "My role — {role}",
+  "@projectDetailsRole": {
+    "placeholders": {
+      "role": {
+        "type": "String"
+      }
+    }
+  },
+  "projectDetailsLiveDemo": "Live demo",
+  "projectDetailsSourceCode": "Source code",
+  "footerCopyright": "© {year} {name}. Built with Flutter.",
+  "@footerCopyright": {
+    "placeholders": {
+      "year": {
+        "type": "int"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "contactSectionTitle": "Contact",
+  "contactHeading": "Let’s build something together.",
+  "contactSubtitle": "Have a project in mind or just want to say hi? My inbox is always open.",
+  "contactFormName": "Your name",
+  "contactFormEmail": "Your email",
+  "contactFormMessage": "Message",
+  "contactFormNameRequired": "Please enter your name.",
+  "contactFormEmailInvalid": "Please enter a valid email.",
+  "contactFormMessageShort": "Tell me a bit more (min. 10 characters).",
+  "contactSendMessage": "Send message",
+  "contactSending": "Opening…",
+  "contactMailSnackbar": "Opening your mail app…",
+  "adminSignInTitle": "Admin sign-in",
+  "adminSignInSubtitle": "Restricted area — owner access only.",
+  "fieldEmail": "Email",
+  "fieldPassword": "Password",
+  "emailInvalid": "Enter a valid email.",
+  "passwordTooShort": "At least 6 characters.",
+  "signInFailed": "Sign-in failed. Please try again.",
+  "shellDashboard": "Dashboard",
+  "shellProfile": "Profile",
+  "shellProjects": "Projects",
+  "shellConsoleTitle": "Admin console",
+  "shellSignOut": "Sign out",
+  "dashboardOverview": "Overview",
+  "dashboardTotalProjects": "Total projects",
+  "dashboardFeaturedCount": "Featured",
+  "dashboardRecentlyUpdated": "Recently updated",
+  "dashboardNewProject": "New project",
+  "dashboardEmptyProjects": "No projects yet. Add your first one!",
+  "dashboardFailedToLoad": "Failed to load.",
+  "updatedToday": "today",
+  "updatedYesterday": "yesterday",
+  "profileEditorTitle": "Edit profile",
+  "profileSaveChanges": "Save changes",
+  "profileSaving": "Saving…",
+  "profileFailedToLoad": "Failed to load profile.",
+  "profileBasicsHeading": "Basics",
+  "fieldName": "Name",
+  "fieldTitle": "Title",
+  "fieldTagline": "Tagline",
+  "fieldYearsOfExperience": "Years of experience",
+  "fieldAboutMe": "About me",
+  "availableSwitchTitle": "Available for work",
+  "availableSwitchSubtitle": "Shows the green badge in the hero section",
+  "skillsHeading": "Skills",
+  "skillsAdd": "Add skill",
+  "skillsEmpty": "No skills yet — add the technologies you work with.",
+  "skillLabel": "Skill {index}",
+  "@skillLabel": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "livePreviewTitle": "Live preview",
+  "livePreviewHint": "updates as you type",
+  "livePreviewNameFallback": "Your name",
+  "livePreviewTitleFallback": "Your title",
+  "livePreviewEmptySkills": "No skills yet — add some below.",
+  "projectsAdminCount": "Projects ({count})",
+  "@projectsAdminCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "projectsAdminNew": "New project",
+  "projectsAdminReorderHint": "Drag rows to reorder — applies to the public site instantly.",
+  "projectsAdminEmpty": "No projects yet. Create your first one!",
+  "projectsAdminFailedToLoad": "Failed to load projects.",
+  "tooltipFeature": "Feature",
+  "tooltipUnfeature": "Unfeature",
+  "deleteProjectTitle": "Delete \"{title}\"?",
+  "@deleteProjectTitle": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteProjectBody": "This permanently removes the project from the public site. This action cannot be undone.",
+  "formRoleField": "Your role",
+  "formShortDescription": "Short description *",
+  "formShortDescriptionRequired": "Short description is required.",
+  "formShortDescriptionHelper": "Shown on the project card",
+  "formFullDescription": "Full description",
+  "formFeaturedSwitchTitle": "Featured project",
+  "formFeaturedSwitchSubtitle": "Highlights it on cards and the dashboard",
+  "formTechStack": "Tech stack",
+  "formTechStackHelper": "Type a technology and press Add",
+  "formTechStackEmpty": "No technologies added yet.",
+  "formScreenshotsCount": "Screenshots ({count})",
+  "@formScreenshotsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "formAddImages": "Add images",
+  "formUploadingImages": "Uploading…",
+  "formCoverHint": "The first image is used as the card cover.",
+  "formNoScreenshots": "No screenshots yet.",
+  "formCoverBadge": "Cover",
+  "formLinksHeading": "Links",
+  "formLiveUrlField": "Live demo URL",
+  "formGithubUrlField": "GitHub repository URL",
+  "categoryMobile": "Mobile",
+  "categoryWeb": "Web",
+  "categoryFullstack": "Full-stack",
+  "signInButton": "Sign in",
+  "signingIn": "Signing in…",
+  "updatedDaysAgo": "{count}d ago",
+  "@updatedDaysAgo": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "projectUpdatedLine": "{category} · updated {when}",
+  "@projectUpdatedLine": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      },
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "formTitleField": "Title *",
+  "formTitleRequired": "Title is required.",
+  "formCategoryField": "Category"
+}

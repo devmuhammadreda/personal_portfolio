@@ -12,10 +12,4 @@ enum ProjectCategory {
         (category) => category.value == value,
         orElse: () => ProjectCategory.mobile,
       );
-
-  String get label => switch (this) {
-    ProjectCategory.mobile => 'Mobile',
-    ProjectCategory.web => 'Web',
-    ProjectCategory.fullstack => 'Full-stack',
-  };
 }
