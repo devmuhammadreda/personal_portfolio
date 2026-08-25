@@ -350,6 +350,18 @@ abstract class AppLocalizations {
   /// **'Your email'**
   String get contactFormEmail;
 
+  /// No description provided for @contactFormPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number (optional)'**
+  String get contactFormPhone;
+
+  /// No description provided for @contactFormPhoneInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid phone number.'**
+  String get contactFormPhoneInvalid;
+
   /// No description provided for @contactFormMessage.
   ///
   /// In en, this message translates to:
@@ -383,14 +395,14 @@ abstract class AppLocalizations {
   /// No description provided for @contactSending.
   ///
   /// In en, this message translates to:
-  /// **'Opening…'**
+  /// **'Sending…'**
   String get contactSending;
 
-  /// No description provided for @contactMailSnackbar.
+  /// No description provided for @contactSentSnackbar.
   ///
   /// In en, this message translates to:
-  /// **'Opening your mail app…'**
-  String get contactMailSnackbar;
+  /// **'Message sent — I\'ll get back to you soon!'**
+  String get contactSentSnackbar;
 
   /// No description provided for @adminSignInTitle.
   ///
@@ -451,6 +463,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Projects'**
   String get shellProjects;
+
+  /// No description provided for @shellMessages.
+  ///
+  /// In en, this message translates to:
+  /// **'Messages'**
+  String get shellMessages;
 
   /// No description provided for @shellConsoleTitle.
   ///
@@ -871,6 +889,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Category'**
   String get formCategoryField;
+
+  /// No description provided for @messagesAdminCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Messages ({count})'**
+  String messagesAdminCount(int count);
+
+  /// No description provided for @messagesAdminUnreadCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} unread'**
+  String messagesAdminUnreadCount(int count);
+
+  /// No description provided for @messagesAdminMarkAllRead.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark all as read'**
+  String get messagesAdminMarkAllRead;
+
+  /// No description provided for @messagesAdminEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No messages yet — new contact form submissions land here.'**
+  String get messagesAdminEmpty;
+
+  /// No description provided for @messagesAdminFailedToLoad.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load messages.'**
+  String get messagesAdminFailedToLoad;
+
+  /// No description provided for @messagesAdminReply.
+  ///
+  /// In en, this message translates to:
+  /// **'Reply'**
+  String get messagesAdminReply;
 }
 
 class _AppLocalizationsDelegate

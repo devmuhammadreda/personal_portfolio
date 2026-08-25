@@ -142,6 +142,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get contactFormEmail => 'بريدك الإلكتروني';
 
   @override
+  String get contactFormPhone => 'رقم الهاتف (اختياري)';
+
+  @override
+  String get contactFormPhoneInvalid => 'أدخل رقم هاتف صحيحًا.';
+
+  @override
   String get contactFormMessage => 'الرسالة';
 
   @override
@@ -158,10 +164,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get contactSendMessage => 'أرسل الرسالة';
 
   @override
-  String get contactSending => 'جارٍ الفتح…';
+  String get contactSending => 'جارٍ الإرسال…';
 
   @override
-  String get contactMailSnackbar => 'جارٍ فتح تطبيق البريد…';
+  String get contactSentSnackbar => 'تم إرسال رسالتك — سأرد عليك قريبًا!';
 
   @override
   String get adminSignInTitle => 'تسجيل دخول المشرف';
@@ -192,6 +198,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get shellProjects => 'المشاريع';
+
+  @override
+  String get shellMessages => 'الرسائل';
 
   @override
   String get shellConsoleTitle => 'لوحة المشرف';
@@ -418,4 +427,27 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get formCategoryField => 'التصنيف';
+
+  @override
+  String messagesAdminCount(int count) {
+    return 'الرسائل ($count)';
+  }
+
+  @override
+  String messagesAdminUnreadCount(int count) {
+    return '$count غير مقروءة';
+  }
+
+  @override
+  String get messagesAdminMarkAllRead => 'تعليم الكل كمقروء';
+
+  @override
+  String get messagesAdminEmpty =>
+      'لا توجد رسائل بعد — ستظهر هنا رسائل نموذج التواصل.';
+
+  @override
+  String get messagesAdminFailedToLoad => 'فشل تحميل الرسائل.';
+
+  @override
+  String get messagesAdminReply => 'رد';
 }

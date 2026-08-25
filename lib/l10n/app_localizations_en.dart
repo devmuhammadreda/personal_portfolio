@@ -144,6 +144,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get contactFormEmail => 'Your email';
 
   @override
+  String get contactFormPhone => 'Phone number (optional)';
+
+  @override
+  String get contactFormPhoneInvalid => 'Enter a valid phone number.';
+
+  @override
   String get contactFormMessage => 'Message';
 
   @override
@@ -160,10 +166,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get contactSendMessage => 'Send message';
 
   @override
-  String get contactSending => 'Opening…';
+  String get contactSending => 'Sending…';
 
   @override
-  String get contactMailSnackbar => 'Opening your mail app…';
+  String get contactSentSnackbar =>
+      'Message sent — I\'ll get back to you soon!';
 
   @override
   String get adminSignInTitle => 'Admin sign-in';
@@ -194,6 +201,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get shellProjects => 'Projects';
+
+  @override
+  String get shellMessages => 'Messages';
 
   @override
   String get shellConsoleTitle => 'Admin console';
@@ -421,4 +431,27 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get formCategoryField => 'Category';
+
+  @override
+  String messagesAdminCount(int count) {
+    return 'Messages ($count)';
+  }
+
+  @override
+  String messagesAdminUnreadCount(int count) {
+    return '$count unread';
+  }
+
+  @override
+  String get messagesAdminMarkAllRead => 'Mark all as read';
+
+  @override
+  String get messagesAdminEmpty =>
+      'No messages yet — new contact form submissions land here.';
+
+  @override
+  String get messagesAdminFailedToLoad => 'Failed to load messages.';
+
+  @override
+  String get messagesAdminReply => 'Reply';
 }
