@@ -37,6 +37,8 @@ create table if not exists public.projects (
   "imageUrls" jsonb not null default '[]'::jsonb,
   category text not null default 'mobile',
   featured boolean not null default false,
+  "googlePlayUrl" text,
+  "appStoreUrl" text,
   "order" int not null default 0,
   "createdAt" timestamptz not null default now(),
   "updatedAt" timestamptz not null default now()

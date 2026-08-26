@@ -136,10 +136,10 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get projectDetailsLiveDemo => 'تجربة مباشرة';
+  String get projectDetailsGooglePlay => 'جوجل بلاي';
 
   @override
-  String get projectDetailsSourceCode => 'الكود المصدري';
+  String get projectDetailsAppStore => 'آب ستور';
 
   @override
   String footerCopyright(int year, String name) {
@@ -416,10 +416,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get formLinksHeading => 'الروابط';
 
   @override
-  String get formLiveUrlField => 'رابط التجربة المباشرة';
+  String get formGooglePlayUrlField => 'رابط Google Play';
 
   @override
-  String get formGithubUrlField => 'رابط مستودع GitHub';
+  String get formAppStoreUrlField => 'رابط App Store';
 
   @override
   String get categoryMobile => 'موبايل';

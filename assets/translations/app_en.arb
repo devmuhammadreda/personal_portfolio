@@ -48,8 +48,8 @@
       }
     }
   },
-  "projectDetailsLiveDemo": "Live demo",
-  "projectDetailsSourceCode": "Source code",
+  "projectDetailsGooglePlay": "Google Play",
+  "projectDetailsAppStore": "App Store",
   "footerCopyright": "© {year} {name}. Built with Flutter.",
   "@footerCopyright": {
     "placeholders": {
@@ -174,8 +174,8 @@
   "formNoScreenshots": "No screenshots yet.",
   "formCoverBadge": "Cover",
   "formLinksHeading": "Links",
-  "formLiveUrlField": "Live demo URL",
-  "formGithubUrlField": "GitHub repository URL",
+  "formGooglePlayUrlField": "Google Play URL",
+  "formAppStoreUrlField": "App Store URL",
   "categoryMobile": "Mobile",
   "categoryWeb": "Web",
   "categoryFullstack": "Full-stack",

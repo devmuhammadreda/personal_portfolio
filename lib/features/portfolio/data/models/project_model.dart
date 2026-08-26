@@ -15,8 +15,8 @@ final class ProjectModel extends Project {
     required super.order,
     required super.createdAt,
     required super.updatedAt,
-    super.liveUrl,
-    super.githubUrl,
+    super.googlePlayUrl,
+    super.appStoreUrl,
   });
 
   factory ProjectModel.fromMap(String id, Map<String, dynamic> map) {
@@ -32,8 +32,8 @@ final class ProjectModel extends Project {
       imageUrls: (map['imageUrls'] as List<dynamic>? ?? const [])
           .whereType<String>()
           .toList(),
-      liveUrl: map['liveUrl'] as String?,
-      githubUrl: map['githubUrl'] as String?,
+      googlePlayUrl: map['googlePlayUrl'] as String?,
+      appStoreUrl: map['appStoreUrl'] as String?,
       category: ProjectCategory.fromValue(map['category'] as String? ?? ''),
       featured: map['featured'] as bool? ?? false,
       order: (map['order'] as num?)?.toInt() ?? 0,
@@ -51,8 +51,8 @@ final class ProjectModel extends Project {
       techStack: project.techStack,
       role: project.role,
       imageUrls: project.imageUrls,
-      liveUrl: project.liveUrl,
-      githubUrl: project.githubUrl,
+      googlePlayUrl: project.googlePlayUrl,
+      appStoreUrl: project.appStoreUrl,
       category: project.category,
       featured: project.featured,
       order: project.order,
@@ -69,8 +69,8 @@ final class ProjectModel extends Project {
       'techStack': techStack,
       'role': role,
       'imageUrls': imageUrls,
-      if (liveUrl != null && liveUrl!.isNotEmpty) 'liveUrl': liveUrl,
-      if (githubUrl != null && githubUrl!.isNotEmpty) 'githubUrl': githubUrl,
+      'googlePlayUrl': googlePlayUrl,
+      'appStoreUrl': appStoreUrl,
       'category': category.value,
       'featured': featured,
       'order': order,

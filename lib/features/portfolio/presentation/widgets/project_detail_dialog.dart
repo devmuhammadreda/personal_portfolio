@@ -135,21 +135,22 @@ class _ProjectDetailDialogState extends State<_ProjectDetailDialog> {
                       spacing: 12,
                       runSpacing: 10,
                       children: [
-                        if (project.liveUrl?.isNotEmpty ?? false)
+                        if (project.googlePlayUrl?.isNotEmpty ?? false)
                           FilledButton.icon(
-                            onPressed: () => openExternalUrl(project.liveUrl!),
+                            onPressed: () =>
+                                openExternalUrl(project.googlePlayUrl!),
                             icon: const Icon(
-                              Icons.open_in_new_rounded,
-                              size: 17,
+                              Icons.play_arrow_rounded,
+                              size: 19,
                             ),
-                            label: Text(context.loc.projectDetailsLiveDemo),
+                            label: Text(context.loc.projectDetailsGooglePlay),
                           ),
-                        if (project.githubUrl?.isNotEmpty ?? false)
+                        if (project.appStoreUrl?.isNotEmpty ?? false)
                           OutlinedButton.icon(
                             onPressed: () =>
-                                openExternalUrl(project.githubUrl!),
-                            icon: const Icon(Icons.code_rounded, size: 17),
-                            label: Text(context.loc.projectDetailsSourceCode),
+                                openExternalUrl(project.appStoreUrl!),
+                            icon: const Icon(Icons.apple_rounded, size: 18),
+                            label: Text(context.loc.projectDetailsAppStore),
                           ),
                       ],
                     ),

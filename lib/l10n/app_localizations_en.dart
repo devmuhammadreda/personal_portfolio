@@ -140,10 +140,10 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get projectDetailsLiveDemo => 'Live demo';
+  String get projectDetailsGooglePlay => 'Google Play';
 
   @override
-  String get projectDetailsSourceCode => 'Source code';
+  String get projectDetailsAppStore => 'App Store';
 
   @override
   String footerCopyright(int year, String name) {
@@ -422,10 +422,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get formLinksHeading => 'Links';
 
   @override
-  String get formLiveUrlField => 'Live demo URL';
+  String get formGooglePlayUrlField => 'Google Play URL';
 
   @override
-  String get formGithubUrlField => 'GitHub repository URL';
+  String get formAppStoreUrlField => 'App Store URL';
 
   @override
   String get categoryMobile => 'Mobile';

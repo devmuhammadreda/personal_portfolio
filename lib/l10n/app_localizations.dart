@@ -344,17 +344,17 @@ abstract class AppLocalizations {
   /// **'My role — {role}'**
   String projectDetailsRole(String role);
 
-  /// No description provided for @projectDetailsLiveDemo.
+  /// No description provided for @projectDetailsGooglePlay.
   ///
   /// In en, this message translates to:
-  /// **'Live demo'**
-  String get projectDetailsLiveDemo;
+  /// **'Google Play'**
+  String get projectDetailsGooglePlay;
 
-  /// No description provided for @projectDetailsSourceCode.
+  /// No description provided for @projectDetailsAppStore.
   ///
   /// In en, this message translates to:
-  /// **'Source code'**
-  String get projectDetailsSourceCode;
+  /// **'App Store'**
+  String get projectDetailsAppStore;
 
   /// No description provided for @footerCopyright.
   ///
@@ -872,17 +872,17 @@ abstract class AppLocalizations {
   /// **'Links'**
   String get formLinksHeading;
 
-  /// No description provided for @formLiveUrlField.
+  /// No description provided for @formGooglePlayUrlField.
   ///
   /// In en, this message translates to:
-  /// **'Live demo URL'**
-  String get formLiveUrlField;
+  /// **'Google Play URL'**
+  String get formGooglePlayUrlField;
 
-  /// No description provided for @formGithubUrlField.
+  /// No description provided for @formAppStoreUrlField.
   ///
   /// In en, this message translates to:
-  /// **'GitHub repository URL'**
-  String get formGithubUrlField;
+  /// **'App Store URL'**
+  String get formAppStoreUrlField;
 
   /// No description provided for @categoryMobile.
   ///

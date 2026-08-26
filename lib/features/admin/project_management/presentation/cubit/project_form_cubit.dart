@@ -73,12 +73,18 @@ final class ProjectFormCubit extends Cubit<ProjectFormState>
   void setLongDescription(String value) =>
       _update((d) => d.copyWith(longDescription: value));
 
-  void setLiveUrl(String value) => _update(
-    (d) => d.copyWith(liveUrl: value.trim().isEmpty ? null : value.trim()),
+  void setGooglePlayUrl(String value) => _update(
+    (d) => d.copyWith(
+      googlePlayUrl: value.trim().isEmpty ? null : value.trim(),
+      clearGooglePlayUrl: value.trim().isEmpty,
+    ),
   );
 
-  void setGithubUrl(String value) => _update(
-    (d) => d.copyWith(githubUrl: value.trim().isEmpty ? null : value.trim()),
+  void setAppStoreUrl(String value) => _update(
+    (d) => d.copyWith(
+      appStoreUrl: value.trim().isEmpty ? null : value.trim(),
+      clearAppStoreUrl: value.trim().isEmpty,
+    ),
   );
 
   void setCategory(ProjectCategory category) =>

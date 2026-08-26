@@ -16,8 +16,8 @@ class Project extends Equatable {
     required this.order,
     required this.createdAt,
     required this.updatedAt,
-    this.liveUrl,
-    this.githubUrl,
+    this.googlePlayUrl,
+    this.appStoreUrl,
   });
 
   /// Firestore document id. Empty for a not-yet-persisted project.
@@ -28,8 +28,10 @@ class Project extends Equatable {
   final List<String> techStack;
   final String role;
   final List<String> imageUrls;
-  final String? liveUrl;
-  final String? githubUrl;
+
+  /// Production store links.
+  final String? googlePlayUrl;
+  final String? appStoreUrl;
   final ProjectCategory category;
   final bool featured;
 
@@ -48,10 +50,10 @@ class Project extends Equatable {
     List<String>? techStack,
     String? role,
     List<String>? imageUrls,
-    String? liveUrl,
-    bool clearLiveUrl = false,
-    String? githubUrl,
-    bool clearGithubUrl = false,
+    String? googlePlayUrl,
+    bool clearGooglePlayUrl = false,
+    String? appStoreUrl,
+    bool clearAppStoreUrl = false,
     ProjectCategory? category,
     bool? featured,
     int? order,
@@ -66,8 +68,10 @@ class Project extends Equatable {
       techStack: techStack ?? this.techStack,
       role: role ?? this.role,
       imageUrls: imageUrls ?? this.imageUrls,
-      liveUrl: clearLiveUrl ? null : (liveUrl ?? this.liveUrl),
-      githubUrl: clearGithubUrl ? null : (githubUrl ?? this.githubUrl),
+      googlePlayUrl: clearGooglePlayUrl
+          ? null
+          : (googlePlayUrl ?? this.googlePlayUrl),
+      appStoreUrl: clearAppStoreUrl ? null : (appStoreUrl ?? this.appStoreUrl),
       category: category ?? this.category,
       featured: featured ?? this.featured,
       order: order ?? this.order,
@@ -85,8 +89,8 @@ class Project extends Equatable {
     techStack,
     role,
     imageUrls,
-    liveUrl,
-    githubUrl,
+    googlePlayUrl,
+    appStoreUrl,
     category,
     featured,
     order,
