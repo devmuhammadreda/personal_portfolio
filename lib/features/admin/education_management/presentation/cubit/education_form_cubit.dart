@@ -23,6 +23,7 @@ final class EducationFormCubit extends Cubit<EducationFormState>
           EducationFormState(
             status: EducationFormStatus.ready,
             education: _emptyDraft(order: nextOrder),
+            isCurrent: true,
           ),
         );
         return;
@@ -42,6 +43,7 @@ final class EducationFormCubit extends Cubit<EducationFormState>
         EducationFormState(
           status: EducationFormStatus.ready,
           education: existing,
+          isCurrent: existing.endDate == null,
         ),
       );
     } on AppFailure catch (failure) {
@@ -79,9 +81,12 @@ final class EducationFormCubit extends Cubit<EducationFormState>
   void setEndDate(DateTime? value) =>
       _update((d) => d.copyWith(endDate: value, clearEndDate: value == null));
 
-  /// Marks the studies as ongoing by clearing the end date.
-  void setCurrent({required bool current}) =>
-      current ? _update((d) => d.copyWith(clearEndDate: true)) : null;
+  /// Toggles the explicit "still studying" flag; switching it on clears
+  /// any picked end date.
+  void setCurrent({required bool current}) {
+    emit(state.copyWith(isCurrent: current));
+    if (current) _update((d) => d.copyWith(clearEndDate: true));
+  }
 
   void dismissError() => emit(state.copyWith(clearError: true));
 
@@ -96,12 +101,17 @@ final class EducationFormCubit extends Cubit<EducationFormState>
     final education = state.education;
     if (education == null || !validate() || state.isSaving) return false;
 
+    // "Currently studying" always wins over a stale end date.
+    final Education persisted = state.isCurrent
+        ? education.copyWith(clearEndDate: true)
+        : education;
+
     emit(state.copyWith(status: EducationFormStatus.saving, clearError: true));
     try {
-      if (education.isNew) {
-        await _timelineRepository.createEducation(education);
+      if (persisted.isNew) {
+        await _timelineRepository.createEducation(persisted);
       } else {
-        await _timelineRepository.updateEducation(education);
+        await _timelineRepository.updateEducation(persisted);
       }
       safeEmit(state.copyWith(status: EducationFormStatus.saved));
       return true;

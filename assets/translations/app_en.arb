@@ -112,6 +112,16 @@
   "availableSwitchTitle": "Available for work",
   "availableSwitchSubtitle": "Shows the green badge in the hero section",
   "skillsHeading": "Skills",
+  "skillGroupsAdd": "Add category",
+  "skillGroupLabel": "Category {index}",
+  "@skillGroupLabel": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "skillGroupHint": "e.g. Mobile, Backend, Tools",
   "skillsAdd": "Add skill",
   "skillsEmpty": "No skills yet — add the technologies you work with.",
   "skillLabel": "Skill {index}",

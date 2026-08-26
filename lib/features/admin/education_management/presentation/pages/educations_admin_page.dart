@@ -236,7 +236,7 @@ class _EducationRow extends StatelessWidget {
     DateTime? start,
     DateTime? end,
   ) {
-    final DateFormat formatter = DateFormat.yMMM(
+    final DateFormat formatter = DateFormat.y(
       Localizations.localeOf(context).toString(),
     );
     final String startText = start == null ? '' : formatter.format(start);

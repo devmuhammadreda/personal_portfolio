@@ -7,6 +7,7 @@ import '../../../../../core/di/injector.dart';
 import '../../../../../core/theme/app_accents.dart';
 import '../../../../../core/utils/url_helper.dart';
 import '../../../media/domain/repositories/media_storage_repository.dart';
+import '../../../../portfolio/domain/entities/skill_group.dart';
 import '../../../../portfolio/domain/repositories/profile_repository.dart';
 import '../cubit/profile_editor_cubit.dart';
 import '../cubit/profile_editor_state.dart';
@@ -178,7 +179,7 @@ class _SkillsCard extends StatelessWidget {
     final loc = context.loc;
     final ThemeData theme = Theme.of(context);
     final cubit = context.read<ProfileEditorCubit>();
-    final skills = state.profile.skills;
+    final groups = state.profile.skillGroups;
 
     return Card(
       child: Padding(
@@ -195,14 +196,14 @@ class _SkillsCard extends StatelessWidget {
                   ),
                 ),
                 OutlinedButton.icon(
-                  onPressed: cubit.addSkill,
+                  onPressed: cubit.addSkillGroup,
                   icon: const Icon(Icons.add_rounded, size: 18),
-                  label: Text(context.loc.skillsAdd),
+                  label: Text(loc.skillGroupsAdd),
                 ),
               ],
             ),
             const SizedBox(height: 8),
-            if (skills.isEmpty)
+            if (groups.isEmpty)
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 12),
                 child: Text(
@@ -211,51 +212,118 @@ class _SkillsCard extends StatelessWidget {
                 ),
               )
             else
-              for (var i = 0; i < skills.length; i++)
-                Row(
-                  key: ValueKey('skill-row-$i-${skills[i].name}'),
-                  children: [
-                    Expanded(
-                      flex: 3,
-                      child: TextFormField(
-                        initialValue: skills[i].name.isEmpty
-                            ? null
-                            : skills[i].name,
-                        onChanged: (value) => cubit.renameSkill(i, value),
-                        decoration: InputDecoration(
-                          labelText: loc.skillLabel(i + 1),
-                          isDense: true,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 4,
-                      child: Slider(
-                        value: skills[i].level.toDouble(),
-                        min: 0,
-                        max: 100,
-                        divisions: 20,
-                        label: '${skills[i].level}',
-                        onChanged: (value) => cubit.setSkillLevel(i, value),
-                      ),
-                    ),
-                    Text(
-                      '${skills[i].level}%',
-                      style: theme.textTheme.labelMedium,
-                    ),
-                    IconButton(
-                      tooltip: context.loc.commonRemove,
-                      onPressed: () => cubit.removeSkill(i),
-                      icon: Icon(
-                        Icons.close_rounded,
-                        size: 19,
-                        color: theme.colorScheme.onSurfaceVariant,
-                      ),
-                    ),
-                  ],
-                ),
+              for (var g = 0; g < groups.length; g++)
+                _SkillGroupEditor(groupIndex: g, group: groups[g]),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _SkillGroupEditor extends StatelessWidget {
+  const _SkillGroupEditor({required this.groupIndex, required this.group});
+
+  final int groupIndex;
+  final SkillGroup group;
+
+  @override
+  Widget build(BuildContext context) {
+    final loc = context.loc;
+    final ThemeData theme = Theme.of(context);
+    final cubit = context.read<ProfileEditorCubit>();
+
+    return Container(
+      key: ValueKey('skill-group-$groupIndex-${group.category}'),
+      margin: const EdgeInsets.only(bottom: 14),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: theme.colorScheme.outline),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: TextFormField(
+                  initialValue: group.category.isEmpty ? null : group.category,
+                  onChanged: (value) =>
+                      cubit.renameSkillGroup(groupIndex, value),
+                  decoration: InputDecoration(
+                    hintText: loc.skillGroupHint,
+                    labelText: loc.skillGroupLabel(groupIndex + 1),
+                    isDense: true,
+                  ),
+                ),
+              ),
+              IconButton(
+                tooltip: loc.commonRemove,
+                onPressed: () => cubit.removeSkillGroup(groupIndex),
+                icon: Icon(
+                  Icons.close_rounded,
+                  size: 19,
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 4),
+          for (var i = 0; i < group.skills.length; i++)
+            Row(
+              key: ValueKey('skill-row-$i-${group.skills[i].name}'),
+              children: [
+                Expanded(
+                  flex: 3,
+                  child: TextFormField(
+                    initialValue: group.skills[i].name.isEmpty
+                        ? null
+                        : group.skills[i].name,
+                    onChanged: (value) =>
+                        cubit.renameSkill(groupIndex, i, value),
+                    decoration: InputDecoration(
+                      labelText: loc.skillLabel(i + 1),
+                      isDense: true,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 4,
+                  child: Slider(
+                    value: group.skills[i].level.toDouble(),
+                    min: 0,
+                    max: 100,
+                    divisions: 20,
+                    label: '${group.skills[i].level}',
+                    onChanged: (value) =>
+                        cubit.setSkillLevel(groupIndex, i, value),
+                  ),
+                ),
+                Text(
+                  '${group.skills[i].level}%',
+                  style: theme.textTheme.labelMedium,
+                ),
+                IconButton(
+                  tooltip: loc.commonRemove,
+                  onPressed: () => cubit.removeSkill(groupIndex, i),
+                  icon: Icon(
+                    Icons.close_rounded,
+                    size: 19,
+                    color: theme.colorScheme.onSurfaceVariant,
+                  ),
+                ),
+              ],
+            ),
+          Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: TextButton.icon(
+              onPressed: () => cubit.addSkill(groupIndex),
+              icon: const Icon(Icons.add_rounded, size: 17),
+              label: Text(loc.skillsAdd),
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -23,6 +23,7 @@ final class ExperienceFormCubit extends Cubit<ExperienceFormState>
           ExperienceFormState(
             status: ExperienceFormStatus.ready,
             experience: _emptyDraft(order: nextOrder),
+            isCurrent: true,
           ),
         );
         return;
@@ -44,6 +45,7 @@ final class ExperienceFormCubit extends Cubit<ExperienceFormState>
         ExperienceFormState(
           status: ExperienceFormStatus.ready,
           experience: existing,
+          isCurrent: existing.endDate == null,
         ),
       );
     } on AppFailure catch (failure) {
@@ -80,9 +82,12 @@ final class ExperienceFormCubit extends Cubit<ExperienceFormState>
   void setEndDate(DateTime? value) =>
       _update((d) => d.copyWith(endDate: value, clearEndDate: value == null));
 
-  /// Marks the role as ongoing by clearing the end date.
-  void setCurrent({required bool current}) =>
-      current ? _update((d) => d.copyWith(clearEndDate: true)) : null;
+  /// Toggles the explicit "still working here" flag; switching it on
+  /// clears any picked end date.
+  void setCurrent({required bool current}) {
+    emit(state.copyWith(isCurrent: current));
+    if (current) _update((d) => d.copyWith(clearEndDate: true));
+  }
 
   void dismissError() => emit(state.copyWith(clearError: true));
 
@@ -97,12 +102,17 @@ final class ExperienceFormCubit extends Cubit<ExperienceFormState>
     final experience = state.experience;
     if (experience == null || !validate() || state.isSaving) return false;
 
+    // "Currently working" always wins over a stale end date.
+    final WorkExperience persisted = state.isCurrent
+        ? experience.copyWith(clearEndDate: true)
+        : experience;
+
     emit(state.copyWith(status: ExperienceFormStatus.saving, clearError: true));
     try {
-      if (experience.isNew) {
-        await _timelineRepository.createWorkExperience(experience);
+      if (persisted.isNew) {
+        await _timelineRepository.createWorkExperience(persisted);
       } else {
-        await _timelineRepository.updateWorkExperience(experience);
+        await _timelineRepository.updateWorkExperience(persisted);
       }
       safeEmit(state.copyWith(status: ExperienceFormStatus.saved));
       return true;

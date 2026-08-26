@@ -17,6 +17,7 @@ final class AboutSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
+    final ColorScheme scheme = theme.colorScheme;
     final bool isCompact = context.isCompact;
 
     return BlocBuilder<PortfolioCubit, PortfolioState>(
@@ -53,7 +54,7 @@ final class AboutSection extends StatelessWidget {
                     builder: (context, revealed) => _StatsPanel(
                       yearsOfExperience: profile.yearsOfExperience,
                       projectCount: state.projects.length,
-                      techCount: profile.skills.length,
+                      techCount: profile.totalSkills,
                       revealed: revealed,
                     ),
                   ),
@@ -66,7 +67,34 @@ final class AboutSection extends StatelessWidget {
               style: theme.textTheme.titleLarge,
             ),
             const SizedBox(height: 18),
-            _SkillsGrid(skills: profile.skills),
+            for (final group in profile.skillGroups) ...[
+              if (group.hasTitle)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 14),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 22,
+                        height: 3,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(999),
+                          gradient: context.accents.accentGradient,
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Text(
+                        group.category,
+                        style: theme.textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.w700,
+                          color: scheme.secondary,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              _SkillsGrid(skills: group.skills),
+              const SizedBox(height: 26),
+            ],
           ],
         );
       },

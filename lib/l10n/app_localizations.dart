@@ -668,6 +668,24 @@ abstract class AppLocalizations {
   /// **'Skills'**
   String get skillsHeading;
 
+  /// No description provided for @skillGroupsAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add category'**
+  String get skillGroupsAdd;
+
+  /// No description provided for @skillGroupLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Category {index}'**
+  String skillGroupLabel(int index);
+
+  /// No description provided for @skillGroupHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Mobile, Backend, Tools'**
+  String get skillGroupHint;
+
   /// No description provided for @skillsAdd.
   ///
   /// In en, this message translates to:

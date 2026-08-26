@@ -95,6 +95,16 @@
   "availableSwitchTitle": "متاح للعمل",
   "availableSwitchSubtitle": "يُظهر الشارة الخضراء في القسم الرئيسي",
   "skillsHeading": "المهارات",
+  "skillGroupsAdd": "إضافة تصنيف",
+  "skillGroupLabel": "التصنيف {index}",
+  "@skillGroupLabel": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "skillGroupHint": "مثال: موبايل، باك إند، أدوات",
   "skillsAdd": "أضف مهارة",
   "skillsEmpty": "لا توجد مهارات بعد — أضف التقنيات التي تعمل بها.",
   "skillLabel": "مهارة {index}",

@@ -89,6 +89,7 @@ class _EducationCard extends StatelessWidget {
               TimelinePeriodBadge(
                 start: education.startDate,
                 end: education.endDate,
+                yearOnly: true,
               ),
             ],
           ),

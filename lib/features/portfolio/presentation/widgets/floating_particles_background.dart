@@ -97,11 +97,7 @@ class _FloatingParticlesBackgroundState
             animation: _controller,
             builder: (context, _) {
               return CustomPaint(
-                painter: _OrbsPainter(
-                  _orbs,
-                  _controller.value,
-                  particleColors,
-                ),
+                painter: _OrbsPainter(_orbs, _controller.value, particleColors),
               );
             },
           ),

@@ -226,9 +226,9 @@ class _BasicsSection extends StatelessWidget {
                 Expanded(
                   child: _DateField(
                     label: loc.formEndDateField,
-                    value: experience.endDate,
+                    value: state.isCurrent ? null : experience.endDate,
                     onPicked: cubit.setEndDate,
-                    enabled: !experience.isCurrent,
+                    enabled: !state.isCurrent,
                   ),
                 ),
               ],
@@ -237,7 +237,7 @@ class _BasicsSection extends StatelessWidget {
             SwitchListTile(
               contentPadding: EdgeInsets.zero,
               title: Text(loc.formCurrentWorkSwitchTitle),
-              value: experience.isCurrent,
+              value: state.isCurrent,
               onChanged: (value) => cubit.setCurrent(current: value),
             ),
             if (state.isSaving)

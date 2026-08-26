@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 
 import '../../../../../core/constants/app_constants.dart';
 import '../../../../../core/di/injector.dart';
@@ -219,7 +218,7 @@ class _BasicsSection extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
-                  child: _DateField(
+                  child: _YearField(
                     label: loc.formStartDateField,
                     value: education.startDate,
                     onPicked: cubit.setStartDate,
@@ -227,11 +226,12 @@ class _BasicsSection extends StatelessWidget {
                 ),
                 const SizedBox(width: 14),
                 Expanded(
-                  child: _DateField(
+                  child: _YearField(
                     label: loc.formEndDateField,
-                    value: education.endDate,
+                    value: state.isCurrent ? null : education.endDate,
                     onPicked: cubit.setEndDate,
-                    enabled: !education.isCurrent,
+                    enabled: !state.isCurrent,
+                    firstYear: education.startDate?.year ?? 1950,
                   ),
                 ),
               ],
@@ -240,7 +240,7 @@ class _BasicsSection extends StatelessWidget {
             SwitchListTile(
               contentPadding: EdgeInsets.zero,
               title: Text(loc.formCurrentStudySwitchTitle),
-              value: education.isCurrent,
+              value: state.isCurrent,
               onChanged: (value) => cubit.setCurrent(current: value),
             ),
           ],
@@ -250,56 +250,41 @@ class _BasicsSection extends StatelessWidget {
   }
 }
 
-/// Read-only field opening a date picker; the clear action passes null.
-class _DateField extends StatelessWidget {
-  const _DateField({
+/// Year-only selector — stores `DateTime(year, 1, 1)` so the existing
+/// timestamptz columns and timeline badges stay untouched.
+class _YearField extends StatelessWidget {
+  const _YearField({
     required this.label,
     required this.value,
     required this.onPicked,
     this.enabled = true,
+    this.firstYear = 1950,
   });
 
   final String label;
   final DateTime? value;
   final ValueChanged<DateTime?> onPicked;
   final bool enabled;
+  final int firstYear;
 
   @override
   Widget build(BuildContext context) {
-    final loc = context.loc;
-    final String formatted = value == null
-        ? ''
-        : DateFormat.yMMMd(Localizations.localeOf(context).toString())
-              .format(value!);
+    final int maxYear = DateTime.now().year + 10;
+    final List<int> years = [
+      for (int year = maxYear; year >= firstYear; year--) year,
+    ];
 
-    return TextFormField(
-      key: ValueKey('$label-$formatted-$enabled'),
-      initialValue: formatted.isEmpty ? null : formatted,
-      readOnly: true,
-      enabled: enabled,
-      showCursor: false,
-      onTap: enabled
-          ? () async {
-              final now = DateTime.now();
-              final DateTime? picked = await showDatePicker(
-                context: context,
-                initialDate: value ?? DateTime(now.year - 1, now.month),
-                firstDate: DateTime(1950),
-                lastDate: DateTime(now.year + 10),
-              );
-              if (picked != null) onPicked(picked);
-            }
+    return DropdownButtonFormField<int>(
+      key: ValueKey('$label-${value?.year}-$enabled'),
+      initialValue: value?.year,
+      decoration: InputDecoration(labelText: label, enabled: enabled),
+      items: [
+        for (final year in years)
+          DropdownMenuItem(value: year, child: Text('$year')),
+      ],
+      onChanged: enabled
+          ? (year) => onPicked(year == null ? null : DateTime(year))
           : null,
-      decoration: InputDecoration(
-        labelText: label,
-        suffixIcon: !enabled || value == null
-            ? const Icon(Icons.calendar_today_outlined)
-            : IconButton(
-                tooltip: loc.commonRemove,
-                onPressed: () => onPicked(null),
-                icon: const Icon(Icons.close_rounded),
-              ),
-      ),
     );
   }
 }

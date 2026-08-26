@@ -124,27 +124,32 @@ final class ProfileLivePreview extends StatelessWidget {
               ),
             ],
             const Divider(height: 32),
-            Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: [
-                for (final skill in profile.skills.take(6))
-                  Chip(
-                    label: Text(skill.name),
-                    visualDensity: VisualDensity.compact,
-                  ),
-                if (profile.skills.isEmpty)
-                  Text(
-                    context.loc.livePreviewEmptySkills,
-                    style: theme.textTheme.bodyMedium,
-                  ),
-              ],
+            Builder(
+              builder: (context) {
+                final allSkills = profile.allSkills.toList();
+                return Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: [
+                    for (final skill in allSkills.take(6))
+                      Chip(
+                        label: Text(skill.name),
+                        visualDensity: VisualDensity.compact,
+                      ),
+                    if (allSkills.isEmpty)
+                      Text(
+                        context.loc.livePreviewEmptySkills,
+                        style: theme.textTheme.bodyMedium,
+                      ),
+                  ],
+                );
+              },
             ),
-            if (profile.skills.isNotEmpty)
+            if (profile.totalSkills > 0)
               Padding(
                 padding: const EdgeInsets.only(top: 4),
                 child: Text(
-                  '${profile.skills.length} skills configured',
+                  '${profile.totalSkills} skills configured',
                   style: theme.textTheme.labelMedium,
                 ),
               ),

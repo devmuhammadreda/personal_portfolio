@@ -308,6 +308,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get skillsHeading => 'Skills';
 
   @override
+  String get skillGroupsAdd => 'Add category';
+
+  @override
+  String skillGroupLabel(int index) {
+    return 'Category $index';
+  }
+
+  @override
+  String get skillGroupHint => 'e.g. Mobile, Backend, Tools';
+
+  @override
   String get skillsAdd => 'Add skill';
 
   @override

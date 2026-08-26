@@ -9,6 +9,7 @@ import '../../../../../core/mixin/cubit_lifecycle_mixin.dart';
 import '../../../media/domain/repositories/media_storage_repository.dart';
 import '../../../../portfolio/domain/entities/profile.dart';
 import '../../../../portfolio/domain/entities/skill.dart';
+import '../../../../portfolio/domain/entities/skill_group.dart';
 import '../../../../portfolio/domain/entities/social_links.dart';
 import '../../../../portfolio/domain/repositories/profile_repository.dart';
 import 'profile_editor_state.dart';
@@ -71,30 +72,69 @@ final class ProfileEditorCubit extends Cubit<ProfileEditorState>
   void setAvailableForWork({required bool available}) =>
       _emitProfile(state.profile.copyWith(availableForWork: available));
 
-  void addSkill() {
-    final skills = [...state.profile.skills, const Skill(name: '', level: 60)];
-    _emitProfile(state.profile.copyWith(skills: skills));
+  // --- Categorized skills -------------------------------------------------
+
+  void addSkillGroup() {
+    final groups = [
+      ...state.profile.skillGroups,
+      const SkillGroup(category: '', skills: []),
+    ];
+    _emitProfile(state.profile.copyWith(skillGroups: groups));
   }
 
-  void renameSkill(int index, String name) {
-    final skills = [...state.profile.skills];
-    if (index < 0 || index >= skills.length) return;
-    skills[index] = skills[index].copyWithSkill(name: name);
-    _emitProfile(state.profile.copyWith(skills: skills));
+  void renameSkillGroup(int groupIndex, String name) {
+    final groups = [...state.profile.skillGroups];
+    if (groupIndex < 0 || groupIndex >= groups.length) return;
+    groups[groupIndex] = groups[groupIndex].copyWith(category: name);
+    _emitProfile(state.profile.copyWith(skillGroups: groups));
   }
 
-  void setSkillLevel(int index, double level) {
-    final skills = [...state.profile.skills];
-    if (index < 0 || index >= skills.length) return;
-    skills[index] = skills[index].copyWithSkill(
+  void removeSkillGroup(int groupIndex) {
+    final groups = [...state.profile.skillGroups]..removeAt(groupIndex);
+    _emitProfile(state.profile.copyWith(skillGroups: groups));
+  }
+
+  void addSkill(int groupIndex) {
+    final groups = [...state.profile.skillGroups];
+    if (groupIndex < 0 || groupIndex >= groups.length) return;
+    final group = groups[groupIndex];
+    groups[groupIndex] = group.copyWith(
+      skills: [
+        ...group.skills,
+        const Skill(name: '', level: 60),
+      ],
+    );
+    _emitProfile(state.profile.copyWith(skillGroups: groups));
+  }
+
+  void renameSkill(int groupIndex, int skillIndex, String name) {
+    final groups = [...state.profile.skillGroups];
+    if (groupIndex < 0 || groupIndex >= groups.length) return;
+    final skills = [...groups[groupIndex].skills];
+    if (skillIndex < 0 || skillIndex >= skills.length) return;
+    skills[skillIndex] = skills[skillIndex].copyWithSkill(name: name);
+    groups[groupIndex] = groups[groupIndex].copyWith(skills: skills);
+    _emitProfile(state.profile.copyWith(skillGroups: groups));
+  }
+
+  void setSkillLevel(int groupIndex, int skillIndex, double level) {
+    final groups = [...state.profile.skillGroups];
+    if (groupIndex < 0 || groupIndex >= groups.length) return;
+    final skills = [...groups[groupIndex].skills];
+    if (skillIndex < 0 || skillIndex >= skills.length) return;
+    skills[skillIndex] = skills[skillIndex].copyWithSkill(
       level: level.round().clamp(0, 100),
     );
-    _emitProfile(state.profile.copyWith(skills: skills));
+    groups[groupIndex] = groups[groupIndex].copyWith(skills: skills);
+    _emitProfile(state.profile.copyWith(skillGroups: groups));
   }
 
-  void removeSkill(int index) {
-    final skills = [...state.profile.skills]..removeAt(index);
-    _emitProfile(state.profile.copyWith(skills: skills));
+  void removeSkill(int groupIndex, int skillIndex) {
+    final groups = [...state.profile.skillGroups];
+    if (groupIndex < 0 || groupIndex >= groups.length) return;
+    final skills = [...groups[groupIndex].skills]..removeAt(skillIndex);
+    groups[groupIndex] = groups[groupIndex].copyWith(skills: skills);
+    _emitProfile(state.profile.copyWith(skillGroups: groups));
   }
 
   void setSocialLink(SocialField field, String value) {

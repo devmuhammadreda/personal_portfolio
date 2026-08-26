@@ -114,16 +114,19 @@ final class TimelineCard extends StatelessWidget {
 }
 
 /// Pill showing a localized `MMM yyyy – MMM yyyy` range; a null [end]
-/// renders the localized "present" label instead.
+/// renders the localized "present" label instead. With [yearOnly] the
+/// range shows bare years (`yyyy – yyyy`).
 final class TimelinePeriodBadge extends StatelessWidget {
   const TimelinePeriodBadge({
     super.key,
     required this.start,
     required this.end,
+    this.yearOnly = false,
   });
 
   final DateTime? start;
   final DateTime? end;
+  final bool yearOnly;
 
   @override
   Widget build(BuildContext context) {
@@ -148,9 +151,10 @@ final class TimelinePeriodBadge extends StatelessWidget {
   }
 
   String _periodText(BuildContext context) {
-    final DateFormat formatter = DateFormat.yMMM(
-      Localizations.localeOf(context).toString(),
-    );
+    final String locale = Localizations.localeOf(context).toString();
+    final DateFormat formatter = yearOnly
+        ? DateFormat.y(locale)
+        : DateFormat.yMMM(locale);
     final String? startText = start == null ? null : formatter.format(start!);
     final String endText = end == null
         ? context.loc.timelinePresent

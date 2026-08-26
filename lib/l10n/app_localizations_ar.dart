@@ -302,6 +302,17 @@ class AppLocalizationsAr extends AppLocalizations {
   String get skillsHeading => 'المهارات';
 
   @override
+  String get skillGroupsAdd => 'إضافة تصنيف';
+
+  @override
+  String skillGroupLabel(int index) {
+    return 'التصنيف $index';
+  }
+
+  @override
+  String get skillGroupHint => 'مثال: موبايل، باك إند، أدوات';
+
+  @override
   String get skillsAdd => 'أضف مهارة';
 
   @override

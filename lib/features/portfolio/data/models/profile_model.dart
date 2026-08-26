@@ -1,4 +1,5 @@
 import '../../domain/entities/profile.dart';
+import 'skill_group_model.dart';
 import 'skill_model.dart';
 import 'social_links_model.dart';
 
@@ -8,7 +9,7 @@ final class ProfileModel extends Profile {
     required super.title,
     required super.tagline,
     required super.aboutMe,
-    required super.skills,
+    required super.skillGroups,
     required super.socialLinks,
     required super.yearsOfExperience,
     required super.availableForWork,
@@ -22,10 +23,9 @@ final class ProfileModel extends Profile {
       title: map['title'] as String? ?? '',
       tagline: map['tagline'] as String? ?? '',
       aboutMe: map['aboutMe'] as String? ?? '',
-      skills: (map['skills'] as List<dynamic>? ?? const [])
-          .whereType<Map<dynamic, dynamic>>()
-          .map((raw) => SkillModel.fromMap(Map<String, dynamic>.from(raw)))
-          .toList(),
+      skillGroups: SkillGroupModel.listFromJson(
+        map['skills'] as List<dynamic>? ?? const [],
+      ),
       socialLinks: SocialLinksModel.fromMap(
         Map<String, dynamic>.from(map['socialLinks'] as Map? ?? const {}),
       ),
@@ -42,12 +42,19 @@ final class ProfileModel extends Profile {
       title: profile.title,
       tagline: profile.tagline,
       aboutMe: profile.aboutMe,
-      skills: profile.skills
+      skillGroups: profile.skillGroups
           .map(
-            (skill) => SkillModel(
-              name: skill.name,
-              level: skill.level,
-              iconUrl: skill.iconUrl,
+            (group) => SkillGroupModel(
+              category: group.category,
+              skills: group.skills
+                  .map(
+                    (skill) => SkillModel(
+                      name: skill.name,
+                      level: skill.level,
+                      iconUrl: skill.iconUrl,
+                    ),
+                  )
+                  .toList(),
             ),
           )
           .toList(),
@@ -71,7 +78,10 @@ final class ProfileModel extends Profile {
       'title': title,
       'tagline': tagline,
       'aboutMe': aboutMe,
-      'skills': skills.cast<SkillModel>().map((s) => s.toMap()).toList(),
+      'skills': skillGroups
+          .cast<SkillGroupModel>()
+          .map((g) => g.toMap())
+          .toList(),
       'socialLinks': (socialLinks as SocialLinksModel).toMap(),
       if (resumeUrl != null) 'resumeUrl': resumeUrl,
       if (profileImageUrl != null) 'profileImageUrl': profileImageUrl,

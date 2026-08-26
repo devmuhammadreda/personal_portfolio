@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 import 'skill.dart';
+import 'skill_group.dart';
 import 'social_links.dart';
 
 class Profile extends Equatable {
@@ -9,7 +10,7 @@ class Profile extends Equatable {
     required this.title,
     required this.tagline,
     required this.aboutMe,
-    required this.skills,
+    required this.skillGroups,
     required this.socialLinks,
     required this.yearsOfExperience,
     required this.availableForWork,
@@ -21,19 +22,30 @@ class Profile extends Equatable {
   final String title;
   final String tagline;
   final String aboutMe;
-  final List<Skill> skills;
+  final List<SkillGroup> skillGroups;
   final SocialLinks socialLinks;
   final String? resumeUrl;
   final String? profileImageUrl;
   final int yearsOfExperience;
   final bool availableForWork;
 
+  /// Total number of individual skills across all groups.
+  int get totalSkills =>
+      skillGroups.fold(0, (count, group) => count + group.skills.length);
+
+  /// All skills flattened, preserving group order.
+  Iterable<Skill> get allSkills sync* {
+    for (final group in skillGroups) {
+      yield* group.skills;
+    }
+  }
+
   static const Profile empty = Profile(
     name: '',
     title: '',
     tagline: '',
     aboutMe: '',
-    skills: [],
+    skillGroups: [],
     socialLinks: SocialLinks.empty,
     yearsOfExperience: 0,
     availableForWork: false,
@@ -46,7 +58,7 @@ class Profile extends Equatable {
     String? title,
     String? tagline,
     String? aboutMe,
-    List<Skill>? skills,
+    List<SkillGroup>? skillGroups,
     SocialLinks? socialLinks,
     String? resumeUrl,
     bool clearResumeUrl = false,
@@ -60,7 +72,7 @@ class Profile extends Equatable {
       title: title ?? this.title,
       tagline: tagline ?? this.tagline,
       aboutMe: aboutMe ?? this.aboutMe,
-      skills: skills ?? this.skills,
+      skillGroups: skillGroups ?? this.skillGroups,
       socialLinks: socialLinks ?? this.socialLinks,
       resumeUrl: clearResumeUrl ? null : (resumeUrl ?? this.resumeUrl),
       profileImageUrl: clearProfileImageUrl
@@ -77,7 +89,7 @@ class Profile extends Equatable {
     title,
     tagline,
     aboutMe,
-    skills,
+    skillGroups,
     socialLinks,
     resumeUrl,
     profileImageUrl,
