@@ -42,6 +42,29 @@ create table if not exists public.projects (
   "updatedAt" timestamptz not null default now()
 );
 
+-- Ordered list entries rendered on the public timeline sections.
+create table if not exists public.work_experience (
+  id uuid primary key default gen_random_uuid(),
+  company text not null default '',
+  position text not null default '',
+  description text not null default '',
+  location text,
+  "startDate" timestamptz,
+  "endDate" timestamptz,
+  "order" int not null default 0
+);
+
+create table if not exists public.education (
+  id uuid primary key default gen_random_uuid(),
+  institution text not null default '',
+  degree text not null default '',
+  "fieldOfStudy" text not null default '',
+  grade text,
+  "startDate" timestamptz,
+  "endDate" timestamptz,
+  "order" int not null default 0
+);
+
 -- -----------------------------------------------------------------------------
 -- 2. Admin gate
 --    Sign up your admin user in Dashboard › Authentication first, then:
@@ -91,6 +114,27 @@ create policy "admin write projects"
   on public.projects for all
   using (public.is_admin()) with check (public.is_admin());
 
+alter table public.work_experience enable row level security;
+alter table public.education enable row level security;
+
+drop policy if exists "public read work_experience" on public.work_experience;
+create policy "public read work_experience"
+  on public.work_experience for select using (true);
+
+drop policy if exists "admin write work_experience" on public.work_experience;
+create policy "admin write work_experience"
+  on public.work_experience for all
+  using (public.is_admin()) with check (public.is_admin());
+
+drop policy if exists "public read education" on public.education;
+create policy "public read education"
+  on public.education for select using (true);
+
+drop policy if exists "admin write education" on public.education;
+create policy "admin write education"
+  on public.education for all
+  using (public.is_admin()) with check (public.is_admin());
+
 -- admins table: no policies → only the service role / SQL editor touches it.
 
 -- -----------------------------------------------------------------------------
@@ -105,6 +149,14 @@ begin
   end;
   begin
     alter publication supabase_realtime add table public.projects;
+  exception when duplicate_object then null;
+  end;
+  begin
+    alter publication supabase_realtime add table public.work_experience;
+  exception when duplicate_object then null;
+  end;
+  begin
+    alter publication supabase_realtime add table public.education;
   exception when duplicate_object then null;
   end;
 end $$;

@@ -11,6 +11,8 @@
   "loadingPortfolio": "جارٍ تحميل الموقع…",
   "errorLoadingPortfolio": "حدث خطأ ما أثناء تحميل الموقع.",
   "navAbout": "نبذة عني",
+  "navExperience": "خبرتي",
+  "navEducation": "التعليم",
   "navProjects": "المشاريع",
   "navContact": "تواصل معي",
   "navMenuTooltip": "القائمة",
@@ -27,6 +29,11 @@
   "statYearsLabel": "سنوات الخبرة",
   "statProjectsLabel": "مشاريع منجزة",
   "statTechnologiesLabel": "تقنيات",
+  "experienceSectionTitle": "الخبرة العملية",
+  "educationSectionTitle": "التعليم",
+  "timelinePresent": "حتى الآن",
+  "experienceEmptyPublic": "لم تُضف خبرات عملية بعد — عود قريبًا!",
+  "educationEmptyPublic": "لم يُضف سجل تعليمي بعد — عود قريبًا!",
   "projectsSectionTitle": "المشاريع",
   "projectsEmptyPublic": "لا توجد مشاريع بعد — عود قريبًا!",
   "projectsFilterAll": "الكل",
@@ -62,6 +69,8 @@
   "shellProfile": "الملف الشخصي",
   "shellProjects": "المشاريع",
   "shellMessages": "الرسائل",
+  "shellExperience": "خبرتي",
+  "shellEducation": "التعليم",
   "shellConsoleTitle": "لوحة المشرف",
   "shellSignOut": "تسجيل الخروج",
   "dashboardOverview": "نظرة عامة",
@@ -168,5 +177,56 @@
   "messagesAdminMarkAllRead": "تعليم الكل كمقروء",
   "messagesAdminEmpty": "لا توجد رسائل بعد — ستظهر هنا رسائل نموذج التواصل.",
   "messagesAdminFailedToLoad": "فشل تحميل الرسائل.",
-  "messagesAdminReply": "رد"
+  "messagesAdminReply": "رد",
+  "experiencesAdminCount": "الخبرة العملية ({count})",
+  "@experiencesAdminCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "experiencesAdminNew": "عنصر جديد",
+  "experiencesAdminEmpty": "لا توجد خبرات عملية بعد. أضف أول وظيفة!",
+  "experiencesAdminFailedToLoad": "فشل تحميل الخبرة العملية.",
+  "educationsAdminCount": "التعليم ({count})",
+  "@educationsAdminCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "educationsAdminNew": "عنصر جديد",
+  "educationsAdminEmpty": "لا يوجد سجل تعليمي بعد. أضف دراستك!",
+  "educationsAdminFailedToLoad": "فشل تحميل التعليم.",
+  "timelineReorderHint": "اسحب الصفوف لإعادة الترتيب — ينعكس على الموقع العام فورًا.",
+  "experienceFormNewHeading": "إضافة خبرة عملية",
+  "experienceFormEditHeading": "تعديل الخبرة العملية",
+  "educationFormNewHeading": "إضافة تعليم",
+  "educationFormEditHeading": "تعديل التعليم",
+  "experienceSavedSnackbar": "تم حفظ الخبرة ✓",
+  "educationSavedSnackbar": "تم حفظ التعليم ✓",
+  "deleteTimelineTitle": "حذف \"{title}\"؟",
+  "@deleteTimelineTitle": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteTimelineBody": "سيؤدي هذا إلى حذف العنصر نهائيًا من الموقع العام. لا يمكن التراجع عن هذا الإجراء.",
+  "formRequiredField": "هذا الحقل مطلوب.",
+  "formCompanyField": "الشركة *",
+  "formPositionField": "المسمّى الوظيفي *",
+  "formLocationField": "الموقع",
+  "formEntryDescription": "الوصف",
+  "formStartDateField": "تاريخ البدء",
+  "formEndDateField": "تاريخ الانتهاء",
+  "formCurrentWorkSwitchTitle": "أعمل هنا حاليًا",
+  "formCurrentStudySwitchTitle": "أدرس هنا حاليًا",
+  "formInstitutionField": "المؤسسة التعليمية *",
+  "formDegreeField": "الدرجة العلمية *",
+  "formFieldOfStudyField": "التخصص",
+  "formGradeField": "التقدير / المعدل"
 }

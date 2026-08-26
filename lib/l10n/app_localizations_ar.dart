@@ -43,6 +43,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get navAbout => 'نبذة عني';
 
   @override
+  String get navExperience => 'خبرتي';
+
+  @override
+  String get navEducation => 'التعليم';
+
+  @override
   String get navProjects => 'المشاريع';
 
   @override
@@ -90,6 +96,21 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get statTechnologiesLabel => 'تقنيات';
+
+  @override
+  String get experienceSectionTitle => 'الخبرة العملية';
+
+  @override
+  String get educationSectionTitle => 'التعليم';
+
+  @override
+  String get timelinePresent => 'حتى الآن';
+
+  @override
+  String get experienceEmptyPublic => 'لم تُضف خبرات عملية بعد — عود قريبًا!';
+
+  @override
+  String get educationEmptyPublic => 'لم يُضف سجل تعليمي بعد — عود قريبًا!';
 
   @override
   String get projectsSectionTitle => 'المشاريع';
@@ -201,6 +222,12 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get shellMessages => 'الرسائل';
+
+  @override
+  String get shellExperience => 'خبرتي';
+
+  @override
+  String get shellEducation => 'التعليم';
 
   @override
   String get shellConsoleTitle => 'لوحة المشرف';
@@ -450,4 +477,102 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get messagesAdminReply => 'رد';
+
+  @override
+  String experiencesAdminCount(int count) {
+    return 'الخبرة العملية ($count)';
+  }
+
+  @override
+  String get experiencesAdminNew => 'عنصر جديد';
+
+  @override
+  String get experiencesAdminEmpty => 'لا توجد خبرات عملية بعد. أضف أول وظيفة!';
+
+  @override
+  String get experiencesAdminFailedToLoad => 'فشل تحميل الخبرة العملية.';
+
+  @override
+  String educationsAdminCount(int count) {
+    return 'التعليم ($count)';
+  }
+
+  @override
+  String get educationsAdminNew => 'عنصر جديد';
+
+  @override
+  String get educationsAdminEmpty => 'لا يوجد سجل تعليمي بعد. أضف دراستك!';
+
+  @override
+  String get educationsAdminFailedToLoad => 'فشل تحميل التعليم.';
+
+  @override
+  String get timelineReorderHint =>
+      'اسحب الصفوف لإعادة الترتيب — ينعكس على الموقع العام فورًا.';
+
+  @override
+  String get experienceFormNewHeading => 'إضافة خبرة عملية';
+
+  @override
+  String get experienceFormEditHeading => 'تعديل الخبرة العملية';
+
+  @override
+  String get educationFormNewHeading => 'إضافة تعليم';
+
+  @override
+  String get educationFormEditHeading => 'تعديل التعليم';
+
+  @override
+  String get experienceSavedSnackbar => 'تم حفظ الخبرة ✓';
+
+  @override
+  String get educationSavedSnackbar => 'تم حفظ التعليم ✓';
+
+  @override
+  String deleteTimelineTitle(String title) {
+    return 'حذف \"$title\"؟';
+  }
+
+  @override
+  String get deleteTimelineBody =>
+      'سيؤدي هذا إلى حذف العنصر نهائيًا من الموقع العام. لا يمكن التراجع عن هذا الإجراء.';
+
+  @override
+  String get formRequiredField => 'هذا الحقل مطلوب.';
+
+  @override
+  String get formCompanyField => 'الشركة *';
+
+  @override
+  String get formPositionField => 'المسمّى الوظيفي *';
+
+  @override
+  String get formLocationField => 'الموقع';
+
+  @override
+  String get formEntryDescription => 'الوصف';
+
+  @override
+  String get formStartDateField => 'تاريخ البدء';
+
+  @override
+  String get formEndDateField => 'تاريخ الانتهاء';
+
+  @override
+  String get formCurrentWorkSwitchTitle => 'أعمل هنا حاليًا';
+
+  @override
+  String get formCurrentStudySwitchTitle => 'أدرس هنا حاليًا';
+
+  @override
+  String get formInstitutionField => 'المؤسسة التعليمية *';
+
+  @override
+  String get formDegreeField => 'الدرجة العلمية *';
+
+  @override
+  String get formFieldOfStudyField => 'التخصص';
+
+  @override
+  String get formGradeField => 'التقدير / المعدل';
 }

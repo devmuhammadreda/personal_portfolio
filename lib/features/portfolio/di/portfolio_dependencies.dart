@@ -9,12 +9,16 @@ import '../data/datasources/project_remote_data_source.dart';
 import '../data/datasources/supabase_contact_message_data_source.dart';
 import '../data/datasources/supabase_profile_data_source.dart';
 import '../data/datasources/supabase_project_data_source.dart';
+import '../data/datasources/supabase_timeline_data_source.dart';
+import '../data/datasources/timeline_remote_data_source.dart';
 import '../data/repositories/contact_message_repository_impl.dart';
 import '../data/repositories/profile_repository_impl.dart';
 import '../data/repositories/project_repository_impl.dart';
+import '../data/repositories/timeline_repository_impl.dart';
 import '../domain/repositories/contact_message_repository.dart';
 import '../domain/repositories/profile_repository.dart';
 import '../domain/repositories/project_repository.dart';
+import '../domain/repositories/timeline_repository.dart';
 
 /// Content data registrations needed by **both** flavors: the admin
 /// console edits the same profile/projects the public site displays.
@@ -29,11 +33,17 @@ void initPortfolioDataInjection() {
     ..registerLazySingleton<ContactMessageRemoteDataSource>(
       () => SupabaseContactMessageDataSource(getIt<SupabaseClient>()),
     )
+    ..registerLazySingleton<TimelineRemoteDataSource>(
+      () => SupabaseTimelineDataSource(getIt<SupabaseClient>()),
+    )
     ..registerLazySingleton<ProfileRepository>(
       () => ProfileRepositoryImpl(getIt<ProfileRemoteDataSource>()),
     )
     ..registerLazySingleton<ProjectRepository>(
       () => ProjectRepositoryImpl(getIt<ProjectRemoteDataSource>()),
+    )
+    ..registerLazySingleton<TimelineRepository>(
+      () => TimelineRepositoryImpl(getIt<TimelineRemoteDataSource>()),
     )
     ..registerLazySingleton<ContactMessageRepository>(
       () =>

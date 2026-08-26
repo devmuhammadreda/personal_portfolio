@@ -27,7 +27,7 @@ final class ProjectsSection extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SectionHeader(index: '02', title: context.loc.projectsSectionTitle),
+            SectionHeader(index: '04', title: context.loc.projectsSectionTitle),
             const SizedBox(height: 22),
             Wrap(
               spacing: 10,

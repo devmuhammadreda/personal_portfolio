@@ -44,6 +44,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navAbout => 'About';
 
   @override
+  String get navExperience => 'Experience';
+
+  @override
+  String get navEducation => 'Education';
+
+  @override
   String get navProjects => 'Projects';
 
   @override
@@ -92,6 +98,23 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get statTechnologiesLabel => 'Technologies';
+
+  @override
+  String get experienceSectionTitle => 'Work Experience';
+
+  @override
+  String get educationSectionTitle => 'Education';
+
+  @override
+  String get timelinePresent => 'Present';
+
+  @override
+  String get experienceEmptyPublic =>
+      'No work experience added yet — check back soon!';
+
+  @override
+  String get educationEmptyPublic =>
+      'No education history added yet — check back soon!';
 
   @override
   String get projectsSectionTitle => 'Projects';
@@ -204,6 +227,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get shellMessages => 'Messages';
+
+  @override
+  String get shellExperience => 'Experience';
+
+  @override
+  String get shellEducation => 'Education';
 
   @override
   String get shellConsoleTitle => 'Admin console';
@@ -454,4 +483,104 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get messagesAdminReply => 'Reply';
+
+  @override
+  String experiencesAdminCount(int count) {
+    return 'Work experience ($count)';
+  }
+
+  @override
+  String get experiencesAdminNew => 'New entry';
+
+  @override
+  String get experiencesAdminEmpty =>
+      'No work experience yet. Add your first role!';
+
+  @override
+  String get experiencesAdminFailedToLoad => 'Failed to load work experience.';
+
+  @override
+  String educationsAdminCount(int count) {
+    return 'Education ($count)';
+  }
+
+  @override
+  String get educationsAdminNew => 'New entry';
+
+  @override
+  String get educationsAdminEmpty =>
+      'No education history yet. Add your studies!';
+
+  @override
+  String get educationsAdminFailedToLoad => 'Failed to load education.';
+
+  @override
+  String get timelineReorderHint =>
+      'Drag rows to reorder — applies to the public site instantly.';
+
+  @override
+  String get experienceFormNewHeading => 'New work experience';
+
+  @override
+  String get experienceFormEditHeading => 'Edit work experience';
+
+  @override
+  String get educationFormNewHeading => 'New education entry';
+
+  @override
+  String get educationFormEditHeading => 'Edit education entry';
+
+  @override
+  String get experienceSavedSnackbar => 'Experience entry saved ✓';
+
+  @override
+  String get educationSavedSnackbar => 'Education entry saved ✓';
+
+  @override
+  String deleteTimelineTitle(String title) {
+    return 'Delete \"$title\"?';
+  }
+
+  @override
+  String get deleteTimelineBody =>
+      'This permanently removes the entry from the public site. This action cannot be undone.';
+
+  @override
+  String get formRequiredField => 'This field is required.';
+
+  @override
+  String get formCompanyField => 'Company *';
+
+  @override
+  String get formPositionField => 'Position *';
+
+  @override
+  String get formLocationField => 'Location';
+
+  @override
+  String get formEntryDescription => 'Description';
+
+  @override
+  String get formStartDateField => 'Start date';
+
+  @override
+  String get formEndDateField => 'End date';
+
+  @override
+  String get formCurrentWorkSwitchTitle => 'I currently work here';
+
+  @override
+  String get formCurrentStudySwitchTitle => 'I currently study here';
+
+  @override
+  String get formInstitutionField => 'Institution *';
+
+  @override
+  String get formDegreeField => 'Degree *';
+
+  @override
+  String get formFieldOfStudyField => 'Field of study';
+
+  @override
+  String get formGradeField => 'Grade / GPA';
 }

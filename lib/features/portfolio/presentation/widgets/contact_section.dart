@@ -74,7 +74,7 @@ class _ContactSectionState extends State<ContactSection> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SectionHeader(index: '03', title: context.loc.contactSectionTitle),
+        SectionHeader(index: '05', title: context.loc.contactSectionTitle),
         const SizedBox(height: 28),
         Flex(
           direction: isCompact ? Axis.vertical : Axis.horizontal,

@@ -1,8 +1,10 @@
 import 'package:equatable/equatable.dart';
 
+import '../../domain/entities/education.dart';
 import '../../domain/entities/profile.dart';
 import '../../domain/entities/project.dart';
 import '../../domain/entities/project_category.dart';
+import '../../domain/entities/work_experience.dart';
 
 enum PortfolioStatus { initial, loading, ready, failure }
 
@@ -11,6 +13,8 @@ final class PortfolioState extends Equatable {
     this.status = PortfolioStatus.initial,
     this.profile = Profile.empty,
     this.projects = const [],
+    this.experiences = const [],
+    this.educations = const [],
     this.selectedCategory,
     this.errorMessage,
   });
@@ -18,6 +22,8 @@ final class PortfolioState extends Equatable {
   final PortfolioStatus status;
   final Profile profile;
   final List<Project> projects;
+  final List<WorkExperience> experiences;
+  final List<Education> educations;
   final ProjectCategory? selectedCategory;
   final String? errorMessage;
 
@@ -35,6 +41,8 @@ final class PortfolioState extends Equatable {
     PortfolioStatus? status,
     Profile? profile,
     List<Project>? projects,
+    List<WorkExperience>? experiences,
+    List<Education>? educations,
     ProjectCategory? selectedCategory,
     bool clearSelectedCategory = false,
     String? errorMessage,
@@ -44,6 +52,8 @@ final class PortfolioState extends Equatable {
       status: status ?? this.status,
       profile: profile ?? this.profile,
       projects: projects ?? this.projects,
+      experiences: experiences ?? this.experiences,
+      educations: educations ?? this.educations,
       selectedCategory: clearSelectedCategory
           ? null
           : (selectedCategory ?? this.selectedCategory),
@@ -56,6 +66,8 @@ final class PortfolioState extends Equatable {
     status,
     profile,
     projects,
+    experiences,
+    educations,
     selectedCategory,
     errorMessage,
   ];

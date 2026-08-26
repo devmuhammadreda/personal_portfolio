@@ -11,6 +11,8 @@
   "loadingPortfolio": "Loading portfolio…",
   "errorLoadingPortfolio": "Something went wrong while loading the portfolio.",
   "navAbout": "About",
+  "navExperience": "Experience",
+  "navEducation": "Education",
   "navProjects": "Projects",
   "navContact": "Contact",
   "navMenuTooltip": "Menu",
@@ -27,6 +29,11 @@
   "statYearsLabel": "Years of experience",
   "statProjectsLabel": "Shipped projects",
   "statTechnologiesLabel": "Technologies",
+  "experienceSectionTitle": "Work Experience",
+  "educationSectionTitle": "Education",
+  "timelinePresent": "Present",
+  "experienceEmptyPublic": "No work experience added yet — check back soon!",
+  "educationEmptyPublic": "No education history added yet — check back soon!",
   "projectsSectionTitle": "Projects",
   "projectsEmptyPublic": "No projects here yet — check back soon!",
   "projectsFilterAll": "All",
@@ -79,6 +86,8 @@
   "shellProfile": "Profile",
   "shellProjects": "Projects",
   "shellMessages": "Messages",
+  "shellExperience": "Experience",
+  "shellEducation": "Education",
   "shellConsoleTitle": "Admin console",
   "shellSignOut": "Sign out",
   "dashboardOverview": "Overview",
@@ -213,5 +222,56 @@
   "messagesAdminMarkAllRead": "Mark all as read",
   "messagesAdminEmpty": "No messages yet — new contact form submissions land here.",
   "messagesAdminFailedToLoad": "Failed to load messages.",
-  "messagesAdminReply": "Reply"
+  "messagesAdminReply": "Reply",
+  "experiencesAdminCount": "Work experience ({count})",
+  "@experiencesAdminCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "experiencesAdminNew": "New entry",
+  "experiencesAdminEmpty": "No work experience yet. Add your first role!",
+  "experiencesAdminFailedToLoad": "Failed to load work experience.",
+  "educationsAdminCount": "Education ({count})",
+  "@educationsAdminCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "educationsAdminNew": "New entry",
+  "educationsAdminEmpty": "No education history yet. Add your studies!",
+  "educationsAdminFailedToLoad": "Failed to load education.",
+  "timelineReorderHint": "Drag rows to reorder — applies to the public site instantly.",
+  "experienceFormNewHeading": "New work experience",
+  "experienceFormEditHeading": "Edit work experience",
+  "educationFormNewHeading": "New education entry",
+  "educationFormEditHeading": "Edit education entry",
+  "experienceSavedSnackbar": "Experience entry saved ✓",
+  "educationSavedSnackbar": "Education entry saved ✓",
+  "deleteTimelineTitle": "Delete \"{title}\"?",
+  "@deleteTimelineTitle": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteTimelineBody": "This permanently removes the entry from the public site. This action cannot be undone.",
+  "formRequiredField": "This field is required.",
+  "formCompanyField": "Company *",
+  "formPositionField": "Position *",
+  "formLocationField": "Location",
+  "formEntryDescription": "Description",
+  "formStartDateField": "Start date",
+  "formEndDateField": "End date",
+  "formCurrentWorkSwitchTitle": "I currently work here",
+  "formCurrentStudySwitchTitle": "I currently study here",
+  "formInstitutionField": "Institution *",
+  "formDegreeField": "Degree *",
+  "formFieldOfStudyField": "Field of study",
+  "formGradeField": "Grade / GPA"
 }

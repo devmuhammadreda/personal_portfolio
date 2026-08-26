@@ -4,6 +4,10 @@ import 'package:go_router/go_router.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../portfolio/presentation/pages/portfolio_page.dart';
 import '../auth/presentation/pages/login_page.dart';
+import '../education_management/presentation/pages/education_form_page.dart';
+import '../education_management/presentation/pages/educations_admin_page.dart';
+import '../experience_management/presentation/pages/experience_form_page.dart';
+import '../experience_management/presentation/pages/experiences_admin_page.dart';
 import '../message_inbox/presentation/pages/messages_admin_page.dart';
 import '../presentation/pages/dashboard_page.dart';
 import '../presentation/widgets/admin_footer_badge.dart';
@@ -65,6 +69,40 @@ GoRouter createAdminRouter(AuthGate authGate) {
             path: AppRoutes.adminProjects,
             pageBuilder: (context, state) =>
                 _noTransition(state, const ProjectsAdminPage()),
+          ),
+          GoRoute(
+            path: AppRoutes.adminExperiences,
+            pageBuilder: (context, state) =>
+                _noTransition(state, const ExperiencesAdminPage()),
+          ),
+          GoRoute(
+            path: AppRoutes.adminNewExperience,
+            pageBuilder: (context, state) =>
+                _noTransition(state, const ExperienceFormPage()),
+          ),
+          GoRoute(
+            path: '${AppRoutes.adminExperiences}/:id',
+            pageBuilder: (context, state) => _noTransition(
+              state,
+              ExperienceFormPage(experienceId: state.pathParameters['id']),
+            ),
+          ),
+          GoRoute(
+            path: AppRoutes.adminEducations,
+            pageBuilder: (context, state) =>
+                _noTransition(state, const EducationsAdminPage()),
+          ),
+          GoRoute(
+            path: AppRoutes.adminNewEducation,
+            pageBuilder: (context, state) =>
+                _noTransition(state, const EducationFormPage()),
+          ),
+          GoRoute(
+            path: '${AppRoutes.adminEducations}/:id',
+            pageBuilder: (context, state) => _noTransition(
+              state,
+              EducationFormPage(educationId: state.pathParameters['id']),
+            ),
           ),
           GoRoute(
             path: AppRoutes.adminMessages,

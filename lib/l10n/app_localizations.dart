@@ -164,6 +164,18 @@ abstract class AppLocalizations {
   /// **'About'**
   String get navAbout;
 
+  /// No description provided for @navExperience.
+  ///
+  /// In en, this message translates to:
+  /// **'Experience'**
+  String get navExperience;
+
+  /// No description provided for @navEducation.
+  ///
+  /// In en, this message translates to:
+  /// **'Education'**
+  String get navEducation;
+
   /// No description provided for @navProjects.
   ///
   /// In en, this message translates to:
@@ -259,6 +271,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Technologies'**
   String get statTechnologiesLabel;
+
+  /// No description provided for @experienceSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Work Experience'**
+  String get experienceSectionTitle;
+
+  /// No description provided for @educationSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Education'**
+  String get educationSectionTitle;
+
+  /// No description provided for @timelinePresent.
+  ///
+  /// In en, this message translates to:
+  /// **'Present'**
+  String get timelinePresent;
+
+  /// No description provided for @experienceEmptyPublic.
+  ///
+  /// In en, this message translates to:
+  /// **'No work experience added yet — check back soon!'**
+  String get experienceEmptyPublic;
+
+  /// No description provided for @educationEmptyPublic.
+  ///
+  /// In en, this message translates to:
+  /// **'No education history added yet — check back soon!'**
+  String get educationEmptyPublic;
 
   /// No description provided for @projectsSectionTitle.
   ///
@@ -469,6 +511,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Messages'**
   String get shellMessages;
+
+  /// No description provided for @shellExperience.
+  ///
+  /// In en, this message translates to:
+  /// **'Experience'**
+  String get shellExperience;
+
+  /// No description provided for @shellEducation.
+  ///
+  /// In en, this message translates to:
+  /// **'Education'**
+  String get shellEducation;
 
   /// No description provided for @shellConsoleTitle.
   ///
@@ -925,6 +979,186 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reply'**
   String get messagesAdminReply;
+
+  /// No description provided for @experiencesAdminCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Work experience ({count})'**
+  String experiencesAdminCount(int count);
+
+  /// No description provided for @experiencesAdminNew.
+  ///
+  /// In en, this message translates to:
+  /// **'New entry'**
+  String get experiencesAdminNew;
+
+  /// No description provided for @experiencesAdminEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No work experience yet. Add your first role!'**
+  String get experiencesAdminEmpty;
+
+  /// No description provided for @experiencesAdminFailedToLoad.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load work experience.'**
+  String get experiencesAdminFailedToLoad;
+
+  /// No description provided for @educationsAdminCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Education ({count})'**
+  String educationsAdminCount(int count);
+
+  /// No description provided for @educationsAdminNew.
+  ///
+  /// In en, this message translates to:
+  /// **'New entry'**
+  String get educationsAdminNew;
+
+  /// No description provided for @educationsAdminEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No education history yet. Add your studies!'**
+  String get educationsAdminEmpty;
+
+  /// No description provided for @educationsAdminFailedToLoad.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load education.'**
+  String get educationsAdminFailedToLoad;
+
+  /// No description provided for @timelineReorderHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Drag rows to reorder — applies to the public site instantly.'**
+  String get timelineReorderHint;
+
+  /// No description provided for @experienceFormNewHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'New work experience'**
+  String get experienceFormNewHeading;
+
+  /// No description provided for @experienceFormEditHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit work experience'**
+  String get experienceFormEditHeading;
+
+  /// No description provided for @educationFormNewHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'New education entry'**
+  String get educationFormNewHeading;
+
+  /// No description provided for @educationFormEditHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit education entry'**
+  String get educationFormEditHeading;
+
+  /// No description provided for @experienceSavedSnackbar.
+  ///
+  /// In en, this message translates to:
+  /// **'Experience entry saved ✓'**
+  String get experienceSavedSnackbar;
+
+  /// No description provided for @educationSavedSnackbar.
+  ///
+  /// In en, this message translates to:
+  /// **'Education entry saved ✓'**
+  String get educationSavedSnackbar;
+
+  /// No description provided for @deleteTimelineTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete \"{title}\"?'**
+  String deleteTimelineTitle(String title);
+
+  /// No description provided for @deleteTimelineBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This permanently removes the entry from the public site. This action cannot be undone.'**
+  String get deleteTimelineBody;
+
+  /// No description provided for @formRequiredField.
+  ///
+  /// In en, this message translates to:
+  /// **'This field is required.'**
+  String get formRequiredField;
+
+  /// No description provided for @formCompanyField.
+  ///
+  /// In en, this message translates to:
+  /// **'Company *'**
+  String get formCompanyField;
+
+  /// No description provided for @formPositionField.
+  ///
+  /// In en, this message translates to:
+  /// **'Position *'**
+  String get formPositionField;
+
+  /// No description provided for @formLocationField.
+  ///
+  /// In en, this message translates to:
+  /// **'Location'**
+  String get formLocationField;
+
+  /// No description provided for @formEntryDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get formEntryDescription;
+
+  /// No description provided for @formStartDateField.
+  ///
+  /// In en, this message translates to:
+  /// **'Start date'**
+  String get formStartDateField;
+
+  /// No description provided for @formEndDateField.
+  ///
+  /// In en, this message translates to:
+  /// **'End date'**
+  String get formEndDateField;
+
+  /// No description provided for @formCurrentWorkSwitchTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'I currently work here'**
+  String get formCurrentWorkSwitchTitle;
+
+  /// No description provided for @formCurrentStudySwitchTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'I currently study here'**
+  String get formCurrentStudySwitchTitle;
+
+  /// No description provided for @formInstitutionField.
+  ///
+  /// In en, this message translates to:
+  /// **'Institution *'**
+  String get formInstitutionField;
+
+  /// No description provided for @formDegreeField.
+  ///
+  /// In en, this message translates to:
+  /// **'Degree *'**
+  String get formDegreeField;
+
+  /// No description provided for @formFieldOfStudyField.
+  ///
+  /// In en, this message translates to:
+  /// **'Field of study'**
+  String get formFieldOfStudyField;
+
+  /// No description provided for @formGradeField.
+  ///
+  /// In en, this message translates to:
+  /// **'Grade / GPA'**
+  String get formGradeField;
 }
 
 class _AppLocalizationsDelegate

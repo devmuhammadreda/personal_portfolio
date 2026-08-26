@@ -9,6 +9,8 @@ import '../cubit/portfolio_state.dart';
 import '../widgets/about_section.dart';
 import '../widgets/animated_navbar.dart';
 import '../widgets/contact_section.dart';
+import '../widgets/education_section.dart';
+import '../widgets/experience_section.dart';
 import '../widgets/hero_section.dart';
 import '../widgets/projects_section.dart';
 import '../widgets/site_footer.dart';
@@ -28,6 +30,8 @@ class _PortfolioPageState extends State<PortfolioPage> {
   final ScrollController _scrollController = ScrollController();
   final GlobalKey _heroKey = GlobalKey();
   final GlobalKey _aboutKey = GlobalKey();
+  final GlobalKey _experienceKey = GlobalKey();
+  final GlobalKey _educationKey = GlobalKey();
   final GlobalKey _projectsKey = GlobalKey();
   final GlobalKey _contactKey = GlobalKey();
 
@@ -51,9 +55,11 @@ class _PortfolioPageState extends State<PortfolioPage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<PortfolioCubit>(
-      create: (_) =>
-          PortfolioCubit(profileRepository: getIt(), projectRepository: getIt())
-            ..load(),
+      create: (_) => PortfolioCubit(
+        profileRepository: getIt(),
+        projectRepository: getIt(),
+        timelineRepository: getIt(),
+      )..load(),
       child: BlocConsumer<PortfolioCubit, PortfolioState>(
         listener: (context, state) {},
         builder: (context, state) {
@@ -93,6 +99,22 @@ class _PortfolioPageState extends State<PortfolioPage> {
                           child: const AboutSection(),
                         ),
                         Container(
+                          key: _experienceKey,
+                          padding: context.sectionPadding,
+                          constraints: BoxConstraints(
+                            maxWidth: context.contentMaxWidth + 96,
+                          ),
+                          child: const ExperienceSection(),
+                        ),
+                        Container(
+                          key: _educationKey,
+                          padding: context.sectionPadding,
+                          constraints: BoxConstraints(
+                            maxWidth: context.contentMaxWidth + 96,
+                          ),
+                          child: const EducationSection(),
+                        ),
+                        Container(
                           key: _projectsKey,
                           padding: context.sectionPadding,
                           constraints: BoxConstraints(
@@ -127,6 +149,14 @@ class _PortfolioPageState extends State<PortfolioPage> {
                       onTitleTap: () => _scrollTo(_heroKey),
                       sections: [
                         (context.loc.navAbout, () => _scrollTo(_aboutKey)),
+                        (
+                          context.loc.navExperience,
+                          () => _scrollTo(_experienceKey),
+                        ),
+                        (
+                          context.loc.navEducation,
+                          () => _scrollTo(_educationKey),
+                        ),
                         (
                           context.loc.navProjects,
                           () => _scrollTo(_projectsKey),
